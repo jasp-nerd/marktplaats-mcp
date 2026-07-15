@@ -1,0 +1,14 @@
+{
+ "bankAccount": false,
+ "phoneNumber": true,
+ "identification": false,
+ "paymentMethod": {
+  "name": "ideal"
+ },
+ "smbVerified": false,
+ "profilePictures": {},
+ "salesRepresentatives": [],
+ "lowBidThresholdPercentage": 90,
+ "workshopServices": [],
+ "reviews": []
+}
