@@ -1,0 +1,31 @@
+name: Update category data
+
+on:
+  schedule:
+    - cron: "17 4 1 * *"   # monthly
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Scrape current categories
+        run: uv run scripts/update_categories.py
+      - name: Verify data still passes the test suite
+        run: |
+          uv sync --all-groups
+          uv run pytest tests/test_categories.py -q
+      - uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: refresh vendored category data"
+          title: "chore: refresh vendored category data"
+          body: >
+            Automated monthly refresh of `src/marktplaats_mcp/data/*.json`
+            scraped from marktplaats.nl. Category tests passed on this data.
+          branch: chore/update-categories
+          delete-branch: true
