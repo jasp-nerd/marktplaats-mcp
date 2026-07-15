@@ -1,0 +1,3131 @@
+{
+ "listings": [
+  {
+   "itemId": "m2419636341",
+   "title": "Fiets te koop!",
+   "description": "Fiets in perfecte staat! Bagagerek voorkant + achterkant. Fietszakken inbegrepen!",
+   "categorySpecificDescription": "Fiets in perfecte staat! Bagagerek voorkant + achterkant. Fietszakken inbegrepen!",
+   "thinContent": true,
+   "priceInfo": {
+    "priceCents": 30000,
+    "priceType": "MIN_BID"
+   },
+   "location": {
+    "cityName": "Temse",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.133101094034,
+    "longitude": 4.2058251112088
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 60100233,
+    "sellerName": "Femke",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_3DAYS",
+    "PACKAGE_FREE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/8b389c23-ea29-4eac-81a5-d5b88a1b1e6c?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 9,
+      "height": 20
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2419636341-fiets-te-koop"
+  },
+  {
+   "itemId": "m2418470599",
+   "title": "Elektrische fiets Riese & Müller Swing Vario Urban",
+   "description": "Te koop: kwaliteitsvolle elektrische fiets van het premiummerk riese & müller. Specificaties: model: swing vario urban kleur: urban black framemaat: 46 tussen 150 en 165 cm) aangekocht: augustus 2",
+   "categorySpecificDescription": "Te koop: kwaliteitsvolle elektrische fiets van het premiummerk riese & müller. Specificaties: model: swing vario urban kleur: urban black framemaat: 46 tussen 150 en 165 cm) aangekocht: augustus 2019 kilometerstand: 20.000 Bosch middenmotor envio...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 135000,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "cityName": "Brecht",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.335940680064,
+    "longitude": 4.6281821331631
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 50106028,
+    "sellerName": "Pol D",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Gebruikt",
+     "values": [
+      "Gebruikt"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "condition",
+     "value": "Gebruikt",
+     "values": [
+      "Gebruikt"
+     ]
+    },
+    {
+     "key": "brakeType",
+     "value": "Velgrem",
+     "values": [
+      "Velgrem"
+     ]
+    },
+    {
+     "key": "frameHeight",
+     "value": "Minder dan 47 cm",
+     "values": [
+      "Minder dan 47 cm"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_PREMIUM"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/79334e55-9007-43bd-873c-feed88a629ee?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 4,
+      "height": 3
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2418470599-elektrische-fiets-riese-muller-swing-vario-urban"
+  },
+  {
+   "itemId": "m2410543058",
+   "title": "Damesfiets Achille",
+   "description": "Damesfiets van het merk achielle. Weinig kilometers 3 versnellingen trommelremmen",
+   "categorySpecificDescription": "Damesfiets van het merk achielle. Weinig kilometers 3 versnellingen trommelremmen",
+   "thinContent": true,
+   "priceInfo": {
+    "priceCents": 25000,
+    "priceType": "MIN_BID"
+   },
+   "location": {
+    "cityName": "Wilrijk",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.164289709655,
+    "longitude": 4.3879107643466
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 27978862,
+    "sellerName": "Stien",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_FREE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/d53cdd46-8514-4d56-aa7d-63c6cb0a4c42?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 803,
+      "height": 602
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2410543058-damesfiets-achille"
+  },
+  {
+   "itemId": "m2419767973",
+   "title": "Koga e-bike maat 53  dames",
+   "description": "Koga e-de luxe uit 2017 met grote actieradius. Deze fiets werd destijds door de consumentenbond uitgeroepen tot \"beste uit de test\". - 626 Kwh batterij in zeer goede staat - geruisloze motor",
+   "categorySpecificDescription": "Koga e-de luxe uit 2017 met grote actieradius. Deze fiets werd destijds door de consumentenbond uitgeroepen tot \"beste uit de test\". - 626 Kwh batterij in zeer goede staat - geruisloze motor, direct op het wiel aangedreven - kadermaat 53 - ...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 62000,
+    "priceType": "MIN_BID"
+   },
+   "location": {
+    "cityName": "Maaseik",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.087842682202,
+    "longitude": 5.7151972827223
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 28326344,
+    "sellerName": "cuph",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Gebruikt",
+     "values": [
+      "Gebruikt"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    },
+    {
+     "key": "brakeType",
+     "value": "Schijfrem",
+     "values": [
+      "Schijfrem"
+     ]
+    },
+    {
+     "key": "frameHeight",
+     "value": "53 tot 56 cm",
+     "values": [
+      "53 tot 56 cm"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_PREMIUM"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/86900ebd-8b8f-49d2-b938-2afd4c88506f?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 4,
+      "height": 3
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2419767973-koga-e-bike-maat-53-dames"
+  },
+  {
+   "itemId": "a164479120",
+   "title": "Set van twee nostalgische emaille verbodsborden – fiets",
+   "description": "Set original de deux panneaux ronds en émail originaires des paysbas, interdiction de vélo et interdiction de chiens, en bon état d’usage avec de légères traces d’âge et des taches, chacun mesurant 10",
+   "categorySpecificDescription": "Set original de deux panneaux ronds en émail originaires des paysbas, interdiction de vélo et interdiction de chiens, en bon état d’usage avec de légères traces d’âge et des taches, chacun mesurant 10 cm sur 10 cm.",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 1300,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": true,
+    "abroad": false,
+    "latitude": 0,
+    "longitude": 0
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_82.JPG"
+   ],
+   "sellerInformation": {
+    "sellerId": 38096837,
+    "sellerName": "Catawiki",
+    "showSoiUrl": true,
+    "showWebsiteUrl": true,
+    "sellerWebsiteUrl": "https://admarkt.2dehands.be/buyside/url/ZSiIEVoKK5eYCzwT5AQ7JU9AC2wO8bQtcdnZzWHCmP0FPOmtxkRz_b_BVx0c8wimQGR2KDLZ712xtEYltIeqYxFXZF5xfsCMw8svfC-H4xUFkQLbhpk1f-IyfAQF6CPlpj64F8idjueIPj8Dc9i5-cKmh-iidglxSE8wKcF7j1ig55Zy_GpchLffIRTyasPPuIEdRTO3nVbGVhK-pPk0w2OztGgAiypD5M28XN7r9WgopqJHbQOFIweLkpOuNYRJGt5D15-uIN39-W88oZx6BuVW51nHMcx_vZF7X2wTD2JTLB0tgt4KpsAMQlFMhSjmwUA0BCRhpHQZ6fO00OAbDnqens8Qz5Pmbj2zDHB9foHbz7QYPfeneqj1HGjxyNSjZ31y7MPXKTWckVsRpdf1DqIG7MXivxdXuPZD-eMp1jGcqlfY_eIbxH1pZTp0KNBqsLpmVIQYeOgQNDWM6xcQa8PBtfaYidw9VrpFHk0bixm5QoqTK3anKp3iQwwrUkfuujckpSdMgDX9z5p2yJudmzBSwRT1KWe7GAAlISkV5gyJ4QyXtxNr_OMvHjuqipcJAr8O0OUM0HPx4oBMYmPjy7kbUZraLNJRbT2CyffYSZ3SqqKW6HoLkkPM4Ku3ht4bCyVM80fi6yDOnS_4Cm3SsFHZAGNbSzg5BUbzIJj1kOaw9zZpp1ybQUgD8uar07f56j8HcHWFMXsPEXdy2-Or0rDEA20xjb_yx_IwZQHh5D1m1y8Cf09uaPdii2nN0UB5dx6cDEAPuphjae982nH3ev4ngcem1Jnc7_Sec3kkCb-D2nPG6xpzyu-Evbriy47HZnPIv744OHgJyyISbwX4FL9-lgZFkiXsLGdaxp6swJhpMi6WucyY8ikTffMdh_OW-6P_5bw2zCdDIzDpmNb-BTiDDKv_HaFkP5Ou5VeOS4o3zsORoPXImYmtP00KIQxyDvqO2Vvn8ODAWb-wHIuc8nHlP7EXgL_Q6rNXwomERCiRiQF0DTm1efSRZVnN4KidSCVM18wSZ7FjNN4qe-nvgRNQt-a0IrCzyQltkWw4ULjINW81ZUtiHkwVc2oB-_dtvtbDUOc0t-8VLkZqhVE0Pw",
+    "isVerified": false
+   },
+   "categoryId": 1104,
+   "trackingData": "dUFn9k54kmiYcmfX19rfoANGov08YZ5E-sn4lFXCuyKiGUUx_FjZO1looxQlJaDMHFen_KbHiBwT9rkRKIN2hGziIw7_twY2En31zYF2zWJQWd_xau1oke-5ntpWIabGEKaXjEjzX1O1WcoPo4rOTbq3iBg9y4CcR7X964vhAssf6ib020QkaDGm2WqWLmhVqKnVmn5BeVuxqH-22VmPQJ06mRLxfEqfLMoNxaYAMtjLWCzy_x7V8B1dU6j1wW8zKm12BcVY5kErXJpoGkFJtUl_TqdNZ93GzRRF45j22jANcf9GUHglWY7WZh0HwAVC90NCtcxhcr8t0CmyKdfaCed_Wxb5sgyi7o_rOI6Q4mdew1eG4B5JUOnSpCltm2yzLPrux_haVcP1g2y_3-ATOD2ioS_lnVeHd48Aj7MNfSVkXv2ewr8B-SXU-ss5m63ZLnCTC_HX_kkSMnMp1gPs95xOJxlWj1hxl7uksMKSaxsP2W7cDBt13BnKUkK5rp4UZeRphwC8tbU1J9EgrFFnMFFQEqEZ4HzratMuv0jfdZN9XaqbCfgfbh02QTIyDK9ahv19cqBQ3KwT61Jdhr9ReQ",
+   "pageLocation": "L0_SEARCH",
+   "priorityProduct": "NONE",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "extendedAttributes": [],
+   "traits": [
+    "NO_MARKETING",
+    "ADMARKT_CONSOLE",
+    "PROFILE"
+   ],
+   "verticals": [
+    "antique_and_art",
+    "antique_wall_signs_and_tiles"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "00000000-0000-0000-0000-000000000000",
+     "url": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_#.JPG",
+     "sizes": {
+      "XL": "84",
+      "M": "82",
+      "XXXL": "86",
+      "L": "83",
+      "XXL": "85",
+      "XXS": "14",
+      "XS": "14",
+      "S": "82"
+     },
+     "extraSmallUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_14.JPG",
+     "mediumUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_82.JPG",
+     "largeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_83.JPG",
+     "extraExtraLargeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_85.JPG",
+     "aspectRatio": {
+      "width": 3,
+      "height": 4
+     }
+    }
+   ],
+   "reserved": false,
+   "vipUrl": "/v/antiek-en-kunst/antiek-wandborden-en-tegels/a164479120-set-van-twee-nostalgische-emaille-verbodsborden-fiets"
+  },
+  {
+   "itemId": "m2419047348",
+   "title": "Sportieve damesfiets - Zanata",
+   "description": "Mooie lichte damesfiets, zo goed als nieuw. 21 Versnellingen, maat small (voor persoon +/- 1,60m) shimano sora groupset sportief wit zadel",
+   "categorySpecificDescription": "Mooie lichte damesfiets, zo goed als nieuw. 21 Versnellingen, maat small (voor persoon +/- 1,60m) shimano sora groupset sportief wit zadel",
+   "thinContent": true,
+   "priceInfo": {
+    "priceCents": 30000,
+    "priceType": "MIN_BID"
+   },
+   "location": {
+    "cityName": "Zottegem",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 50.867664170209,
+    "longitude": 3.8055334479871
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 54643525,
+    "sellerName": "ODS",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "brand",
+     "value": "Overige merken",
+     "values": [
+      "Overige merken"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_PREMIUM"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/bed76004-9a62-4ecb-9223-12b12d551081?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 1024,
+      "height": 461
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2419047348-sportieve-damesfiets-zanata"
+  },
+  {
+   "itemId": "m2418962141",
+   "title": "DAMESFIETS  - GIANT  ( NIEUWSTAAT )",
+   "description": "Damesfiets - giant [ nieuwstaat ] perfecte nieuwstaat , 2 jaar oud !!!! Gesloten kettingkas : geen onderhoud 2 sleutels jasbeschermers led verlichting versnellingen : 3 framemaat : 46 vraagprijs : 430",
+   "categorySpecificDescription": "Damesfiets - giant [ nieuwstaat ] perfecte nieuwstaat , 2 jaar oud !!!! Gesloten kettingkas : geen onderhoud 2 sleutels jasbeschermers led verlichting versnellingen : 3 framemaat : 46 vraagprijs : 430 € vaste prijs ophalen geen koerier",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 43000,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "cityName": "Mol",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.233737569675,
+    "longitude": 5.1528180361052
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 50761936,
+    "sellerName": "TOPPER 55",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "brand",
+     "value": "Giant",
+     "values": [
+      "Giant"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_PREMIUM"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/72f8f693-40c8-43a7-a90a-6bb93c1659ee?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 9,
+      "height": 16
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2418962141-damesfiets-giant-nieuwstaat"
+  },
+  {
+   "itemId": "m2420341198",
+   "title": "Norta Survival (Mt 50)-21v Shimano Acera-Gelzadel&Stuurmand",
+   "description": "Te koop aangeboden: een zeer complete en oerdegelijke norta survival. Dit is een kwaliteitsfiets van belgische makelij die bekendstaat om zijn stevigheid en comfort. De fiets heeft onlangs een onderho",
+   "categorySpecificDescription": "Te koop aangeboden: een zeer complete en oerdegelijke norta survival. Dit is een kwaliteitsfiets van belgische makelij die bekendstaat om zijn stevigheid en comfort. De fiets heeft onlangs een onderhoudsbeurt gehad en is direct rijklaar voor de volge...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 0,
+    "priceType": "FAST_BID"
+   },
+   "location": {
+    "cityName": "Buggenhout",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.011842016027,
+    "longitude": 4.1990183451443
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 33734304,
+    "sellerName": "Vicky Moortgat",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 447,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "brakeType",
+     "value": "Velgrem",
+     "values": [
+      "Velgrem"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Zo goed als nieuw",
+     "values": [
+      "Zo goed als nieuw"
+     ]
+    },
+    {
+     "key": "frameHeight",
+     "value": "50 tot 53 cm",
+     "values": [
+      "50 tot 53 cm"
+     ]
+    }
+   ],
+   "traits": [
+    "PACKAGE_PLUS",
+    "DAG_TOPPER"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_ladies_bike",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/7f93625f-41fb-452c-a17b-bd32d889c89f?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 4,
+      "height": 3
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-dames-damesfietsen/m2420341198-norta-survival-mt-50-21v-shimano-acera-gelzadel-stuurmand"
+  },
+  {
+   "itemId": "m2414746517",
+   "title": "Koersfiets Colnago XL Framhoogte 67 cm",
+   "description": "Met pijn in het hart verkoop ik deze koersfiets. Door gezondheidsredenen kan ik helaas niet langer fietsen, waardoor ik al mijn fietsen verkoop. Deze colnago koersfiets is misschien al wat ouder, maar",
+   "categorySpecificDescription": "Met pijn in het hart verkoop ik deze koersfiets. Door gezondheidsredenen kan ik helaas niet langer fietsen, waardoor ik al mijn fietsen verkoop. Deze colnago koersfiets is misschien al wat ouder, maar nog steeds van uitstekende kwaliteit. Een degelij...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 22000,
+    "priceType": "MIN_BID"
+   },
+   "location": {
+    "cityName": "Halle",
+    "countryName": "België",
+    "countryAbbreviation": "BE",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 50.730717752038,
+    "longitude": 4.240420405571
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_82.jpg"
+   ],
+   "sellerInformation": {
+    "sellerId": 39701919,
+    "sellerName": "Bruno",
+    "showSoiUrl": true,
+    "showWebsiteUrl": false,
+    "isVerified": false
+   },
+   "categoryId": 453,
+   "priorityProduct": "DAGTOPPER",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Gebruikt",
+     "values": [
+      "Gebruikt"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "condition",
+     "value": "Gebruikt",
+     "values": [
+      "Gebruikt"
+     ]
+    },
+    {
+     "key": "brakeType",
+     "value": "Velgrem",
+     "values": [
+      "Velgrem"
+     ]
+    },
+    {
+     "key": "properties",
+     "value": "Versnellingen",
+     "values": [
+      "Versnellingen"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "traits": [
+    "DAG_TOPPER_7DAYS",
+    "PACKAGE_FREE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_men_mens_bicycle",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "",
+     "url": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_#.jpg",
+     "extraSmallUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_14.jpg",
+     "mediumUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_82.jpg",
+     "largeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_83.jpg",
+     "extraExtraLargeUrl": "https://images.2dehands.com/api/v1/hz-twh-pro-listing/images/16c1a84b-88cc-4a0f-ad18-83c2e1019d8d?rule=ecg_mp_eps$_85.jpg",
+     "aspectRatio": {
+      "width": 512,
+      "height": 341
+     }
+    }
+   ],
+   "searchType": "TokenMatch",
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-heren-herenfietsen/m2414746517-koersfiets-colnago-xl-framhoogte-67-cm"
+  },
+  {
+   "itemId": "a163349565",
+   "title": "Mechanische Fiets | Trek FX SPORT 6 | -35%",
+   "description": "Informatie in het nederlands: mechanische fiets | trek fx sport 6 | -35% meer informatie transmissie transmissie: shimano grx, 11 versnellingen versnelling: derailleur maten framehoogte: 49 cm staat a",
+   "categorySpecificDescription": "Informatie in het nederlands: mechanische fiets | trek fx sport 6 | -35% meer informatie transmissie transmissie: shimano grx, 11 versnellingen versnelling: derailleur maten framehoogte: 49 cm staat algemene staat: zeer goed overige informatie framem...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 194900,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "cityName": "Stabroek",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.32857894897461,
+    "longitude": 4.37672758102417
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_82.JPG"
+   ],
+   "sellerInformation": {
+    "sellerId": 43988529,
+    "sellerName": "Bikeselection",
+    "showSoiUrl": true,
+    "showWebsiteUrl": true,
+    "sellerWebsiteUrl": "https://admarkt.2dehands.be/buyside/url/d5gqM62gLUcCmndX4A5PF5upIeTbvhXSx1105CxQUj11PZ1lIYagHJ2S_Czk--s8yeaPxVZWXF4qKryiHxY8F6d3Kcv67dmxlJZ3qgCxH53BkRR-P8Q4DU7Ftt_pF2357osoOZFGNs5YDcDrFh6HtnqlxkqXngv_YrkY8wyIJW9Vcy18usN4hKvl2HVw0mSVFsYqzMuArumg7Zg2wBtsX7Rh0TIZkI9E4m3krgVD3z5tK9eIXDs0nT_YWed1gpn0lRJA1-FweweQWAZoH3U0oyGPFsk4macLZozUZCgMN2XxjKBGcqfDByv1fKHLwsLTF1TVTfNDRofRQBEgR5mQXNktCAVEFY44KEPWyURR-Sf4BctX3P8rHpdR5bEWrNFNlY2ukPVtqro0p1Z86TJy722hN_-AQHdsaxeQw-K7A7BqkuSjs7vAzWSonpG_BCDPSDafwT8KTUcJVuFQg9yJvBbaU-dJAtbPw3-5T3pV1ZCW-FrscHvBXQipKILf5-X8vAUgZv-kJDG18xsz4Qw0UTcd5XShyBbnnUYofwnlu8zMoK0-RvqpLRTm6Dso3MQsB1qy_upJGWRmpx_tqAkNSEddY345U6DbZjXrPDxw9pd07UuLhpWfKnLiCurtucnBuM4Gtj8vTtOTw066mkr5chOwbdAicRSZxnRseqCqJ8qXrYTLkYx9fLF1YhyxMYjW6BclfvVrYe22t1gpdHQFWK24nKdOEU4AG8Fe0wn1ay4igPu9nJFmD8zHwtacumb5kEA3IWprnz_ZbGQ0teg2bPv21LD9ACVZKNhic_gMrR0WA2QK3--3z1gHgAyAPfVKGaJxPhMtnTsD3Ww1rOFt4PDz897argvVq-2EfH8KTZrQjvpeqA9ekq8w5n66ZKujjF9E6J-b1Z2GcnXssKAdbFoUPYMB0VhitgNg9l74bcaMnuy2NUfEYoIVkTiRpYVoWT0G7P4A7mQq0WuRXHCx4hX0fqxFmkvloZkQhu2jdV4opeetQuO00XUtmTmrv5pf_nf87C1mps_cv-CLJj6ah7_KTflSSkRTqpvsIaxJ71Nmt0od-45hdrunsuVbkldZHgyU__i2ro-pFxXXxJhOJQ",
+    "isVerified": false
+   },
+   "categoryId": 453,
+   "trackingData": "PY-dByCxCZPArNOB-EHyTaTlncawyhrJcWAEm7hlLOe37aCHVDo1WiWWUNivY6gIkFpQo_vUoN0qvtYEeZGQyQ5eeHC9kuXElulHbgSWNm_4uewVOFDZQAW97nEuGPEzmhLc5nw_WcvkMHL6ZJOBKHIGFu6S8jVI7hAuBQJmMpMwFV9lZ-5I68Y5c-IsZWGvCUrGwgzVNFyybif_r90KBvkKUcVNJ0TeZQAQSmUq4-xIGuqbkKmkFwWt1F0ch_HWrb7yCiyvVoZWS0E4oJo1a6LMd-ThgMwb_4ud8oZY70lRv-PPamODziZpM1GZpNgpiWzy_5JDpvQNhoNqMYDmrq0J10omouMOErhYThIr75n1o7HxaCZKORzo2oetpHsMuuF1POVRNWIC_tU5pDbFWp46s5muLARVZtDb5S0-wVNo8NQIXVyd_wdTQ29A3OD7aV5OmBBgnAqYotLJaTCK2JEkKIjqSKc4hhasgFLXMjSrT4t-xTQBjFFF9TD9Exol9ReImwzjAGdOr-rMIsZe1te4xMxpePibA1iWArIqX_g6Z0aIKzDxl__swF40fb7hy4iUNC_1yqIOlqDeftCEZQ",
+   "pageLocation": "L0_SEARCH",
+   "priorityProduct": "NONE",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    }
+   ],
+   "traits": [
+    "ADMARKT_CONSOLE",
+    "PROFILE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_men_mens_bicycle",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "00000000-0000-0000-0000-000000000000",
+     "url": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_#.JPG",
+     "sizes": {
+      "XL": "84",
+      "M": "82",
+      "XXXL": "86",
+      "L": "83",
+      "XXL": "85",
+      "XXS": "14",
+      "XS": "14",
+      "S": "82"
+     },
+     "extraSmallUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_14.JPG",
+     "mediumUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_82.JPG",
+     "largeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_83.JPG",
+     "extraExtraLargeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_85.JPG",
+     "aspectRatio": {
+      "width": 128,
+      "height": 59
+     }
+    }
+   ],
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-heren-herenfietsen/a163349565-mechanische-fiets-trek-fx-sport-6-35"
+  }
+ ],
+ "topBlock": [
+  {
+   "itemId": "a164479120",
+   "title": "Set van twee nostalgische emaille verbodsborden – fiets",
+   "description": "Set original de deux panneaux ronds en émail originaires des paysbas, interdiction de vélo et interdiction de chiens, en bon état d’usage avec de légères traces d’âge et des taches, chacun mesurant 10",
+   "categorySpecificDescription": "Set original de deux panneaux ronds en émail originaires des paysbas, interdiction de vélo et interdiction de chiens, en bon état d’usage avec de légères traces d’âge et des taches, chacun mesurant 10 cm sur 10 cm.",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 1300,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": true,
+    "abroad": false,
+    "latitude": 0,
+    "longitude": 0
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_82.JPG"
+   ],
+   "sellerInformation": {
+    "sellerId": 38096837,
+    "sellerName": "Catawiki",
+    "showSoiUrl": true,
+    "showWebsiteUrl": true,
+    "sellerWebsiteUrl": "https://admarkt.2dehands.be/buyside/url/j2iRf3vek2KExHXf7j0p1zv0nceZXh_q_VwHpaZwM1zbNWidd1htF4TWRlxN4uCi2HfOuUag0Bhxg96w8EAMf3U6QFTl7FjJbOQN_j6nA7DXgbHclm6UfAOTEVZIt2wrLG9q_Wws4NAIaiEf-kwb1DI60GYvry04j-y1pSf0SltmmmHG6hMmsvveVN-gZzpytZDtTAxwtg6zP-luBayXaq_ZAOpgfh8UusQb1g2PTRq2kxp0jP5eyWMgcGD6RDmT5ghEdcMRLzGVcSfERKwOu5kU3JUgmbVBZ9VsPN6iosGsOqyhFmoeO0DBpQ2OfYtqPicjgmZeHkFp4GO6Oq211Zse69yju6tr_5qp54X9qW0Dw6_YOZCdO3pEwSl9es3utK_iKnQxQ_Nnjvt3u7579e6w0NyiuutKhBBCU9U27h60Dw4A1bwXifo1e24Sc8rYO7PsxKgdQBx3WnE6B4hZEmhNW4EWvcqa-O9Mat3VF4EmRzVCK4jasFA7HfeuzI_CEMUSLz8XlwTINjkk47EtV0rg_IW3akKMmHTSfi6QZ_gHfd9FQYpyZ61lvwxgRpyldZ90OAcRjx-5dq5vq3T0zeDERwkbRX-E2ie-N6GPYI5mxQapdiGdV-s2h-TeL92cHvYv_LVcWDXqarJcguC4BjylbaLXGHIFjdQmQBcKljsL106YTzbtzP6SgkTd86TIyc4DElpLesr84AecPSXTFkLNl2uRvi1DVE5LlepxdL1l8Tf3AQ0D6C1FDDtXDYA_Lf3wFIihWTHdBiCwvHIpmQwr63ww9rugtwHVO9RdHx2Qpx_1yeCcAwxdndsXVsjzEfaohkML85BHhbBO6y8YrwY2mx1cd2qAWbDvwCElIiMlAaLu8KKlBYX0EcI77uzLifD2lVzuBcqWK3aeVFOJXoDvEmbQSMMgRpyAn1T-7BV7WTSHOlua1ErIpBJ4X3p8ICwknbXcdduFRRcM1rYFsd4_AcjY-o_MkDHbHfcuiiGRJMYlL7bgh_86eFa45crpKvgSSx-HX0Uw0_Y1c4UlFplt-O8Gou6rupiTYcMjOkH2UdnVubwVk2dFxjL6_46Z6jZkYNaOKKib-CqXOOfXynteaL3uWGy-0uYy1z2EInc",
+    "isVerified": false
+   },
+   "categoryId": 1104,
+   "trackingData": "pXQS8VofjwxLUcynyTCE37lPx8hB7RosWDwArTWAL5iheJhkM6ePVMQ4Fc2OLTyWhsZjcBCfkaRRS49cxMZNRNcwvqQxPEaC1XkOO9gbqjI_UBE-4_0BhTjdU5KZEwrrEAzv9vpr3b3DewLvr4vRbCKjuzl6VxUQ6HJzeZIZwWyg7DcdSxK07smP4Is_vuDeXI-15U7_4sHrTJwhI6VtdHAVp7AlebCQrXVLIaiGMzejN4NWFxkep_WyYySk2_1uPuVxNzWQCicldAz5z51hTQoL2n_W0hr6XMA3zvn3add0gReg-Q56IhGWi4bJNpVEggWLWkgjh_9clvy7Tei_A2bGH_Wc5wk6_HFtWc0UFjYIKFtRJKildNBAwM0Psx7OhHiHWoJb33qawKH2xPAZxyqvn8aygnVgOHRnRhrG36Bj9g84qpaoMJWdWMBku4BmpcfGz6JqWwYYBo6UncR7xO-KPCiENjC6jZQWcaIipl3v7jXMO7jpiNnJZuhE0OeOVMjsDs2k9_WIHw0f1ih2tGqsGZmNT270L4g1_5VlSQPULu5RQcrq5PA9Hhhb8QnlAaFMaYtoQi3DBX_TaV_jDA",
+   "pageLocation": "L0_SEARCH_TOP",
+   "priorityProduct": "TOPADVERTENTIE",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "extendedAttributes": [],
+   "traits": [
+    "NO_MARKETING",
+    "ADMARKT_CONSOLE",
+    "PROFILE"
+   ],
+   "verticals": [
+    "antique_and_art",
+    "antique_wall_signs_and_tiles"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "00000000-0000-0000-0000-000000000000",
+     "url": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_#.JPG",
+     "sizes": {
+      "XL": "84",
+      "M": "82",
+      "XXXL": "86",
+      "L": "83",
+      "XXL": "85",
+      "XXS": "14",
+      "XS": "14",
+      "S": "82"
+     },
+     "extraSmallUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_14.JPG",
+     "mediumUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_82.JPG",
+     "largeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_83.JPG",
+     "extraExtraLargeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/0f/0f15f6f2-b66c-41fa-af2e-c8e2e198af9d?rule=eps_85.JPG",
+     "aspectRatio": {
+      "width": 3,
+      "height": 4
+     }
+    }
+   ],
+   "reserved": false,
+   "vipUrl": "/v/antiek-en-kunst/antiek-wandborden-en-tegels/a164479120-set-van-twee-nostalgische-emaille-verbodsborden-fiets"
+  },
+  {
+   "itemId": "a163349565",
+   "title": "Mechanische Fiets | Trek FX SPORT 6 | -35%",
+   "description": "Informatie in het nederlands: mechanische fiets | trek fx sport 6 | -35% meer informatie transmissie transmissie: shimano grx, 11 versnellingen versnelling: derailleur maten framehoogte: 49 cm staat a",
+   "categorySpecificDescription": "Informatie in het nederlands: mechanische fiets | trek fx sport 6 | -35% meer informatie transmissie transmissie: shimano grx, 11 versnellingen versnelling: derailleur maten framehoogte: 49 cm staat algemene staat: zeer goed overige informatie framem...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 194900,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "cityName": "Stabroek",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.32857894897461,
+    "longitude": 4.37672758102417
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_82.JPG"
+   ],
+   "sellerInformation": {
+    "sellerId": 43988529,
+    "sellerName": "Bikeselection",
+    "showSoiUrl": true,
+    "showWebsiteUrl": true,
+    "sellerWebsiteUrl": "https://admarkt.2dehands.be/buyside/url/pwMorBKUTIQa1pEEpiXTzXARuAUrSKCRmAPduB1ltHjfD21NsRJ1BSk6MK2RtkhYSmUYjRkMizb_RGTUsc9HbmswGFDBJJc4phLyQfcoXiRgenzAvPdgefEaWeiawMUhhRvfzkxL-wRf4MW7GskBv9eiAvBSpNJv-EHY5BOwb6R8JtPyj3BmKbP718vVnG1iRwFl8SrdUN1DVviiZ_T3MCbMl9YwI99SdtKEi9TTa2yjXo0Jq7R19JLA_arLYZyOLlF45LxB_y4i3TpH1wn43uSN1sjAqM_Hjm-vQs5fUULuWCSgZTI8QUtcqbWI_YLTvvLZqdbyltsQaj2KA0jdNresXYqGDF4uGCsrU0ydzNXXVPeyAXaWsD2lXpYebVmtabVgOq8sj_iu3hjshg6EsdWqIL3YUB0HWczgZ_tJl-4uHzIxkn2iruqQFn6t1V9M0FbDXNCbcv6ujCsV4WAH2zTjwIH54OUMukSigH3vo7sNgPtoul3jOFnEQFH3yBFSpUPWphwrF1cfCeV-YikDimtgXt6lUM7W_C-2xxXoxEb-3ZdIAN-qQKmaT03vbjh0zSiiCrrrJgaJNr_7OI9bWi931S1BJ2Q34qrekylJp4CASBBktV4gWjjbrpy_499kSWu_7vExB4ddyc3G7AkYL8cr3VhMLd3pwQW72xYnh195FxfE9bYd2L8OXNb19jqgXVR48c2A_dVQbL14D_6T-UTeh9ywuJdXdm-7xs-XBZWBpjIP_dLfOACczENQn5ouKB8m_TqH4bqrMW4KwdH6qe8jo35CwIovAxD77M7Kko2_jLms-A0Or-WLz0Fvxv_8WWwuyx3aAQlfZbXMRat2aey4aeTHw9zVm-Cvkgl_nlUDId5ZAIjgZ2QT96b6MZoe0Uc9u_B4mJeroOBiX_7aA5uHw5v2Dd_JcvduhcVBCRNd2w3NlVzQQVQ3-EMYXQf8lhRx4Um6QegN2l-GocOLsjtHzaHxxcwSsvy9HFhnjCXZXfjqQG92eabxHTqwG4TXs1n0gSFQOjgxYQVEkSV_9rDtKBygfiK_oycKI5qpp_4eRv0EcEMRKwH1ewIn9_lcADuKkDl0ExI6bfFJbiirzPz37f2gEO3iLDo18GmTqxg",
+    "isVerified": false
+   },
+   "categoryId": 453,
+   "trackingData": "OTWgjJblhHDoBcjgBOOVd8qK5FuPKk6HL5IeXW3-av_NY6Gxb8jFLBc2lfhPiYluuaLtMgLWVdVSL31CZ_cXipAslD_0BqHFj3cvXq5FvDQksxmOOT9tQcGUwHJVzdxdNe7CYsjJv7LmQFBLU0nJ4Z2yjUSEEivLXmK437KYtfmM5_ilFudNan7WBvwrNm3JMqjjYZcg3VtLUYKzr25LFeSr7KvDGjwr4za2goBdgl1jUdHPY5gQ0LEAi97dO7HVc5bqNDRu0ZHjuD0EVN-lSsozZzZ7LYkcgMsdCAzKf6qm6bF0AWa3ifraj4UlWBo9gsAJTLDzSHiKemlC1nkGDBtYscKJttWjLQA3EWPF6FFvYN7tqiF5Q2l18kTSRoapTiLZl23Kwhdt5VlSMoZMC072hiGN_Idu_4yeX2jQiH6JTzFscwnZLVpCnDgjfWJFtxZX-sNHifDDp9M3yeTP2jQ5gmDgpO0ATesaCuLZIPG529XMpE5cpo55XjLGK2oa-yxapMTSfVLoHDeQ6b1piNAtiuRYPHerbv--wuZlmO8r215t9wusfFeNDS7KvFImx0tTACjgsxDunwpqbI3tdQ",
+   "pageLocation": "L0_SEARCH_TOP",
+   "priorityProduct": "TOPADVERTENTIE",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    }
+   ],
+   "traits": [
+    "ADMARKT_CONSOLE",
+    "PROFILE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_men_mens_bicycle",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "00000000-0000-0000-0000-000000000000",
+     "url": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_#.JPG",
+     "sizes": {
+      "XL": "84",
+      "M": "82",
+      "XXXL": "86",
+      "L": "83",
+      "XXL": "85",
+      "XXS": "14",
+      "XS": "14",
+      "S": "82"
+     },
+     "extraSmallUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_14.JPG",
+     "mediumUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_82.JPG",
+     "largeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_83.JPG",
+     "extraExtraLargeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b9/b9e254e7-ca99-4e59-899b-abc786a6a58c?rule=eps_85.JPG",
+     "aspectRatio": {
+      "width": 128,
+      "height": 59
+     }
+    }
+   ],
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-heren-herenfietsen/a163349565-mechanische-fiets-trek-fx-sport-6-35"
+  },
+  {
+   "itemId": "a164300337",
+   "title": "Mechanische fiets | Sensa Giulia | -50%",
+   "description": "Informatie in het nederlands: mechanische fiets | sensa giulia | -50% meer informatie algemene informatie kleur: zwart transmissie transmissie: shimano 105 di2, 12 versnellingen versnelling: derailleu",
+   "categorySpecificDescription": "Informatie in het nederlands: mechanische fiets | sensa giulia | -50% meer informatie algemene informatie kleur: zwart transmissie transmissie: shimano 105 di2, 12 versnellingen versnelling: derailleur maten framehoogte: 55 cm staat algemene staat: z...",
+   "thinContent": false,
+   "priceInfo": {
+    "priceCents": 289900,
+    "priceType": "FIXED"
+   },
+   "location": {
+    "cityName": "Stabroek",
+    "distanceMeters": -1000,
+    "isBuyerLocation": false,
+    "onCountryLevel": false,
+    "abroad": false,
+    "latitude": 51.32857894897461,
+    "longitude": 4.37672758102417
+   },
+   "date": "Vandaag",
+   "imageUrls": [
+    "//admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_82.JPG"
+   ],
+   "sellerInformation": {
+    "sellerId": 43988529,
+    "sellerName": "Bikeselection",
+    "showSoiUrl": true,
+    "showWebsiteUrl": true,
+    "sellerWebsiteUrl": "https://admarkt.2dehands.be/buyside/url/UzRTG8etFK_lFh8l28jFbmXGEV6yqNcJw1NZn_T2fbjLWqhsf9IGw4DeYgG3-4ueZuWQDiRmNTTEN9s-FVv2NW4oUMkNvUy-YO-whPBDp0nm1xVCS8I0-kYqjSMqilI5B6kBcztIjOq49BAvAQoat-pscfONgs-Z3k0sA79Z6e05dcibMIs97vl17iKIKPZY5oO8lBkmHgw3Ig3F5jUNXzOmSvVPhFoa3-jGV3r9gQ7dlnD7fC-astPQ03b29f5Kn4jklTuxJg_-EJsqC9MirydI05HEzWV7G7C31I4PWFYEhgoTiHnGt2JgIRdJYJXfdGcBZGSJFcVkRgiAX6XH8DTuO7xjs-nXMgyMcdoizwNPU6yPfnXWOQFD5DeV2QjwVhjGgYxG8sjqWJEBHiAr1gMqxsn4kv7_RgrL4-JwEwEQQucvBhyC9_XUxmbR9fpd0dUEbY582G4Yud0c6T14xWAIY7QAbKdyQU4ejXHWiWN7tLR96po7wGlfu2cxzsNxeBpdkAeQ0FEOd7baIbtqsgc8jtAkHnRhpr8GTSkHaYw_LoVUPmwLXkcSEnkwCnUzvGu019eq_NhiQweRerxm-bF_gtBuXkBOGL65dBJ3xWIWlwD-aREzcozlSIvf-fi6doNNnldYVtvAfR3HjIrGVPcNzIVBkJgIe4jBVQFWshAHXtThuOS2CVoyC-PgpNoLyw7OyYhX-ZJRRk1X5TlEVvU3DgelMB_yK4cvmfw8yRXYgguma2ufznnrlGAowbOfEpewm1WxlSFtxeaaaocwqtrf9wr3Y7AvSn3QSmsQiaBRTYOKcE2abHy_mDtZUHvcqjigXGDlSFUBWHv-jwnVPq5DTaTTMDCT-mqXb4JOfgBTUZn285an9kikpxDETZSgENJ2JN83EOa8e4Lea4YX-Kcng44dIQOJ_1ySVTUuvXTC6APEBbAwSPTGj1lboaGV9gI4C5ZoYZqjnIdY58a2-mQ6sfINOaIQyUTEOH67oD8Kc9qrdDPcycLRTkDFoevnH6eKzmULJiL_Ei8Wp7vduVxoh3sIYandieIHe-LG1uGd3EGpb711ZPjigbBaWh-QJtFKNfHgHdd5jTJS76Y2Hw",
+    "isVerified": false
+   },
+   "categoryId": 453,
+   "trackingData": "A54ylh33QNesbgVhE55HSC_x_RLmz-8VKvZQOmw6gBkscG_YHUXrF8ONgOLxiLcrrFaTDJZWseQivF0PbH_VlXjvqEOedUQkZjjb16Ns_vUhgl8DHJnGHpEnc1iO6w05xGw45D--znt0BDvmJ9QBREiYwrn2dqFWy_XZLilCnvstcBBe_f7nsM_1hE8yPVqtniPb8m_8FPPdNIgACcvG4w_4f4ACxz3WmSngd6SqauknJvXHw8Oe4zi0PNwg1LzDY6Ut3RyCIeJAJGG8jbPWOmUIoLopP4zZl2MBAn7NdDXfPnU1hMKcwS9HRMbwW7ckN8yGteEbDnLnEVQoNxrLRcSGfge3Dz3dziWnX3oC4kkphOsAnkz9QPGOvL9LPdgr9rKdVxrNuPdNzkhtdx0cIBXNl4YFpnm4IjpYrGV60CS4RUPSTjvgXnw8cAmNpZg1_Q9bLZ-5BowVpw4CqZfPZghWmJx-werxwRg42dFrUkuIisf1K1ofeRrtO0wU0W6TMWnq8tb1FK_ZkrTmSonPByNpaH7_d7ltF6V4imcPS1N45EF5VE-LVgH9WKADXzXK6TeloFevKvklhiKvnywJTQ",
+   "pageLocation": "L0_SEARCH_TOP",
+   "priorityProduct": "TOPADVERTENTIE",
+   "videoOnVip": false,
+   "urgencyFeatureActive": false,
+   "napAvailable": false,
+   "attributes": [
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    },
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    }
+   ],
+   "extendedAttributes": [
+    {
+     "key": "delivery",
+     "value": "Ophalen",
+     "values": [
+      "Ophalen"
+     ]
+    },
+    {
+     "key": "condition",
+     "value": "Nieuw",
+     "values": [
+      "Nieuw"
+     ]
+    }
+   ],
+   "traits": [
+    "ADMARKT_CONSOLE",
+    "PROFILE"
+   ],
+   "verticals": [
+    "smb-highvalue",
+    "bicycles_men_mens_bicycle",
+    "bicycles_and_mopeds"
+   ],
+   "pictures": [
+    {
+     "id": 0,
+     "mediaId": "00000000-0000-0000-0000-000000000000",
+     "url": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_#.JPG",
+     "sizes": {
+      "XL": "84",
+      "M": "82",
+      "XXXL": "86",
+      "L": "83",
+      "XXL": "85",
+      "XXS": "14",
+      "XS": "14",
+      "S": "82"
+     },
+     "extraSmallUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_14.JPG",
+     "mediumUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_82.JPG",
+     "largeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_83.JPG",
+     "extraExtraLargeUrl": "https://admarkt-cdn.2dehands.com/api/v1/icas-twh-pro-admarkt/images/b4/b4153562-98ee-440d-8640-e6c1a5ef4ae0?rule=eps_85.JPG",
+     "aspectRatio": {
+      "width": 16,
+      "height": 9
+     }
+    }
+   ],
+   "reserved": false,
+   "vipUrl": "/v/fietsen-en-brommers/fietsen-heren-herenfietsen/a164300337-mechanische-fiets-sensa-giulia-50"
+  }
+ ],
+ "facets": [
+  {
+   "key": "PriceCents",
+   "type": "AttributeRangeFacet"
+  },
+  {
+   "key": "RelevantCategories",
+   "type": "CategoryTreeFacet",
+   "categories": [
+    {
+     "id": 445,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen en Brommers",
+     "key": "fietsen-en-brommers",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 447,
+     "histogramCount": 3786,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Dames | Damesfietsen",
+     "key": "fietsen-dames-damesfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 453,
+     "histogramCount": 2941,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Heren | Herenfietsen",
+     "key": "fietsen-heren-herenfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 464,
+     "histogramCount": 7637,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Racefietsen",
+     "key": "fietsen-racefietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 451,
+     "histogramCount": 4913,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Elektrische fietsen",
+     "key": "elektrische-fietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 454,
+     "histogramCount": 4709,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Heren | Sportfietsen en Toerfietsen",
+     "key": "fietsen-heren-sportfietsen-en-toerfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1917,
+     "histogramCount": 3692,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Kinderfietsjes",
+     "key": "fietsen-kinderfietsjes",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 459,
+     "histogramCount": 2346,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Meisjes",
+     "key": "fietsen-meisjes",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 460,
+     "histogramCount": 2088,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Mountainbikes en ATB",
+     "key": "fietsen-mountainbikes-en-atb",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 455,
+     "histogramCount": 1813,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Jongens",
+     "key": "fietsen-jongens",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 462,
+     "histogramCount": 1774,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsonderdelen",
+     "key": "fietsonderdelen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 467,
+     "histogramCount": 1524,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Vouwfietsen",
+     "key": "fietsen-vouwfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 448,
+     "histogramCount": 1455,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Dames | Sportfietsen en Toerfietsen",
+     "key": "fietsen-dames-sportfietsen-en-toerfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 48,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Auto diversen",
+     "key": "auto-diversen",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 3065,
+     "histogramCount": 1448,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsendragers",
+     "key": "fietsendragers",
+     "parentId": 48,
+     "parentKey": "auto-diversen"
+    },
+    {
+     "id": 2026,
+     "histogramCount": 1273,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Oldtimers",
+     "key": "fietsen-oldtimers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 461,
+     "histogramCount": 1219,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Dames | Omafietsen",
+     "key": "fietsen-dames-omafietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 456,
+     "histogramCount": 1086,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Driewielers",
+     "key": "fietsen-driewielers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1621,
+     "histogramCount": 1054,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Crossfietsen en BMX",
+     "key": "fietsen-crossfietsen-en-bmx",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 201,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Boeken",
+     "key": "boeken",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 226,
+     "histogramCount": 947,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Sportboeken",
+     "key": "sportboeken",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 784,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Sport en Fitness",
+     "key": "sport-en-fitness",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 792,
+     "histogramCount": 908,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Wielrennen",
+     "key": "wielrennen",
+     "parentId": 784,
+     "parentKey": "sport-en-fitness"
+    },
+    {
+     "id": 457,
+     "histogramCount": 862,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsstoeltjes",
+     "key": "fietsaccessoires-fietsstoeltjes",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 446,
+     "histogramCount": 776,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Bakfietsen",
+     "key": "fietsen-bakfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1919,
+     "histogramCount": 745,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Overige Fietsaccessoires",
+     "key": "fietsaccessoires-overige-fietsaccessoires",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 463,
+     "histogramCount": 622,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Fietsen en Brommers",
+     "key": "overige-fietsen-en-brommers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 466,
+     "histogramCount": 544,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Tandems",
+     "key": "fietsen-tandems",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1667,
+     "histogramCount": 531,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Cruisers en Lowriders",
+     "key": "fietsen-cruisers-en-lowriders",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 450,
+     "histogramCount": 501,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Aanhangwagens en Karren",
+     "key": "fietsaccessoires-aanhangwagens-en-karren",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 803,
+     "histogramCount": 500,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fitnessapparatuur",
+     "key": "fitnessapparatuur",
+     "parentId": 784,
+     "parentKey": "sport-en-fitness"
+    },
+    {
+     "id": 449,
+     "histogramCount": 494,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Driewielfietsen",
+     "key": "fietsen-driewielfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 3115,
+     "histogramCount": 471,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsenrekken",
+     "key": "fietsaccessoires-fietsenrekken",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 223,
+     "histogramCount": 380,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Reisgidsen",
+     "key": "reisgidsen",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 1776,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kleding | Heren",
+     "key": "kleding-heren",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 641,
+     "histogramCount": 363,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Hoeden en Petten",
+     "key": "hoeden-en-petten",
+     "parentId": 1776,
+     "parentKey": "kleding-heren"
+    },
+    {
+     "id": 1916,
+     "histogramCount": 346,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Dames | Moederfietsen",
+     "key": "fietsen-dames-moederfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1099,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Hobby en Vrije tijd",
+     "key": "hobby-en-vrije-tijd",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 1398,
+     "histogramCount": 326,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Elektronica-componenten",
+     "key": "elektronica-componenten",
+     "parentId": 1099,
+     "parentKey": "hobby-en-vrije-tijd"
+    },
+    {
+     "id": 793,
+     "histogramCount": 316,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fitnessmaterialen",
+     "key": "fitnessmaterialen",
+     "parentId": 784,
+     "parentKey": "sport-en-fitness"
+    },
+    {
+     "id": 2736,
+     "histogramCount": 286,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietshelmen",
+     "key": "fietsaccessoires-fietshelmen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 468,
+     "histogramCount": 270,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietskleding",
+     "key": "fietsaccessoires-fietskleding",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1264,
+     "histogramCount": 238,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Hobby en Vrije tijd",
+     "key": "overige-hobby-en-vrije-tijd",
+     "parentId": 1099,
+     "parentKey": "hobby-en-vrije-tijd"
+    },
+    {
+     "id": 3107,
+     "histogramCount": 219,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsaccu's",
+     "key": "fietsaccessoires-fietsaccu-s",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1666,
+     "histogramCount": 215,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietstassen",
+     "key": "fietsaccessoires-fietstassen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 3109,
+     "histogramCount": 210,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsgereedschap",
+     "key": "fietsaccessoires-fietsgereedschap",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 565,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kinderen en Baby's",
+     "key": "kinderen-en-baby-s",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2781,
+     "histogramCount": 209,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Speelgoed | Buiten | Voertuigen en Loopfietsen",
+     "key": "speelgoed-buiten-voertuigen-en-loopfietsen",
+     "parentId": 565,
+     "parentKey": "kinderen-en-baby-s"
+    },
+    {
+     "id": 395,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Dieren en Toebehoren",
+     "key": "dieren-en-toebehoren",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 397,
+     "histogramCount": 178,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Dieren-accessoires",
+     "key": "overige-dieren-accessoires",
+     "parentId": 395,
+     "parentKey": "dieren-en-toebehoren"
+    },
+    {
+     "id": 213,
+     "histogramCount": 169,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Hobby en Vrije tijd",
+     "key": "hobby-en-vrije-tijd",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 3108,
+     "histogramCount": 152,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Bagagedragers",
+     "key": "fietsaccessoires-bagagedragers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 3112,
+     "histogramCount": 149,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietscomputers",
+     "key": "fietsaccessoires-fietscomputers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 3111,
+     "histogramCount": 148,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsverlichting",
+     "key": "fietsaccessoires-fietsverlichting",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 3114,
+     "histogramCount": 141,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietssloten",
+     "key": "fietsaccessoires-fietssloten",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 289,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Caravans en Kamperen",
+     "key": "caravans-en-kamperen",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2925,
+     "histogramCount": 137,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Mobilhomes",
+     "key": "mobilhomes",
+     "parentId": 289,
+     "parentKey": "caravans-en-kamperen"
+    },
+    {
+     "id": 1918,
+     "histogramCount": 109,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietsmanden",
+     "key": "fietsaccessoires-fietsmanden",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 801,
+     "histogramCount": 108,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Sport en Fitness",
+     "key": "overige-sport-en-fitness",
+     "parentId": 784,
+     "parentKey": "sport-en-fitness"
+    },
+    {
+     "id": 465,
+     "histogramCount": 106,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Steps",
+     "key": "steps",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 621,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kleding | Dames",
+     "key": "kleding-dames",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 624,
+     "histogramCount": 103,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Hoeden en Petten",
+     "key": "hoeden-en-petten",
+     "parentId": 621,
+     "parentKey": "kleding-dames"
+    },
+    {
+     "id": 227,
+     "histogramCount": 99,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Stripverhalen",
+     "key": "stripverhalen",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 895,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Verzamelen",
+     "key": "verzamelen",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 935,
+     "histogramCount": 98,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Merken en Reclamevoorwerpen",
+     "key": "merken-en-reclamevoorwerpen",
+     "parentId": 895,
+     "parentKey": "verzamelen"
+    },
+    {
+     "id": 215,
+     "histogramCount": 97,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kinderboeken | Jeugd | onder 10 jaar",
+     "key": "kinderboeken-jeugd-onder-10-jaar",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 221,
+     "histogramCount": 91,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Boeken",
+     "key": "overige-boeken",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 224,
+     "histogramCount": 91,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Romans",
+     "key": "romans",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 2600,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Auto-onderdelen",
+     "key": "auto-onderdelen",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2915,
+     "histogramCount": 90,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Motor en Toebehoren",
+     "key": "motor-en-toebehoren",
+     "parentId": 2600,
+     "parentKey": "auto-onderdelen"
+    },
+    {
+     "id": 927,
+     "histogramCount": 90,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Verzamelen",
+     "key": "overige-verzamelen",
+     "parentId": 895,
+     "parentKey": "verzamelen"
+    },
+    {
+     "id": 458,
+     "histogramCount": 89,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Ligfietsen",
+     "key": "fietsen-ligfietsen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1465,
+     "histogramCount": 89,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kinderboeken | Kleuters",
+     "key": "kinderboeken-kleuters",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 2922,
+     "histogramCount": 82,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Auto-onderdelen",
+     "key": "overige-auto-onderdelen",
+     "parentId": 2600,
+     "parentKey": "auto-onderdelen"
+    },
+    {
+     "id": 1,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Antiek en Kunst",
+     "key": "antiek-en-kunst",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 15,
+     "histogramCount": 76,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Curiosa en Brocante",
+     "key": "curiosa-en-brocante",
+     "parentId": 1,
+     "parentKey": "antiek-en-kunst"
+    },
+    {
+     "id": 3106,
+     "histogramCount": 75,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsen | Eenwielers",
+     "key": "fietsen-eenwielers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1928,
+     "histogramCount": 71,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Honden-accessoires",
+     "key": "honden-accessoires",
+     "parentId": 395,
+     "parentKey": "dieren-en-toebehoren"
+    },
+    {
+     "id": 613,
+     "histogramCount": 69,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Speelgoed | Playmobil",
+     "key": "speelgoed-playmobil",
+     "parentId": 565,
+     "parentKey": "kinderen-en-baby-s"
+    },
+    {
+     "id": 49,
+     "histogramCount": 67,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Aanhangers en Bagagewagens",
+     "key": "aanhangers-en-bagagewagens",
+     "parentId": 48,
+     "parentKey": "auto-diversen"
+    },
+    {
+     "id": 1890,
+     "histogramCount": 67,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Reisverhalen",
+     "key": "reisverhalen",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 428,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Diversen",
+     "key": "diversen",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 1345,
+     "histogramCount": 66,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Rommelmarktspullen",
+     "key": "rommelmarktspullen",
+     "parentId": 428,
+     "parentKey": "diversen"
+    },
+    {
+     "id": 452,
+     "histogramCount": 62,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Dakdragers",
+     "key": "dakdragers",
+     "parentId": 48,
+     "parentKey": "auto-diversen"
+    },
+    {
+     "id": 2924,
+     "histogramCount": 60,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Caravans",
+     "key": "caravans",
+     "parentId": 289,
+     "parentKey": "caravans-en-kamperen"
+    },
+    {
+     "id": 820,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Telecommunicatie",
+     "key": "telecommunicatie",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 3046,
+     "histogramCount": 60,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Telefoonhouders",
+     "key": "telefoonhouders",
+     "parentId": 820,
+     "parentKey": "telecommunicatie"
+    },
+    {
+     "id": 679,
+     "histogramCount": 60,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Brommers | Crossbrommers",
+     "key": "brommers-crossbrommers",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 218,
+     "histogramCount": 60,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Literatuur",
+     "key": "literatuur",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 690,
+     "histogramCount": 58,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Minibikes, Midibikes en Pitbikes",
+     "key": "minibikes-midibikes-en-pitbikes",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 1032,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Immo",
+     "key": "immo",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2771,
+     "histogramCount": 56,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Appartementen en Studio's te huur",
+     "key": "appartementen-en-studio-s-te-huur",
+     "parentId": 1032,
+     "parentKey": "immo"
+    },
+    {
+     "id": 90,
+     "histogramCount": 56,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Tuning en Styling",
+     "key": "tuning-en-styling",
+     "parentId": 48,
+     "parentKey": "auto-diversen"
+    },
+    {
+     "id": 1784,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Postzegels en Munten",
+     "key": "postzegels-en-munten",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 1814,
+     "histogramCount": 55,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Postzegels | Thematische zegels",
+     "key": "postzegels-thematische-zegels",
+     "parentId": 1784,
+     "parentKey": "postzegels-en-munten"
+    },
+    {
+     "id": 1885,
+     "histogramCount": 51,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kinderboeken | Jeugd | 13 jaar en ouder",
+     "key": "kinderboeken-jeugd-13-jaar-en-ouder",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 239,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Doe-het-zelf en Bouw",
+     "key": "doe-het-zelf-en-bouw",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 260,
+     "histogramCount": 50,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Metalen",
+     "key": "metalen",
+     "parentId": 239,
+     "parentKey": "doe-het-zelf-en-bouw"
+    },
+    {
+     "id": 88,
+     "histogramCount": 50,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Vrachtwagen-onderdelen",
+     "key": "vrachtwagen-onderdelen",
+     "parentId": 2600,
+     "parentKey": "auto-onderdelen"
+    },
+    {
+     "id": 1884,
+     "histogramCount": 49,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Kinderboeken | Jeugd | 10 tot 12 jaar",
+     "key": "kinderboeken-jeugd-10-tot-12-jaar",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 60,
+     "histogramCount": 47,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Autogereedschap",
+     "key": "autogereedschap",
+     "parentId": 48,
+     "parentKey": "auto-diversen"
+    },
+    {
+     "id": 1643,
+     "histogramCount": 43,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Garages en Parkeerplaatsen",
+     "key": "garages-en-parkeerplaatsen",
+     "parentId": 1032,
+     "parentKey": "immo"
+    },
+    {
+     "id": 606,
+     "histogramCount": 41,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Kinderen en Baby's",
+     "key": "overige-kinderen-en-baby-s",
+     "parentId": 565,
+     "parentKey": "kinderen-en-baby-s"
+    },
+    {
+     "id": 1779,
+     "histogramCount": 41,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Sportkleding",
+     "key": "sportkleding",
+     "parentId": 1776,
+     "parentKey": "kleding-heren"
+    },
+    {
+     "id": 1847,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Tuin en Terras",
+     "key": "tuin-en-terras",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 274,
+     "histogramCount": 41,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Tuin en Terras",
+     "key": "overige-tuin-en-terras",
+     "parentId": 1847,
+     "parentKey": "tuin-en-terras"
+    },
+    {
+     "id": 856,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Vakantie",
+     "key": "vakantie",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 862,
+     "histogramCount": 38,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Vakantiehuizen | België",
+     "key": "vakantiehuizen-belgie",
+     "parentId": 856,
+     "parentKey": "vakantie"
+    },
+    {
+     "id": 1352,
+     "histogramCount": 37,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Mobilhome-accessoires",
+     "key": "mobilhome-accessoires",
+     "parentId": 289,
+     "parentKey": "caravans-en-kamperen"
+    },
+    {
+     "id": 1823,
+     "histogramCount": 36,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Stickers",
+     "key": "stickers",
+     "parentId": 895,
+     "parentKey": "verzamelen"
+    },
+    {
+     "id": 3113,
+     "histogramCount": 33,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Fietsaccessoires | Fietspompen",
+     "key": "fietsaccessoires-fietspompen",
+     "parentId": 445,
+     "parentKey": "fietsen-en-brommers"
+    },
+    {
+     "id": 678,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Motoren",
+     "key": "motoren",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2020,
+     "histogramCount": 32,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Onderdelen | Harley-Davidson",
+     "key": "onderdelen-harley-davidson",
+     "parentId": 678,
+     "parentKey": "motoren"
+    },
+    {
+     "id": 945,
+     "histogramCount": 32,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Sportartikelen en Voetbal",
+     "key": "sportartikelen-en-voetbal",
+     "parentId": 895,
+     "parentKey": "verzamelen"
+    },
+    {
+     "id": 219,
+     "histogramCount": 31,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Gezondheid, Dieet en Voeding",
+     "key": "gezondheid-dieet-en-voeding",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 1652,
+     "histogramCount": 30,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Schoolboeken",
+     "key": "schoolboeken",
+     "parentId": 201,
+     "parentKey": "boeken"
+    },
+    {
+     "id": 614,
+     "histogramCount": 29,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Speelgoed | Poppen",
+     "key": "speelgoed-poppen",
+     "parentId": 565,
+     "parentKey": "kinderen-en-baby-s"
+    },
+    {
+     "id": 31,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Audio, Tv en Foto",
+     "key": "audio-tv-en-foto",
+     "parentId": null,
+     "parentKey": false
+    },
+    {
+     "id": 2834,
+     "histogramCount": 29,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Actiecamera's",
+     "key": "actiecamera-s",
+     "parentId": 31,
+     "parentKey": "audio-tv-en-foto"
+    },
+    {
+     "id": 1390,
+     "histogramCount": 28,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Retro",
+     "key": "retro",
+     "parentId": 895,
+     "parentKey": "verzamelen"
+    },
+    {
+     "id": 3088,
+     "histogramCount": 28,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Hondenmanden",
+     "key": "hondenmanden",
+     "parentId": 395,
+     "parentKey": "dieren-en-toebehoren"
+    },
+    {
+     "id": 440,
+     "histogramCount": 28,
+     "selected": false,
+     "isValuableForSeo": true,
+     "dominant": false,
+     "label": "Overige Diversen",
+     "key": "overige-diversen",
+     "parentId": 428,
+     "parentKey": "diversen"
+    }
+   ]
+  },
+  {
+   "id": 0,
+   "key": "Language",
+   "type": "AttributeGroupFacet",
+   "attributeGroup": [
+    {
+     "attributeValueKey": "fr-BE",
+     "histogramCount": 14645,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "nl-BE",
+     "histogramCount": 59649,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "all-languages",
+     "histogramCount": 74294,
+     "selected": true,
+     "isValuableForSeo": false,
+     "default": true
+    }
+   ],
+   "singleSelect": true,
+   "categoryId": 0
+  },
+  {
+   "id": 1627,
+   "key": "condition",
+   "type": "AttributeGroupFacet",
+   "label": "Conditie",
+   "attributeGroup": [
+    {
+     "attributeValueKey": "Nieuw",
+     "attributeValueId": 30,
+     "attributeValueLabel": "Nieuw",
+     "histogramCount": 8534,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "Refurbished",
+     "attributeValueId": 14050,
+     "attributeValueLabel": "Refurbished",
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "Zo goed als nieuw",
+     "attributeValueId": 31,
+     "attributeValueLabel": "Zo goed als nieuw",
+     "histogramCount": 20075,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "Gebruikt",
+     "attributeValueId": 32,
+     "attributeValueLabel": "Gebruikt",
+     "histogramCount": 17195,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "Niet werkend",
+     "attributeValueId": 13940,
+     "attributeValueLabel": "Niet werkend",
+     "selected": false,
+     "isValuableForSeo": false
+    }
+   ],
+   "singleSelect": false,
+   "categoryId": 0
+  },
+  {
+   "id": 8,
+   "key": "delivery",
+   "type": "AttributeGroupFacet",
+   "label": "Levering",
+   "attributeGroup": [
+    {
+     "attributeValueKey": "Ophalen",
+     "attributeValueId": 33,
+     "attributeValueLabel": "Ophalen",
+     "histogramCount": 58316,
+     "selected": false,
+     "isValuableForSeo": false
+    },
+    {
+     "attributeValueKey": "Verzenden",
+     "attributeValueId": 34,
+     "attributeValueLabel": "Verzenden",
+     "histogramCount": 8973,
+     "selected": false,
+     "isValuableForSeo": false
+    }
+   ],
+   "singleSelect": false,
+   "categoryId": 0
+  },
+  {
+   "id": 987654321,
+   "key": "offeredSince",
+   "type": "AttributeGroupFacet",
+   "label": "Aangeboden sinds",
+   "attributeGroup": [
+    {
+     "attributeValueKey": "Vandaag",
+     "histogramCount": 455,
+     "selected": false,
+     "isValuableForSeo": false,
+     "default": false
+    },
+    {
+     "attributeValueKey": "Gisteren",
+     "histogramCount": 1844,
+     "selected": false,
+     "isValuableForSeo": false,
+     "default": false
+    },
+    {
+     "attributeValueKey": "Een week",
+     "histogramCount": 8423,
+     "selected": false,
+     "isValuableForSeo": false,
+     "default": false
+    },
+    {
+     "attributeValueKey": "Altijd",
+     "histogramCount": 59912,
+     "selected": true,
+     "isValuableForSeo": false,
+     "default": true
+    }
+   ],
+   "singleSelect": true,
+   "categoryId": 0
+  }
+ ],
+ "totalResultCount": 64453,
+ "maxAllowedPageNumber": 500,
+ "correlationId": "0b676904-c08c-4ab6-9bec-ccb4d687ee97",
+ "originalQuery": "fiets",
+ "sortOptions": [
+  {
+   "sortBy": "OPTIMIZED",
+   "sortOrder": "DECREASING"
+  },
+  {
+   "sortBy": "SORT_INDEX",
+   "sortOrder": "DECREASING"
+  },
+  {
+   "sortBy": "SORT_INDEX",
+   "sortOrder": "INCREASING"
+  },
+  {
+   "sortBy": "PRICE",
+   "sortOrder": "INCREASING"
+  },
+  {
+   "sortBy": "PRICE",
+   "sortOrder": "DECREASING"
+  }
+ ],
+ "isSearchSaved": false,
+ "hasErrors": false,
+ "alternativeLocales": [],
+ "searchRequest": {
+  "originalRequest": {
+   "categories": {},
+   "searchQuery": "fiets",
+   "attributes": {},
+   "attributesById": [],
+   "attributesByKey": [],
+   "attributeRanges": [],
+   "attributeLabels": [],
+   "sortOptions": {
+    "sortBy": "OPTIMIZED",
+    "sortOrder": "DECREASING",
+    "sortAttribute": ""
+   },
+   "pagination": {
+    "offset": 0,
+    "limit": 10
+   },
+   "distance": {
+    "postcode": ""
+   },
+   "viewOptions": {
+    "kind": "list-view"
+   },
+   "bypassSpellingSuggestion": false
+  },
+  "categories": {},
+  "searchQuery": "fiets",
+  "attributes": {},
+  "attributesById": [],
+  "attributesByKey": [],
+  "attributeRanges": [],
+  "attributeLabels": [],
+  "sortOptions": {
+   "sortBy": "OPTIMIZED",
+   "sortOrder": "DECREASING",
+   "sortAttribute": ""
+  },
+  "pagination": {
+   "offset": 0,
+   "limit": 10
+  },
+  "distance": {
+   "postcode": ""
+  },
+  "viewOptions": {
+   "kind": "list-view"
+  },
+  "bypassSpellingSuggestion": false
+ },
+ "showSuggestionTooltip": false,
+ "showAttributeTooltip": false,
+ "searchCategory": 0,
+ "searchCategoryOptions": [
+  {
+   "fullName": "Antiek en Kunst",
+   "id": 1,
+   "key": "antiek-en-kunst",
+   "name": "Antiek en Kunst"
+  },
+  {
+   "fullName": "Audio, Tv en Foto",
+   "id": 31,
+   "key": "audio-tv-en-foto",
+   "name": "Audio, Tv en Foto"
+  },
+  {
+   "fullName": "Auto diversen",
+   "id": 48,
+   "key": "auto-diversen",
+   "name": "Auto diversen"
+  },
+  {
+   "fullName": "Auto's",
+   "id": 91,
+   "key": "auto-s",
+   "name": "Auto's"
+  },
+  {
+   "fullName": "Auto-onderdelen",
+   "id": 2600,
+   "key": "auto-onderdelen",
+   "name": "Auto-onderdelen"
+  },
+  {
+   "fullName": "Boeken",
+   "id": 201,
+   "key": "boeken",
+   "name": "Boeken"
+  },
+  {
+   "fullName": "Caravans en Kamperen",
+   "id": 289,
+   "key": "caravans-en-kamperen",
+   "name": "Caravans en Kamperen"
+  },
+  {
+   "fullName": "Cd's en Dvd's",
+   "id": 1744,
+   "key": "cd-s-en-dvd-s",
+   "name": "Cd's en Dvd's"
+  },
+  {
+   "fullName": "Computers en Software",
+   "id": 322,
+   "key": "computers-en-software",
+   "name": "Computers en Software"
+  },
+  {
+   "fullName": "Contacten en Berichten",
+   "id": 378,
+   "key": "contacten-en-berichten",
+   "name": "Contacten en Berichten"
+  },
+  {
+   "fullName": "Diensten en Vakmensen",
+   "id": 1098,
+   "key": "diensten-en-vakmensen",
+   "name": "Diensten en Vakmensen"
+  },
+  {
+   "fullName": "Dieren en Toebehoren",
+   "id": 395,
+   "key": "dieren-en-toebehoren",
+   "name": "Dieren en Toebehoren"
+  },
+  {
+   "fullName": "Doe-het-zelf en Bouw",
+   "id": 239,
+   "key": "doe-het-zelf-en-bouw",
+   "name": "Doe-het-zelf en Bouw"
+  },
+  {
+   "fullName": "Elektronische apparatuur",
+   "id": 537,
+   "key": "elektronische-apparatuur",
+   "name": "Elektronische apparatuur"
+  },
+  {
+   "fullName": "Fietsen en Brommers",
+   "id": 445,
+   "key": "fietsen-en-brommers",
+   "name": "Fietsen en Brommers"
+  },
+  {
+   "fullName": "Games en Spelcomputers",
+   "id": 356,
+   "key": "games-en-spelcomputers",
+   "name": "Games, Spelcomputers"
+  },
+  {
+   "fullName": "Handtassen en Accessoires",
+   "id": 1826,
+   "key": "handtassen-en-accessoires",
+   "name": "Handtassen en Accessoires"
+  },
+  {
+   "fullName": "Hobby en Vrije tijd",
+   "id": 1099,
+   "key": "hobby-en-vrije-tijd",
+   "name": "Hobby en Vrije tijd"
+  },
+  {
+   "fullName": "Huis en Inrichting",
+   "id": 504,
+   "key": "huis-en-inrichting",
+   "name": "Huis en Inrichting"
+  },
+  {
+   "fullName": "Immo",
+   "id": 1032,
+   "key": "immo",
+   "name": "Immo"
+  },
+  {
+   "fullName": "Kinderen en Baby's",
+   "id": 565,
+   "key": "kinderen-en-baby-s",
+   "name": "Kinderen en Baby's"
+  },
+  {
+   "fullName": "Kleding | Dames",
+   "id": 621,
+   "key": "kleding-dames",
+   "name": "Kleding | Dames"
+  },
+  {
+   "fullName": "Kleding | Heren",
+   "id": 1776,
+   "key": "kleding-heren",
+   "name": "Kleding | Heren"
+  },
+  {
+   "fullName": "Motoren",
+   "id": 678,
+   "key": "motoren",
+   "name": "Motoren"
+  },
+  {
+   "fullName": "Muziek en Instrumenten",
+   "id": 728,
+   "key": "muziek-en-instrumenten",
+   "name": "Muziek en Instrumenten"
+  },
+  {
+   "fullName": "Postzegels en Munten",
+   "id": 1784,
+   "key": "postzegels-en-munten",
+   "name": "Postzegels en Munten"
+  },
+  {
+   "fullName": "Sport en Fitness",
+   "id": 784,
+   "key": "sport-en-fitness",
+   "name": "Sport en Fitness"
+  },
+  {
+   "fullName": "Telecommunicatie",
+   "id": 820,
+   "key": "telecommunicatie",
+   "name": "Telecommunicatie"
+  },
+  {
+   "fullName": "Tickets en Kaartjes",
+   "id": 1984,
+   "key": "tickets-en-kaartjes",
+   "name": "Tickets en Kaartjes"
+  },
+  {
+   "fullName": "Tuin en Terras",
+   "id": 1847,
+   "key": "tuin-en-terras",
+   "name": "Tuin en Terras"
+  },
+  {
+   "fullName": "Vacatures",
+   "id": 167,
+   "key": "vacatures",
+   "name": "Vacatures"
+  },
+  {
+   "fullName": "Vakantie",
+   "id": 856,
+   "key": "vakantie",
+   "name": "Vakantie"
+  },
+  {
+   "fullName": "Verzamelen",
+   "id": 895,
+   "key": "verzamelen",
+   "name": "Verzamelen"
+  },
+  {
+   "fullName": "Watersport en Boten",
+   "id": 976,
+   "key": "watersport-en-boten",
+   "name": "Watersport en Boten"
+  },
+  {
+   "fullName": "Zakelijke goederen",
+   "id": 1085,
+   "key": "zakelijke-goederen",
+   "name": "Zakelijke goederen"
+  },
+  {
+   "fullName": "Diversen",
+   "id": 428,
+   "key": "diversen",
+   "name": "Diversen"
+  }
+ ],
+ "seoFriendlyAttributes": [],
+ "seoFriendlyTextAttributes": {},
+ "attributeHierarchy": {
+  "Language": [
+   {
+    "attributeValueId": null,
+    "attributeValueLabel": null,
+    "attributeValueKey": "all-languages",
+    "isDefault": true
+   }
+  ],
+  "offeredSince": [
+   {
+    "attributeValueId": null,
+    "attributeValueLabel": null,
+    "attributeValueKey": "Altijd",
+    "attributeLabel": "Aangeboden sinds",
+    "isDefault": true
+   }
+  ]
+ },
+ "categoriesById": {},
+ "metaTags": {
+  "metaTitle": "Fietsen voor Elke Avontuur | 2dehands",
+  "metaDescription": "Ontdek diverse fietsen die aan al jouw behoeften voldoen. Vergelijk modellen, prijzen en kenmerken om de beste keuze te maken in onze collectie.",
+  "pageTitleH1": "Verscheidenheid aan Fietsen"
+ },
+ "paaContent": null,
+ "hubPage": null
+}
