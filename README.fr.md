@@ -39,6 +39,10 @@ claude mcp add marktplaats -- uvx marktplaats-mcp
 
 Puis demandez : *« Cherche sur 2dehands un vélo cargo à moins de 1000 € près d'Anvers. »*
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/demo.gif" alt="Claude Code searching Marktplaats for a used racefiets via marktplaats-mcp" width="860">
+</p>
+
 ## 📦 Installation dans votre client préféré
 
 Chaque configuration lance le même serveur stdio via `uvx marktplaats-mcp`. Le [README anglais](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.md#-install-in-your-favorite-client) contient les extraits prêts à l'emploi pour **Claude Desktop, OpenAI Codex, opencode, Cursor, VS Code/Copilot, Windsurf, Gemini CLI et JetBrains**. La configuration est identique partout :

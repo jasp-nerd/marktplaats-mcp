@@ -40,6 +40,10 @@ claude mcp add marktplaats -- uvx marktplaats-mcp
 
 Then ask: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/demo.gif" alt="Claude Code searching Marktplaats for a used racefiets via marktplaats-mcp" width="860">
+</p>
+
 ## 📦 Install in your favorite client
 
 Every config runs the same stdio server via `uvx marktplaats-mcp`.
