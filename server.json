@@ -1,7 +1,7 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.jasp-nerd/marktplaats-mcp",
-  "description": "Search Marktplaats and 2dehands classifieds: listings, sellers, categories and new-listing monitoring for any MCP client.",
+  "description": "Search Marktplaats and 2dehands: listings, sellers, categories and new-listing monitoring.",
   "version": "0.1.1",
   "repository": {
     "url": "https://github.com/jasp-nerd/marktplaats-mcp",
@@ -9,7 +9,7 @@
   },
   "packages": [
     {
-      "registry_type": "pypi",
+      "registryType": "pypi",
       "identifier": "marktplaats-mcp",
       "version": "0.1.1",
       "transport": {
