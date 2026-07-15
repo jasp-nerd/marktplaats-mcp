@@ -20,7 +20,7 @@ jobs:
         run: |
           uv sync --all-groups
           uv run pytest tests/test_categories.py -q
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "chore: refresh vendored category data"
           title: "chore: refresh vendored category data"
