@@ -45,7 +45,7 @@ under a fitting section (e.g. Search or Commerce/Marketplaces):
 - [ ] Enable private vulnerability reporting: Settings → Security
 - [ ] Settings → General: enable "Sponsorships" only if wanted
 
-## 5. Launch (concentrate for star velocity — Trending rewards bursts)
+## 5. Launch (concentrate for star velocity: Trending rewards bursts)
 
 Post the same week, ideally the same day:
 
@@ -55,7 +55,7 @@ Post the same week, ideally the same day:
 - Dutch/Belgian dev communities: Tweakers forum, Lowlands dev Discords/Slacks
 - X/LinkedIn with a short screen recording of a Claude search session
 
-A demo GIF in the README measurably boosts conversion — record a 20-second
+A demo GIF in the README boosts conversion. Record a 20-second
 Claude Code session (`asciinema` or QuickTime) and add it under the Quickstart.
 
 ## 6. Ongoing
@@ -63,5 +63,5 @@ Claude Code session (`asciinema` or QuickTime) and add it under the Quickstart.
 - Ship small releases often (freshness is a ranking factor for GitHub search
   and topic pages).
 - Keep topics/description keyword-rich (already set via `gh repo edit`).
-- Respond to issues quickly in the first weeks — early responsiveness converts
+- Respond to issues quickly in the first weeks; early responsiveness converts
   users to stargazers and contributors.

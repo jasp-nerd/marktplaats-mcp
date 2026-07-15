@@ -1,48 +1,48 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="marktplaats-mcp — search Marktplaats & 2dehands from any AI agent" width="760">
+  <img src="assets/banner.svg" alt="marktplaats-mcp: search Marktplaats and 2dehands from any AI agent" width="760">
 </p>
 
-**English** | [Nederlands](README.nl.md) | [Français](README.fr.md)
+<p align="center">
+  <b>English</b> | <a href="README.nl.md">Nederlands</a> | <a href="README.fr.md">Français</a>
+</p>
 
 # marktplaats-mcp
 
-**The MCP server for Marktplaats & 2dehands** — search Dutch and Belgian second-hand classifieds straight from Claude, Cursor, Codex, opencode or any other MCP-compatible AI agent. Find bargains, vet sellers, browse categories and monitor new listings, all through natural language.
+**marktplaats-mcp** is an MCP server that lets Claude, Cursor, Codex, opencode and every other MCP client search Marktplaats and 2dehands, the Dutch and Belgian second-hand classifieds. Find bargains, vet sellers, browse categories and monitor new listings in plain language.
 
 [![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
-[![Downloads](https://static.pepy.tech/badge/marktplaats-mcp/month)](https://pepy.tech/project/marktplaats-mcp)
+[![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-
-> *"Find me a used racefiets under €500 within 25 km of Amsterdam, from verified sellers only."* — that's now a single prompt.
 
 ## ✨ Features
 
-- 🔍 **Powerful search** — free text, categories, price range, condition, distance from a postal code, recency, sorting
-- 🇳🇱🇧🇪 **Two marketplaces, one server** — marktplaats.nl (Netherlands) and 2dehands.be (Belgium) via a simple `site` parameter
-- 📄 **Full listing details** — complete description, all photos, view/favorite counts and listing age
-- 🛡️ **Seller vetting** — verified bank account / identity / phone, review score
-- 🔔 **New-listing monitoring** — poll for ads placed after a timestamp with a stateless cursor; perfect for agent automations
-- 🧠 **Built for LLMs** — token-efficient compact output by default, paid promotions filtered out, structured results, honest pagination hints
-- 🔁 **Resilient** — automatic retries with exponential backoff, jitter and `Retry-After` handling
-- 🔓 **No account, no API key** — works out of the box
+- 🔍 **Powerful search**: free text, categories, price range, condition, distance from a postal code, recency, sorting
+- 🇳🇱🇧🇪 **Two marketplaces, one server**: marktplaats.nl (Netherlands) and 2dehands.be (Belgium) via a `site` parameter
+- 📄 **Full listing details**: complete description, all photos, view and favorite counts, listing age
+- 🛡️ **Seller vetting**: verified bank account, identity and phone, review score
+- 🔔 **New-listing monitoring**: poll for ads placed after a timestamp with a stateless cursor
+- 🧠 **Built for LLMs**: compact token-efficient output, paid promotions filtered out, structured results, pagination hints
+- 🔁 **Resilient**: retries with exponential backoff, jitter and `Retry-After` handling
+- 🔓 **No account, no API key**
 
 ## 🚀 Quickstart
 
 The only prerequisite is [uv](https://docs.astral.sh/uv/) (`brew install uv` or `curl -LsSf https://astral.sh/uv/install.sh | sh`).
 
-**Claude Code** — one command:
+**Claude Code**, one command:
 
 ```bash
 claude mcp add marktplaats -- uvx marktplaats-mcp
 ```
 
-Then just ask: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
+Then ask: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
 
 ## 📦 Install in your favorite client
 
-All configs run the same stdio server via `uvx marktplaats-mcp`.
+Every config runs the same stdio server via `uvx marktplaats-mcp`.
 
 <details>
 <summary><b>Claude Desktop</b></summary>
@@ -187,12 +187,12 @@ Settings → Tools → AI Assistant → Model Context Protocol (MCP) → Add:
 | Tool | What it does |
 |---|---|
 | `search_listings` | Search with query, category, price range, condition, distance, recency, sorting and pagination |
-| `get_listing_details` | Full ad: complete description, all images, view/favorite counts, listing age |
-| `get_seller_profile` | Trust signals: verified bank/identity/phone, review score and count |
+| `get_listing_details` | Full ad: complete description, all images, view and favorite counts, listing age |
+| `get_seller_profile` | Trust signals: verified bank, identity and phone, review score and count |
 | `list_categories` | Browse the category tree (names + ids) used for filtering |
-| `check_new_listings` | Newest-first monitoring with a stateless cursor — only ads placed after `since` |
+| `check_new_listings` | Newest-first monitoring with a stateless cursor: returns only ads placed after `since` |
 
-All tools are read-only and annotated as such, so agents don't nag you with confirmation prompts.
+All five tools are read-only and carry the matching MCP annotations, so clients skip the confirmation prompts.
 
 ### Example prompts
 
@@ -204,16 +204,16 @@ All tools are read-only and annotated as such, so agents don't nag you with conf
 ## ❓ FAQ
 
 **Does this need a Marktplaats account or API key?**
-No. It uses the same public JSON endpoints the website itself uses. No login, no key.
+No. It uses the same public JSON endpoints the website itself uses.
 
 **Is this an official Marktplaats product?**
-No — this is an independent open-source project, not affiliated with Marktplaats/Adevinta. The underlying API is undocumented and may change. Be a good citizen: the server retries politely and doesn't hammer the API.
+No. This is an independent open source project with no ties to Marktplaats or Adevinta. The underlying API is undocumented and may change. The server backs off politely on rate limits; keep your own usage reasonable.
 
 **Why do I sometimes see fewer results than the limit?**
-Paid promotions (DAGTOPPER/TOPADVERTENTIE) are filtered out by default so agents see organic results. Pass `include_sponsored=true` if you want them.
+Paid promotions (DAGTOPPER/TOPADVERTENTIE) are filtered out by default. Pass `include_sponsored=true` if you want them.
 
 **Which Python versions are supported?**
-3.10+. The server is tested on 3.11–3.13 on Linux, macOS and Windows.
+3.10 and up. CI tests 3.11 through 3.13 on Linux, macOS and Windows.
 
 ## 🗺️ Roadmap
 
@@ -224,9 +224,9 @@ Paid promotions (DAGTOPPER/TOPADVERTENTIE) are filtered out by default so agents
 
 ## 🤝 Contributing
 
-PRs welcome! See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for dev setup (spoiler: `uv sync --all-groups`, `uv run pytest`).
+PRs welcome. See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the dev setup: `uv sync --all-groups`, then `uv run pytest`.
 
-Built on the shoulders of [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) and [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp) — see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+This project reuses proven ideas from [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) and [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp). Details in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## 📄 License
 
