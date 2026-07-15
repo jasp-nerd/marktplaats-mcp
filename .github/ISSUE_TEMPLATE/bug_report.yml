@@ -1,0 +1,51 @@
+name: Bug report
+description: Something is broken or behaves unexpectedly
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen.
+      placeholder: search_listings returns HTTP 403 for every query since today...
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: MCP client
+      options:
+        - Claude Code
+        - Claude Desktop
+        - Cursor
+        - OpenAI Codex
+        - opencode
+        - VS Code / Copilot
+        - Windsurf
+        - Gemini CLI
+        - JetBrains
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: site
+    attributes:
+      label: Marketplace
+      options:
+        - marktplaats (NL)
+        - 2dehands (BE)
+        - both
+  - type: input
+    id: version
+    attributes:
+      label: marktplaats-mcp version
+      placeholder: "0.1.0 (uvx marktplaats-mcp --help or pip show marktplaats-mcp)"
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The tool call (or prompt) that triggers the problem.
+      placeholder: |
+        search_listings(query="fiets", postcode="1011 AB", distance_km=10)
