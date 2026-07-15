@@ -14,7 +14,7 @@ from . import __version__
 from .categories import l1_categories, l2_categories, resolve_category_ids
 from .client import ApiError, MarktplaatsClient, build_search_params, since_days_ago
 from .detail import ListingNotFoundError, parse_listing_page
-from .models import NewListingsResult, SearchResult, SellerProfile, dump
+from .models import Listing, NewListingsResult, SearchResult, SellerProfile, dump
 from .parsing import is_promoted, parse_listing
 from .sites import resolve_site
 
@@ -144,8 +144,7 @@ async def search_listings(
 ) -> dict[str, Any]:
     """Search second-hand listings on Marktplaats or 2dehands with filters for
     category, price range, condition, recency and distance from a postal code."""
-    resolved_site = resolve_site(site)
-    data = await _search(
+    listings, total = await _collect_listings(
         site=site,
         query=query,
         category=category,
@@ -160,17 +159,9 @@ async def search_listings(
         sort_order=sort_order,
         limit=limit,
         offset=offset,
+        compact=compact,
+        include_sponsored=include_sponsored,
     )
-
-    raw_listings = [(raw, False) for raw in data.get("listings") or []]
-    if include_sponsored:
-        raw_listings += [(raw, True) for raw in data.get("topBlock") or []]
-    listings = [
-        parse_listing(raw, resolved_site, compact=compact, sponsored=sponsored)
-        for raw, sponsored in raw_listings
-        if include_sponsored or not is_promoted(raw)
-    ][:limit]  # the API can return more than the requested limit (padded with promos)
-    total = int(data.get("totalResultCount") or 0)
     note = None
     if total > offset + limit:
         note = f"More results available: repeat with offset={offset + limit}."
@@ -298,8 +289,7 @@ async def check_new_listings(
     on the next call to only see genuinely new listings."""
     since_dt = _parse_since(since) if since else since_days_ago(1)
     cursor = datetime.now(timezone.utc).replace(microsecond=0)
-    resolved_site = resolve_site(site)
-    data = await _search(
+    listings, _ = await _collect_listings(
         site=site,
         query=query,
         category=category,
@@ -314,12 +304,9 @@ async def check_new_listings(
         sort_order="desc",
         limit=limit,
         offset=0,
+        compact=True,
+        include_sponsored=False,
     )
-    listings = [
-        parse_listing(raw, resolved_site, compact=True)
-        for raw in data.get("listings") or []
-        if not is_promoted(raw)
-    ][:limit]
     note = None
     if len(listings) == limit:
         note = (
@@ -336,6 +323,76 @@ async def check_new_listings(
             note=note,
         )
     )
+
+
+# Page 1 can be padded almost entirely with paid promotions (especially on
+# 2dehands), so after filtering them we may come up short. Fetch a few more
+# pages — politely capped — until the requested number of organic listings
+# is filled.
+MAX_FILL_PAGES = 3
+
+
+async def _collect_listings(
+    *,
+    site: str,
+    query: str,
+    category: str | None,
+    subcategory: str | None,
+    postcode: str | None,
+    distance_km: float | None,
+    price_from: float | None,
+    price_to: float | None,
+    condition: str | None,
+    offered_since: datetime | None,
+    sort_by: str,
+    sort_order: str,
+    limit: int,
+    offset: int,
+    compact: bool,
+    include_sponsored: bool,
+) -> tuple[list[Listing], int]:
+    resolved_site = resolve_site(site)
+    listings: list[Listing] = []
+    seen_raw: set[str] = set()
+    total = 0
+    fetch_offset = offset
+    for page in range(MAX_FILL_PAGES):
+        data = await _search(
+            site=site,
+            query=query,
+            category=category,
+            subcategory=subcategory,
+            postcode=postcode,
+            distance_km=distance_km,
+            price_from=price_from,
+            price_to=price_to,
+            condition=condition,
+            offered_since=offered_since,
+            sort_by=sort_by,
+            sort_order=sort_order,
+            limit=limit,
+            offset=fetch_offset,
+        )
+        total = int(data.get("totalResultCount") or 0)
+        raw_items = [(raw, False) for raw in data.get("listings") or []]
+        if include_sponsored and page == 0:
+            raw_items += [(raw, True) for raw in data.get("topBlock") or []]
+
+        page_ids = {str(raw.get("itemId")) for raw, _ in raw_items}
+        if not raw_items or page_ids <= seen_raw:
+            break  # exhausted, or the API is repeating itself
+        for raw, sponsored in raw_items:
+            item_id = str(raw.get("itemId"))
+            if item_id in seen_raw:
+                continue
+            seen_raw.add(item_id)
+            if not include_sponsored and is_promoted(raw):
+                continue
+            listings.append(parse_listing(raw, resolved_site, compact=compact, sponsored=sponsored))
+        fetch_offset += limit
+        if len(listings) >= limit or fetch_offset >= total:
+            break
+    return listings[:limit], total
 
 
 async def _search(

@@ -109,6 +109,51 @@ async def test_search_listings_passes_filters_to_api(search_response):
     assert "distanceMeters=25000" in params
 
 
+def _fake_listing(item_id: str, promoted: bool = False) -> dict:
+    return {
+        "itemId": item_id,
+        "title": f"Listing {item_id}",
+        "priceInfo": {"priceType": "FIXED", "priceCents": 1000},
+        "vipUrl": f"/v/cat/sub/{item_id}-listing",
+        "location": {"cityName": "Gent"},
+        "date": "Vandaag",
+        "priorityProduct": "DAGTOPPER" if promoted else "NONE",
+    }
+
+
+@respx.mock
+async def test_search_fills_up_from_next_pages_when_page_one_is_all_promos():
+    # 2dehands pads page 1 with paid promos; the tool must fetch further pages
+    # so the user still gets the organic listings they asked for.
+    page1 = {
+        "listings": [_fake_listing(f"m{i}", promoted=True) for i in range(3)],
+        "totalResultCount": 50,
+    }
+    page2 = {
+        "listings": [_fake_listing(f"m{i + 10}") for i in range(3)],
+        "totalResultCount": 50,
+    }
+    route = respx.get(SEARCH_URL_NL).mock(
+        side_effect=[httpx.Response(200, json=page1), httpx.Response(200, json=page2)]
+    )
+    data = await call("search_listings", {"query": "fiets", "limit": 3})
+    assert route.call_count == 2
+    assert data["returned"] == 3
+    assert [listing["id"] for listing in data["listings"]] == ["m10", "m11", "m12"]
+
+
+@respx.mock
+async def test_search_stops_when_api_repeats_itself():
+    page = {
+        "listings": [_fake_listing("m1", promoted=True)],
+        "totalResultCount": 100,
+    }
+    route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=page))
+    data = await call("search_listings", {"query": "fiets", "limit": 5})
+    assert data["returned"] == 0
+    assert route.call_count == 2  # second page repeated the same ids → stop
+
+
 async def test_search_listings_requires_query_or_category():
     with pytest.raises(ToolError, match="query and/or a category"):
         await call("search_listings", {"query": ""})
