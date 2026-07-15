@@ -1,0 +1,87 @@
+[project]
+name = "marktplaats-mcp"
+version = "0.1.0"
+description = "MCP server for Marktplaats & 2dehands - search Dutch and Belgian classifieds from Claude, Cursor, Codex and any MCP client."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "jasp-nerd" }]
+requires-python = ">=3.10"
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "mcp-server",
+    "marktplaats",
+    "2dehands",
+    "classifieds",
+    "claude",
+    "llm",
+    "agents",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Internet :: WWW/HTTP :: Indexing/Search",
+    "Typing :: Typed",
+]
+dependencies = [
+    "fastmcp>=3.4,<4",
+    "httpx>=0.28,<1",
+    "pydantic>=2.11,<3",
+]
+
+[project.urls]
+Homepage = "https://github.com/jasp-nerd/marktplaats-mcp"
+Repository = "https://github.com/jasp-nerd/marktplaats-mcp"
+Issues = "https://github.com/jasp-nerd/marktplaats-mcp/issues"
+Changelog = "https://github.com/jasp-nerd/marktplaats-mcp/releases"
+
+[project.scripts]
+marktplaats-mcp = "marktplaats_mcp.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/marktplaats_mcp"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1",
+    "pytest-asyncio>=1.4",
+    "pytest-cov>=7.1",
+    "respx>=0.23",
+    "ruff>=0.15",
+    "mypy>=1.15",
+    "pre-commit>=4.0",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["marktplaats_mcp"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "PT", "C4"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src"]
+
+[[tool.mypy.overrides]]
+module = "fastmcp.*"
+follow_untyped_imports = true
