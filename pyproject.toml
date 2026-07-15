@@ -1,6 +1,6 @@
 [project]
 name = "marktplaats-mcp"
-version = "0.1.0"
+version = "0.1.1"
 description = "MCP server for Marktplaats & 2dehands - search Dutch and Belgian classifieds from Claude, Cursor, Codex and any MCP client."
 readme = "README.md"
 license = "MIT"

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="marktplaats-mcp: search Marktplaats and 2dehands from any AI agent" width="760">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/banner.svg" alt="marktplaats-mcp: search Marktplaats and 2dehands from any AI agent" width="760">
 </p>
 
 <p align="center">
-  <b>English</b> | <a href="README.nl.md">Nederlands</a> | <a href="README.fr.md">Français</a>
+  <b>English</b> | <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.nl.md">Nederlands</a> | <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.fr.md">Français</a>
 </p>
 
 # marktplaats-mcp
@@ -12,7 +12,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE)
 [![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
 [![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
@@ -224,13 +224,13 @@ Paid promotions (DAGTOPPER/TOPADVERTENTIE) are filtered out by default. Pass `in
 
 ## 🤝 Contributing
 
-PRs welcome. See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for the dev setup: `uv sync --all-groups`, then `uv run pytest`.
+PRs welcome. See [CONTRIBUTING.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/.github/CONTRIBUTING.md) for the dev setup: `uv sync --all-groups`, then `uv run pytest`.
 
-This project reuses proven ideas from [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) and [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp). Details in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+This project reuses proven ideas from [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) and [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp). Details in [THIRD_PARTY_NOTICES.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/THIRD_PARTY_NOTICES.md).
 
 ## 📄 License
 
-[MIT](LICENSE) © 2026 jasp-nerd
+[MIT](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE) © 2026 jasp-nerd
 
 ---
 

@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/banner.svg" alt="marktplaats-mcp : recherchez sur Marktplaats et 2dehands depuis n'importe quel agent IA" width="760">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/banner.svg" alt="marktplaats-mcp : recherchez sur Marktplaats et 2dehands depuis n'importe quel agent IA" width="760">
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> | <a href="README.nl.md">Nederlands</a> | <b>Français</b>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.md">English</a> | <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.nl.md">Nederlands</a> | <b>Français</b>
 </p>
 
 # marktplaats-mcp
@@ -12,7 +12,7 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 [![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE)
 [![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
 [![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 
@@ -41,7 +41,7 @@ Puis demandez : *« Cherche sur 2dehands un vélo cargo à moins de 1000 € pr�
 
 ## 📦 Installation dans votre client préféré
 
-Chaque configuration lance le même serveur stdio via `uvx marktplaats-mcp`. Le [README anglais](README.md#-install-in-your-favorite-client) contient les extraits prêts à l'emploi pour **Claude Desktop, OpenAI Codex, opencode, Cursor, VS Code/Copilot, Windsurf, Gemini CLI et JetBrains**. La configuration est identique partout :
+Chaque configuration lance le même serveur stdio via `uvx marktplaats-mcp`. Le [README anglais](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.md#-install-in-your-favorite-client) contient les extraits prêts à l'emploi pour **Claude Desktop, OpenAI Codex, opencode, Cursor, VS Code/Copilot, Windsurf, Gemini CLI et JetBrains**. La configuration est identique partout :
 
 ```json
 {
@@ -86,8 +86,8 @@ Les promotions payantes (DAGTOPPER/TOPADVERTENTIE) sont filtrées par défaut. P
 
 ## 🤝 Contribuer
 
-Les PR sont les bienvenues. Voir [CONTRIBUTING.md](.github/CONTRIBUTING.md). Ce projet réutilise des idées éprouvées de [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) et [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp).
+Les PR sont les bienvenues. Voir [CONTRIBUTING.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/.github/CONTRIBUTING.md). Ce projet réutilise des idées éprouvées de [marktplaats-py](https://github.com/jensjeflensje/marktplaats-py), [marktplaats-monitor](https://github.com/jasp-nerd/marktplaats-monitor), [marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) et [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp).
 
 ## 📄 Licence
 
-[MIT](LICENSE) © 2026 jasp-nerd
+[MIT](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE) © 2026 jasp-nerd
