@@ -63,6 +63,15 @@ All four must be green before a PR can merge (CI enforces this).
 Be polite to the Marktplaats API: no scraping loops in tests, keep live calls
 out of the test suite (CI has no network access to Marktplaats).
 
+## Releasing (maintainers)
+
+1. Bump `version` in `pyproject.toml` **and** `server.json`, run `uv lock`.
+2. Commit, tag `vX.Y.Z`, push the tag. `release.yml` runs the tests, builds,
+   publishes to PyPI via [trusted publishing](https://docs.pypi.org/trusted-publishers/)
+   (configured on the PyPI project: repo `jasp-nerd/marktplaats-mcp`,
+   workflow `release.yml`, environment `pypi`) and creates the GitHub release.
+3. Refresh the MCP registry entry: `mcp-publisher publish` (uses `server.json`).
+
 ## Reporting bugs / requesting features
 
 Use the [issue templates](https://github.com/jasp-nerd/marktplaats-mcp/issues/new/choose).
