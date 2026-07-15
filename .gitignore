@@ -22,3 +22,6 @@ htmlcov/
 
 # Local environment
 .env
+
+# Local planning docs, not for the public repo
+docs/PROMOTION.md
