@@ -16,6 +16,10 @@
 [![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
 [![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-playful.gif" alt="marktplaats-mcp trailer: koopjes zonder scrollen — vraag het gewoon aan je AI" width="800">
+</p>
+
 ## ✨ Functies
 
 - 🔍 **Krachtig zoeken**: vrije tekst, categorieën, prijsbereik, conditie, afstand vanaf een postcode, recentheid, sortering

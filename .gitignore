@@ -25,3 +25,6 @@ htmlcov/
 
 # Local planning docs, not for the public repo
 docs/PROMOTION.md
+
+# Local Remotion trailer project (only the rendered gifs in assets/ are committed)
+trailer/
