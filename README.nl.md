@@ -10,14 +10,12 @@
 
 **marktplaats-mcp** is een MCP-server waarmee Claude, Cursor, Codex, opencode en elke andere MCP-client Marktplaats en 2dehands kunnen doorzoeken. Vind koopjes, check verkopers, blader door categorieën en monitor nieuwe advertenties in gewone taal.
 
-[![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE)
-[![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
-[![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-playful.gif" alt="marktplaats-mcp trailer: koopjes zonder scrollen — vraag het gewoon aan je AI" width="800">
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/v/marktplaats-mcp.svg" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg" alt="Python versions"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml"><img src="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/dm/marktplaats-mcp.svg" alt="Downloads"></a>
 </p>
 
 ## ✨ Functies
@@ -44,7 +42,7 @@ claude mcp add marktplaats -- uvx marktplaats-mcp
 Vraag daarna: *"Zoek op Marktplaats een OLED-tv onder de €400 in de buurt van 3011 AB."*
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/demo.gif" alt="Claude Code searching Marktplaats for a used racefiets via marktplaats-mcp" width="860">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-playful.gif" alt="marktplaats-mcp trailer: koopjes zonder scrollen — vraag het gewoon aan je AI" width="800">
 </p>
 
 ## 📦 Installeren in jouw favoriete client

@@ -10,15 +10,13 @@
 
 **marktplaats-mcp** is an MCP server that lets Claude, Cursor, Codex, opencode and every other MCP client search Marktplaats and 2dehands, the Dutch and Belgian second-hand classifieds. Find bargains, vet sellers, browse categories and monitor new listings in plain language.
 
-[![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE)
-[![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
-[![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-crt.gif" alt="marktplaats-mcp trailer: an AI agent searches for a racefiets and vets the seller, rendered as a retro CRT terminal session" width="800">
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/v/marktplaats-mcp.svg" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg" alt="Python versions"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml"><img src="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/dm/marktplaats-mcp.svg" alt="Downloads"></a>
+  <a href="https://github.com/astral-sh/ruff"><img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json" alt="Ruff"></a>
 </p>
 
 ## ✨ Features
@@ -45,7 +43,7 @@ claude mcp add marktplaats -- uvx marktplaats-mcp
 Then ask: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/demo.gif" alt="Claude Code searching Marktplaats for a used racefiets via marktplaats-mcp" width="860">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-crt.gif" alt="marktplaats-mcp trailer: an AI agent searches for a racefiets and vets the seller, rendered as a retro CRT terminal session" width="800">
 </p>
 
 ## 📦 Install in your favorite client

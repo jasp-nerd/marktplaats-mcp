@@ -10,11 +10,13 @@
 
 **marktplaats-mcp** est un serveur MCP qui permet à Claude, Cursor, Codex, opencode et tout autre client MCP de chercher sur Marktplaats et 2dehands, les petites annonces d'occasion néerlandaises et belges. Dénichez de bonnes affaires, vérifiez les vendeurs, parcourez les catégories et surveillez les nouvelles annonces en langage naturel.
 
-[![PyPI version](https://img.shields.io/pypi/v/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![Python versions](https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE)
-[![CI](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml)
-[![Downloads](https://img.shields.io/pypi/dm/marktplaats-mcp.svg)](https://pypi.org/project/marktplaats-mcp/)
+<p align="center">
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/v/marktplaats-mcp.svg" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/pyversions/marktplaats-mcp.svg" alt="Python versions"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+  <a href="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml"><img src="https://github.com/jasp-nerd/marktplaats-mcp/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/dm/marktplaats-mcp.svg" alt="Downloads"></a>
+</p>
 
 ## ✨ Fonctionnalités
 
@@ -40,7 +42,7 @@ claude mcp add marktplaats -- uvx marktplaats-mcp
 Puis demandez : *« Cherche sur 2dehands un vélo cargo à moins de 1000 € près d'Anvers. »*
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/demo.gif" alt="Claude Code searching Marktplaats for a used racefiets via marktplaats-mcp" width="860">
+  <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-crt.gif" alt="marktplaats-mcp : un agent IA cherche un vélo et vérifie le vendeur, rendu comme une session de terminal CRT rétro" width="800">
 </p>
 
 ## 📦 Installation dans votre client préféré
