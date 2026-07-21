@@ -45,6 +45,17 @@ Puis demandez : *« Cherche sur 2dehands un vélo cargo à moins de 1000 € pr�
   <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-crt.gif" alt="marktplaats-mcp : un agent IA cherche un vélo et vérifie le vendeur, rendu comme une session de terminal CRT rétro" width="800">
 </p>
 
+## 🌐 Utiliser sur claude.ai (sans installation)
+
+Vous pouvez vous passer du terminal. Une copie hébergée de ce serveur tourne sur `https://marktplaats-mcp.jaspnerd.dev/mcp`, prête à brancher sur [claude.ai](https://claude.ai) dans votre navigateur ou l'application mobile Claude. Les connecteurs personnalisés fonctionnent sur tous les forfaits Claude, y compris Free.
+
+1. Ouvrez [claude.ai](https://claude.ai) et allez dans **Settings → Connectors**.
+2. Cliquez sur **Add custom connector**.
+3. Collez `https://marktplaats-mcp.jaspnerd.dev/mcp` comme URL et cliquez sur **Add**. Aucun compte ni clé requis.
+4. Demandez à Claude : *« Cherche sur 2dehands un vélo cargo à moins de 1000 € près d'Anvers. »*
+
+Le point d'accès hébergé exécute le même code que le paquet PyPI, avec une limite de débit par client. Vous préférez que les requêtes partent de votre propre machine ? Installez-le en local, voir ci-dessous.
+
 ## 📦 Installation dans votre client préféré
 
 Chaque configuration lance le même serveur stdio via `uvx marktplaats-mcp`. Le [README anglais](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/README.md#-install-in-your-favorite-client) contient les extraits prêts à l'emploi pour **Claude Desktop, OpenAI Codex, opencode, Cursor, VS Code/Copilot, Windsurf, Gemini CLI et JetBrains**. La configuration est identique partout :

@@ -46,6 +46,17 @@ Then ask: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
   <img src="https://raw.githubusercontent.com/jasp-nerd/marktplaats-mcp/main/assets/trailer-crt.gif" alt="marktplaats-mcp trailer: an AI agent searches for a racefiets and vets the seller, rendered as a retro CRT terminal session" width="800">
 </p>
 
+## 🌐 Use on claude.ai (no install)
+
+You can skip the terminal entirely. A hosted copy of this server runs at `https://marktplaats-mcp.jaspnerd.dev/mcp`, ready to plug into [claude.ai](https://claude.ai) in your browser or the Claude mobile app. Custom connectors work on every Claude plan, including Free.
+
+1. Open [claude.ai](https://claude.ai) and go to **Settings → Connectors**.
+2. Click **Add custom connector**.
+3. Paste `https://marktplaats-mcp.jaspnerd.dev/mcp` as the URL and click **Add**. No account or key needed.
+4. Ask Claude: *"Search Marktplaats for an OLED TV under €400 near 3011 AB."*
+
+The hosted endpoint runs the same code as the PyPI package, rate-limited per client. If you'd rather have requests come from your own machine, install it locally below.
+
 ## 📦 Install in your favorite client
 
 Every config runs the same stdio server via `uvx marktplaats-mcp`.

@@ -3,6 +3,7 @@ categories and stateless new-listing monitoring."""
 
 from __future__ import annotations
 
+import os
 from datetime import datetime, timezone
 from typing import Annotated, Any, Literal
 
@@ -454,8 +455,29 @@ def _parse_since(value: str) -> datetime:
 
 
 def main() -> None:
-    """Console entry point: run the MCP server over stdio."""
-    mcp.run()
+    """Console entry point.
+
+    Runs over stdio by default. Set MCP_TRANSPORT=http to serve Streamable HTTP
+    (for remote/hosted use), with MCP_HOST (default 0.0.0.0), MCP_PORT (default
+    8000) and MCP_RPS (per-client requests/second, default 5).
+    """
+    transport = os.environ.get("MCP_TRANSPORT", "stdio").lower()
+    if transport == "http":
+        from fastmcp.server.middleware.rate_limiting import RateLimitingMiddleware
+
+        mcp.add_middleware(
+            RateLimitingMiddleware(
+                max_requests_per_second=float(os.environ.get("MCP_RPS", "5")),
+                burst_capacity=20,
+            )
+        )
+        mcp.run(
+            transport="http",
+            host=os.environ.get("MCP_HOST", "0.0.0.0"),
+            port=int(os.environ.get("MCP_PORT", "8000")),
+        )
+    else:
+        mcp.run()
 
 
 if __name__ == "__main__":
