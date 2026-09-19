@@ -1,0 +1,39 @@
+name: Live API canary
+
+# The upstream API is undocumented and changes silently. Exercise every
+# read-only tool against the real sites once a day and open an issue when
+# something breaks, so users hear it from us first.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv sync --all-groups
+      - id: smoke
+        run: uv run python scripts/e2e_smoke.py | tee smoke.log
+      - name: Open or update an issue on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          body="The daily live canary failed on $(date -u +%F). Log:\n\n\`\`\`\n$(tail -40 smoke.log)\n\`\`\`\n\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          existing=$(gh issue list --label e2e-failure --state open --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body "$(printf "$body")"
+          else
+            gh issue create --title "Live API canary failing" --label e2e-failure --body "$(printf "$body")"
+          fi
