@@ -75,6 +75,11 @@ def price_euros(cents: Any) -> float | None:
     return cents / 100 if isinstance(cents, int) and cents > 0 else None
 
 
+def has_asking_price(raw: dict[str, Any]) -> bool:
+    """True when the ad states an amount (fixed price or 'Bieden vanaf' with a value)."""
+    return price_euros((raw.get("priceInfo") or {}).get("priceCents")) is not None
+
+
 def is_promoted(raw: dict[str, Any]) -> bool:
     """Paid placements (DAGTOPPER, TOPADVERTENTIE, ...) carry a priorityProduct."""
     return raw.get("priorityProduct") not in (None, "NONE")

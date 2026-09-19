@@ -35,6 +35,7 @@ from .detail import ListingNotFoundError, parse_listing_page, parse_listing_payl
 from .facets import FacetCache, parse_facets, resolve_attributes
 from .models import (
     CategoriesResult,
+    FilterOption,
     FiltersResult,
     Listing,
     ListingDetails,
@@ -45,7 +46,7 @@ from .models import (
     SellerProfile,
     dump,
 )
-from .parsing import is_promoted, matches_exclusions, parse_listing
+from .parsing import has_asking_price, is_promoted, matches_exclusions, parse_listing
 from .sites import Site, resolve_site
 
 SiteName = Literal["marktplaats", "2dehands"]
@@ -108,9 +109,9 @@ AttributesParam = Annotated[
     Field(
         description=(
             "Category-specific filters as {filter: value}, using the labels from "
-            "list_category_filters, e.g. {'Merk': 'Trek', 'Framehoogte': '57 tot 61 cm'} or "
-            "{'Bouwjaar': '2018-2022', 'Kilometerstand': '-100000', 'Brandstof': ['Benzine', "
-            "'Hybride E+B']}. Ranges are 'min-max', 'min-' or '-max'."
+            "list_category_filters, e.g. {'Merk': 'Gazelle', 'Framehoogte': '57 tot 61 cm'} or "
+            "{'Bouwjaar': '2018-2022', 'Kilometerstand': '-100000', 'Brandstof': 'Benzine'}. "
+            "A list means any of those values. Ranges are 'min-max', 'min-' or '-max'."
         )
     ),
 ]
@@ -155,8 +156,7 @@ SortByParam = Annotated[
     SortBy,
     Field(
         description=(
-            "'relevance' (default), 'date' (newest first with desc), 'price' or 'location'. "
-            "Note: with 'price', bidding and free ads sort as 0."
+            "'relevance' (default), 'date' (newest first with desc), 'price' or 'location'."
         )
     ),
 ]
@@ -248,6 +248,7 @@ class SearchSpec:
     sort_by: str = "relevance"
     sort_order: str = "desc"
     exclude: list[str] = field(default_factory=list)
+    require_price: bool = False
 
     def params(self, limit: int, offset: int) -> list[tuple[str, str]]:
         return build_search_params(
@@ -301,6 +302,16 @@ async def search_listings(
         Field(description="Pagination: pass 'next_offset' from the previous result.", ge=0),
     ] = 0,
     compact: CompactParam = True,
+    include_unpriced: Annotated[
+        bool,
+        Field(
+            description=(
+                "Keep ads without an asking price (free, 'Bieden' without amount) when sorting "
+                "by price or filtering on price. Default False: those ads would otherwise sort "
+                "as €0 and flood the cheapest pages."
+            )
+        ),
+    ] = False,
     include_sponsored: Annotated[
         bool,
         Field(
@@ -332,6 +343,8 @@ async def search_listings(
         sort_by=sort_by,
         sort_order=sort_order,
     )
+    price_matters = sort_by == "price" or price_from is not None or price_to is not None
+    spec.require_price = price_matters and not include_unpriced
     return await _search_result(spec, limit, offset, compact, include_sponsored)
 
 
@@ -513,6 +526,10 @@ async def list_category_filters(
     query: Annotated[
         str, Field(description="Optional search text; needed when no category is given.")
     ] = "",
+    max_options: Annotated[
+        int,
+        Field(description="Max values per filter, most common first (1-200).", ge=1, le=200),
+    ] = 25,
 ) -> dict[str, Any]:
     """Discover the filters available for a category or search (brand, frame
     height, mileage, fuel, RAM, ...), with their valid values and how many ads
@@ -524,7 +541,10 @@ async def list_category_filters(
         raise ToolError(str(exc)) from exc
     if l1_id is None and not query.strip():
         raise ToolError("Provide a category, a subcategory or a query.")
-    filters = await _facets_for(resolved_site, l1_id, l2_ids, query.strip())
+    filters = [
+        f.model_copy(update={"options": _top_options(f.options, max_options)})
+        for f in await _facets_for(resolved_site, l1_id, l2_ids, query.strip())
+    ]
     l1_name, l2_name = category_names(l1_id, l2_ids)
     return dump(
         FiltersResult(
@@ -576,8 +596,8 @@ async def check_new_listings(
 ) -> dict[str, Any]:
     """Poll for listings placed after a given moment (newest first, paid promotions
     filtered out). Stateless: store the returned 'cursor' and pass it as 'since'
-    on the next call. When the result is truncated the cursor does not advance,
-    so nothing is skipped: raise the limit or narrow the search."""
+    on the next call. When the result is truncated the cursor only advances to
+    the oldest ad returned, so nothing is ever skipped."""
     since_dt = _parse_since(since) if since else since_days_ago(1)
     now = datetime.now(timezone.utc).replace(microsecond=0)
     spec = await _build_spec(
@@ -601,20 +621,45 @@ async def check_new_listings(
     listings, _, has_more, _ = await _collect_listings(
         spec, limit=limit, offset=0, compact=True, include_sponsored=False
     )
-    result = NewListingsResult(
-        site=site,
-        since=since_dt.isoformat(),
-        cursor=(since_dt if has_more else now).isoformat(),
-        new_count=len(listings),
-        truncated=True if has_more else None,
-        listings=listings,
-    )
+    cursor = now
+    note = None
     if has_more:
-        result.note = (
-            "More new listings exist than the limit; the cursor was not advanced. "
+        # Advance only as far as the oldest returned ad so nothing is skipped.
+        oldest = await _listing_time(spec.site, listings[-1].id) if listings else None
+        cursor = oldest or since_dt
+        note = (
+            "More new listings exist than the limit. The cursor points at the oldest ad "
+            "returned; poll again with it to continue (the boundary ad may repeat once)."
+            if oldest
+            else "More new listings exist than the limit; the cursor was not advanced. "
             "Raise the limit or narrow the search, then poll again."
         )
-    return dump(result)
+    return dump(
+        NewListingsResult(
+            site=site,
+            since=since_dt.isoformat(),
+            cursor=cursor.isoformat(),
+            new_count=len(listings),
+            truncated=True if has_more else None,
+            listings=listings,
+            note=note,
+        )
+    )
+
+
+async def _listing_time(site: Site, item_id: str) -> datetime | None:
+    """Exact placement time of one listing (used to advance a truncated cursor)."""
+    try:
+        payload = await get_client().listing(site, item_id)
+        details = parse_listing_payload(payload, item_id, site, max_images=0)
+    except (ApiError, ListingNotFoundError):
+        return None
+    if not details.listed_at:
+        return None
+    try:
+        return datetime.fromisoformat(details.listed_at.replace("Z", "+00:00"))
+    except ValueError:
+        return None
 
 
 @mcp.tool(
@@ -629,6 +674,8 @@ async def analyze_prices(
     attributes: AttributesParam = None,
     postcode: PostcodeParam = None,
     distance_km: DistanceParam = None,
+    price_from: PriceFromParam = None,
+    price_to: PriceToParam = None,
     condition: ConditionParam = None,
     delivery: DeliveryParam = None,
     language: LanguageParam = None,
@@ -638,8 +685,11 @@ async def analyze_prices(
     ] = 60,
 ) -> dict[str, Any]:
     """Price statistics (min, quartiles, median, max, mean) over the most relevant
-    asking prices for a search, plus the cheapest matches. Use it to judge whether
-    an ad is a bargain. Free, bidding-only and reserved ads are excluded."""
+    asking prices for a search, plus the cheapest matches. Free, bidding-only and
+    reserved ads are excluded and outliers beyond 1.5x the interquartile range are
+    trimmed. Most reliable with a subcategory plus attributes (e.g. subcategory
+    'Mobiele telefoons | Apple iPhone', attributes {'Model': 'iPhone 15',
+    'Opslagcapaciteit': '128 GB'}) instead of free text, which drags in accessories."""
     spec = await _build_spec(
         site=site,
         query=query,
@@ -648,8 +698,8 @@ async def analyze_prices(
         attributes=attributes,
         postcode=postcode,
         distance_km=distance_km,
-        price_from=None,
-        price_to=None,
+        price_from=price_from,
+        price_to=price_to,
         condition=condition,
         delivery=delivery,
         language=language,
@@ -658,14 +708,20 @@ async def analyze_prices(
         sort_by="relevance",
         sort_order="desc",
     )
+    spec.require_price = True
     listings, total, _, _ = await _collect_listings(
         spec, limit=sample_size, offset=0, compact=True, include_sponsored=False
     )
-    priced = [
-        listing for listing in listings if listing.price_euros is not None and not listing.reserved
-    ]
-    prices = sorted(listing.price_euros for listing in priced if listing.price_euros is not None)
-    stats = PriceStats(site=site, query=query, total_count=total, sample_size=len(prices))
+    priced = [item for item in listings if item.price_euros is not None and not item.reserved]
+    kept, outliers = _trim_outliers(priced)
+    prices = sorted(item.price_euros for item in kept if item.price_euros is not None)
+    stats = PriceStats(
+        site=site,
+        query=query,
+        total_count=total,
+        sample_size=len(prices),
+        excluded_outliers=len(outliers) or None,
+    )
     if prices:
         quartiles = statistics.quantiles(prices, n=4, method="inclusive") if len(prices) > 1 else []
         stats.min = prices[0]
@@ -674,14 +730,27 @@ async def analyze_prices(
         stats.mean = round(statistics.fmean(prices), 2)
         if quartiles:
             stats.p25, stats.p75 = round(quartiles[0], 2), round(quartiles[2], 2)
-        stats.cheapest = sorted(priced, key=lambda item: item.price_euros or 0)[:3]
+        stats.cheapest = sorted(kept, key=lambda item: item.price_euros or 0)[:3]
         stats.note = (
             f"Asking prices of the {len(prices)} most relevant priced ads out of ~{total} matches; "
-            "not sold prices. Narrow with category/attributes for a tighter estimate."
+            "not sold prices. Narrow with subcategory and attributes for a tighter estimate."
         )
     else:
         stats.note = "No priced listings matched; try a broader query."
     return dump(stats)
+
+
+def _trim_outliers(items: list[Listing]) -> tuple[list[Listing], list[Listing]]:
+    """Drop prices beyond 1.5x the interquartile range (a MacBook in an iPhone
+    search, a typo with a missing zero)."""
+    prices = sorted(item.price_euros for item in items if item.price_euros is not None)
+    if len(prices) < 8:
+        return items, []
+    q1, _, q3 = statistics.quantiles(prices, n=4, method="inclusive")
+    low, high = q1 - 1.5 * (q3 - q1), q3 + 1.5 * (q3 - q1)
+    kept = [i for i in items if i.price_euros is not None and low <= i.price_euros <= high]
+    outliers = [i for i in items if i not in kept]
+    return kept, outliers
 
 
 @mcp.prompt(name="bargain_hunt", description="Find and vet the best deals for an item.")
@@ -778,6 +847,12 @@ async def _build_spec(
         sort_order=sort_order,
         exclude=[term for term in exclude or [] if term.strip()],
     )
+
+
+def _top_options(options: list[FilterOption], limit: int) -> list[FilterOption]:
+    """Most common values first; values with zero matching ads are dropped."""
+    ranked = sorted(options, key=lambda option: option.count or 0, reverse=True)
+    return [option for option in ranked if option.count != 0][:limit]
 
 
 def _condition_id(condition: str, filters: list[SearchFilter] | None) -> int:
@@ -886,6 +961,8 @@ async def _collect_listings(
             if not include_sponsored and is_promoted(raw):
                 continue
             if matches_exclusions(raw, spec.exclude):
+                continue
+            if spec.require_price and not has_asking_price(raw):
                 continue
             if to_skip:
                 to_skip -= 1

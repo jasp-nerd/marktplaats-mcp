@@ -25,7 +25,7 @@ def test_app_payload_maps_rich_fields(listing_vip):
     assert details.country == "NL"
     assert details.view_count == 23
     assert details.favorited_count == 0
-    assert details.shippable is True
+    assert details.delivery == "pickup"  # from the 'Levering' attribute, not the app flag
     assert details.reserved is None
     assert details.attributes == {
         "Conditie": "Gebruikt",
@@ -63,6 +63,15 @@ def test_html_entities_are_unescaped(listing_vip):
     }
     details = parse_listing_payload(payload, "m1", NL)
     assert details.description == "Prijs € 1.500 & meer\nok"
+
+
+def test_delivery_option_mapping():
+    from marktplaats_mcp.detail import delivery_option
+
+    assert delivery_option("Ophalen") == "pickup"
+    assert delivery_option("Verzenden") == "shipping"
+    assert delivery_option("Ophalen of Verzenden") == "both"
+    assert delivery_option(None) is None
 
 
 def test_long_descriptions_are_clipped(listing_vip):

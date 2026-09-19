@@ -11,6 +11,7 @@ All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](ht
 - `analyze_prices`: median, quartiles, min, max, mean asking prices and the cheapest matches.
 - New search filters: `delivery` (pickup/shipping), `language` (2dehands: Dutch or French ads), `exclude` (negative keywords).
 - Listing details now come from the app's JSON listing endpoint: typed attributes, car attributes, status (active/closed), exact listing time, postcode, bidding state and minimum bid, shipping, image count, seller type, account age, response rate and review summary. `get_listing_details` accepts pasted URLs and a `max_images` parameter.
+- `search_listings` skips ads without an asking price when sorting or filtering on price (`include_unpriced=true` keeps them); `analyze_prices` takes `price_from`/`price_to` and trims outliers; `list_category_filters` caps values per filter (`max_options`); listing details report `delivery` (pickup/shipping/both) from the ad itself.
 - Listings carry `price_euros`, an ISO `listed` date, `reserved` and `is_business` flags; search results surface the site's spelling suggestion; seller profiles add business verification, payment method and the lowest accepted bid (with explicit nulls).
 - Real output schemas on every tool, MCP resources for the category tree, prompts `bargain_hunt` and `vet_listing`, server icons and website metadata.
 - Hosted mode: landing page, `llms.txt`, privacy policy, icons, `/health`; per-client and global rate limits; Host/Origin validation; non-root container with a health check.
@@ -19,7 +20,7 @@ All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](ht
 ### Fixed
 - The subcategory filter never applied: the API ignores `l2CategoryId` and only honours `l2CategoryIds[]`. Every subcategory search previously returned the whole parent category.
 - Small-limit searches and polls sorted by date returned nothing because the first pages are padded with paid promotions; pages are now fetched at full size and paginated on returned listings, so `offset`/`next_offset` no longer skip or repeat ads.
-- `check_new_listings` no longer advances the cursor when the result is truncated, so nothing is skipped.
+- `check_new_listings` no longer skips ads when the result is truncated: the cursor advances only to the oldest ad returned.
 - `get_listing_details` returned no attributes and image URLs with an unresolved size placeholder.
 - Condition ids differ per category (a used car is not a used bike); they are now resolved from the category's own filters.
 - Actionable errors for missing listings, rate limiting and stale sessions instead of raw HTTP messages.

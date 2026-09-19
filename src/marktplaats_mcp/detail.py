@@ -7,7 +7,7 @@ from __future__ import annotations
 import html
 import json
 import re
-from typing import Any
+from typing import Any, Literal
 
 from .models import Bidding, ListingDetails, Seller, SellerDetails
 from .parsing import IMAGE_LIMIT, format_price, normalize_image_url, price_euros
@@ -61,7 +61,6 @@ def parse_listing_payload(
         view_count=_as_int(meta.get("viewAdCount")),
         favorited_count=_as_int(meta.get("adFavoritedCount")),
         reserved=True if flags.get("reserved") else None,
-        shippable=flags.get("shippable") if isinstance(flags.get("shippable"), bool) else None,
         buy_it_now=True if flags.get("buyItNowEnabled") else None,
     )
 
@@ -93,6 +92,7 @@ def parse_listing_payload(
         if isinstance(name, str) and values:
             attributes[name] = ", ".join(values)
     details.attributes = attributes or None
+    details.delivery = delivery_option(attributes.get("Levering"))
 
     car_attributes: dict[str, str] = {}
     for group in core.get("carAttributes") or []:
@@ -204,6 +204,21 @@ def _extract_description(listing: dict[str, Any], html: str) -> str | None:
     match = _DESCRIPTION_RE.search(html)
     if match:
         return _strip_html(match.group(1))
+    return None
+
+
+def delivery_option(label: str | None) -> Literal["pickup", "shipping", "both"] | None:
+    """Map the site's 'Levering' label to a stable value."""
+    if not label:
+        return None
+    text = label.lower()
+    pickup, shipping = "ophalen" in text, "verzenden" in text
+    if pickup and shipping:
+        return "both"
+    if shipping:
+        return "shipping"
+    if pickup:
+        return "pickup"
     return None
 
 

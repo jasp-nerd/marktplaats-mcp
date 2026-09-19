@@ -261,6 +261,7 @@ async def test_small_limit_survives_promo_padded_pages():
     """Regression: date-sorted page 1 is often 100% DAGTOPPER. A poll with a small
     limit used to fetch three tiny pages of promos and return nothing."""
     route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(500, organic_from=39))
+    respx.post(url__regex=VIP_URL_NL).mock(return_value=httpx.Response(503))
     data = await call("check_new_listings", {"query": "racefiets", "limit": 3})
     assert data["new_count"] == 3
     assert [listing["id"] for listing in data["listings"]] == ["m39", "m40", "m41"]
@@ -486,8 +487,9 @@ async def test_check_new_listings_contract(search_response):
 
 
 @respx.mock
-async def test_check_new_listings_does_not_advance_cursor_when_truncated():
+async def test_check_new_listings_keeps_cursor_when_oldest_ad_cannot_be_timed():
     respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(500, organic_from=0))
+    respx.post(url__regex=VIP_URL_NL).mock(return_value=httpx.Response(503))
     data = await call(
         "check_new_listings", {"query": "fiets", "since": "2026-07-14T00:00:00Z", "limit": 3}
     )
@@ -503,6 +505,78 @@ async def test_check_new_listings_rejects_bad_timestamp():
 
 
 # --- analyze_prices ------------------------------------------------------------
+
+
+@respx.mock
+async def test_price_sort_and_bounds_skip_unpriced_ads():
+    def priced(item_id: str, cents: int, price_type: str = "FIXED") -> dict:
+        row = _fake_listing(item_id)
+        row["priceInfo"] = {"priceType": price_type, "priceCents": cents}
+        return row
+
+    rows = [
+        priced("m1", 0, "FREE"),
+        priced("m2", 0, "FAST_BID"),
+        priced("m3", 5000),
+        priced("m4", 9000),
+    ]
+    respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(200, json={"totalResultCount": 4, "listings": rows})
+    )
+    data = await call("search_listings", {"query": "x", "sort_by": "price", "sort_order": "asc"})
+    assert [item["id"] for item in data["listings"]] == ["m3", "m4"]
+    data = await call("search_listings", {"query": "x", "price_to": 100})
+    assert [item["id"] for item in data["listings"]] == ["m3", "m4"]
+    data = await call(
+        "search_listings", {"query": "x", "sort_by": "price", "include_unpriced": True}
+    )
+    assert len(data["listings"]) == 4
+    data = await call("search_listings", {"query": "x"})  # relevance: unpriced ads stay
+    assert len(data["listings"]) == 4
+
+
+@respx.mock
+async def test_check_new_listings_advances_cursor_to_oldest_returned_ad(listing_vip):
+    respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(500, organic_from=0))
+    vip = respx.post(url__regex=VIP_URL_NL).mock(
+        return_value=httpx.Response(200, json=listing_vip)  # listed 2026-09-19T13:01:54
+    )
+    data = await call(
+        "check_new_listings", {"query": "fiets", "since": "2026-07-14T00:00:00Z", "limit": 3}
+    )
+    assert data["truncated"] is True
+    assert vip.calls[0].request.url.path.endswith("/m2")  # the oldest of the three returned
+    assert data["cursor"].startswith("2026-09-19T13:01:54")
+    assert "oldest ad" in data["note"]
+
+
+@respx.mock
+async def test_analyze_prices_trims_outliers_and_accepts_bounds():
+    def priced(item_id: str, cents: int) -> dict:
+        row = _fake_listing(item_id)
+        row["priceInfo"] = {"priceType": "FIXED", "priceCents": cents}
+        return row
+
+    rows = [priced(f"m{i}", 40000 + i * 1000) for i in range(10)] + [priced("mac", 4300)]
+    route = respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(200, json={"totalResultCount": 11, "listings": rows})
+    )
+    data = await call("analyze_prices", {"query": "iphone 15", "price_to": 600})
+    assert "PriceCents%3A%3A60000" in str(route.calls[0].request.url)
+    assert data["excluded_outliers"] == 1
+    assert data["min"] == 400.0
+    assert [item["id"] for item in data["cheapest"]] == ["m0", "m1", "m2"]
+
+
+@respx.mock
+async def test_list_category_filters_limits_options(facets_bikes):
+    respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=facets_bikes))
+    data = await call(
+        "list_category_filters", {"subcategory": "Fietsen | Racefietsen", "max_options": 2}
+    )
+    brand = next(f for f in data["filters"] if f["key"] == "brand")
+    assert len(brand["options"]) == 2
+    assert brand["options"][0]["count"] >= brand["options"][1]["count"]
 
 
 @respx.mock
@@ -528,6 +602,7 @@ async def test_analyze_prices_contract():
     data = await call("analyze_prices", {"query": "fiets"})
     assert data["sample_size"] == 4
     assert data["total_count"] == 7
+    assert "excluded_outliers" not in data
     assert (data["min"], data["median"], data["max"]) == (100.0, 250.0, 400.0)
     assert data["p25"] == 175.0
     assert data["p75"] == 325.0

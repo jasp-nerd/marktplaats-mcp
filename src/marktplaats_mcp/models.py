@@ -107,7 +107,7 @@ class ListingDetails(BaseModel):
     view_count: int | None = None
     favorited_count: int | None = None
     reserved: bool | None = None
-    shippable: bool | None = None
+    delivery: Literal["pickup", "shipping", "both"] | None = None
     buy_it_now: bool | None = None
     bidding: Bidding | None = None
     attributes: dict[str, str] | None = None
@@ -158,6 +158,7 @@ class PriceStats(BaseModel):
     query: str
     total_count: int
     sample_size: int
+    excluded_outliers: int | None = None
     min: float | None = None
     p25: float | None = None
     median: float | None = None
