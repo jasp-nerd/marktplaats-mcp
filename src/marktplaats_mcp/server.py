@@ -66,10 +66,10 @@ CONDITION_LABELS = {
 }
 
 READ_ONLY = {
-    "readOnlyHint": True,
-    "destructiveHint": False,
-    "idempotentHint": True,
-    "openWorldHint": True,
+    "read_only_hint": True,
+    "destructive_hint": False,
+    "idempotent_hint": True,
+    "open_world_hint": True,
 }
 
 # Shared parameter types (descriptions surface in every client's tool schema).
@@ -197,8 +197,8 @@ mcp: FastMCP = FastMCP(
     "Marktplaats",
     website_url=SITE_URL,
     icons=[
-        Icon(src=f"{SITE_URL}/icon.png", mimeType="image/png", sizes=["512x512"]),
-        Icon(src=f"{SITE_URL}/icon.svg", mimeType="image/svg+xml", sizes=["any"]),
+        Icon(src=f"{SITE_URL}/icon.png", mime_type="image/png", sizes=["512x512"]),
+        Icon(src=f"{SITE_URL}/icon.svg", mime_type="image/svg+xml", sizes=["any"]),
     ],
     lifespan=_lifespan,
     instructions=(
@@ -461,7 +461,7 @@ async def list_seller_listings(
 
 
 @mcp.tool(
-    annotations={"title": "List categories", **READ_ONLY, "openWorldHint": False},
+    annotations={"title": "List categories", **READ_ONLY, "open_world_hint": False},
     output_schema=CategoriesResult.model_json_schema(),
 )
 async def list_categories(

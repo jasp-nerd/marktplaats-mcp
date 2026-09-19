@@ -68,19 +68,19 @@ ConfirmParam = Annotated[
 ]
 
 ACCOUNT_READ = {
-    "readOnlyHint": True,
-    "destructiveHint": False,
-    "idempotentHint": True,
-    "openWorldHint": True,
+    "read_only_hint": True,
+    "destructive_hint": False,
+    "idempotent_hint": True,
+    "open_world_hint": True,
 }
 WRITE_ONCE = {
-    "readOnlyHint": False,
-    "destructiveHint": False,
-    "idempotentHint": False,
-    "openWorldHint": True,
+    "read_only_hint": False,
+    "destructive_hint": False,
+    "idempotent_hint": False,
+    "open_world_hint": True,
 }
-WRITE_IDEMPOTENT = {**WRITE_ONCE, "idempotentHint": True}
-BINDING = {**WRITE_ONCE, "destructiveHint": True}
+WRITE_IDEMPOTENT = {**WRITE_ONCE, "idempotent_hint": True}
+BINDING = {**WRITE_ONCE, "destructive_hint": True}
 
 COOKIE_ENV = {"marktplaats": "MARKTPLAATS_COOKIE", "2dehands": "TWEEDEHANDS_COOKIE"}
 PREVIEW_NOTE = "Nothing was sent. Show this to the user; call again with confirm=true to send."

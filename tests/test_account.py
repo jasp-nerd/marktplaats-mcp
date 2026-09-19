@@ -237,7 +237,7 @@ async def test_read_tools_registered_and_writes_gated():
         "list_my_bids",
         "list_saved_searches",
     }
-    assert all(tool.annotations.readOnlyHint for tool in tools.values())
+    assert all(tool.annotations.read_only_hint for tool in tools.values())
 
     async with Client(server_with(account_client(), allow_writes=True)) as mcp_client:
         tools = {tool.name: tool for tool in await mcp_client.list_tools()}
@@ -248,10 +248,10 @@ async def test_read_tools_registered_and_writes_gated():
         "place_bid",
         "extend_my_listing",
     } <= set(tools)
-    assert tools["place_bid"].annotations.destructiveHint is True
-    assert tools["send_message"].annotations.readOnlyHint is False
-    assert tools["send_message"].annotations.idempotentHint is False
-    assert tools["set_favorite"].annotations.idempotentHint is True
+    assert tools["place_bid"].annotations.destructive_hint is True
+    assert tools["send_message"].annotations.read_only_hint is False
+    assert tools["send_message"].annotations.idempotent_hint is False
+    assert tools["set_favorite"].annotations.idempotent_hint is True
 
 
 async def test_tools_refuse_sites_without_a_cookie():

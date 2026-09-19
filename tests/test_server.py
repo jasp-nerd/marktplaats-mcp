@@ -44,18 +44,18 @@ async def test_all_tools_are_registered_with_descriptions():
     for tool in tools.values():
         assert tool.description, f"{tool.name} must have a description"
         assert tool.annotations is not None
-        assert tool.annotations.readOnlyHint is True
-        assert tool.annotations.destructiveHint is False
+        assert tool.annotations.read_only_hint is True
+        assert tool.annotations.destructive_hint is False
     assert {"bargain_hunt", "vet_listing"} <= prompts
     for tool in tools.values():
-        schema = tool.outputSchema or {}
+        schema = tool.output_schema or {}
         assert schema.get("properties"), f"{tool.name} has no real output schema"
 
 
 async def test_category_resources():
     async with Client(mcp) as client:
         resources = {str(r.uri) for r in await client.list_resources()}
-        templates = {t.uriTemplate for t in await client.list_resource_templates()}
+        templates = {t.uri_template for t in await client.list_resource_templates()}
         assert "marktplaats://categories" in resources
         assert "marktplaats://categories/{parent}" in templates
         top = await client.read_resource("marktplaats://categories")
