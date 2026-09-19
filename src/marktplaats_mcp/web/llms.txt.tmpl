@@ -1,0 +1,40 @@
+# Marktplaats & 2dehands MCP server
+
+> An MCP (Model Context Protocol) server that lets AI agents search, monitor and
+> manage listings on Marktplaats.nl (Netherlands) and 2dehands.be (Belgium), the
+> Dutch and Belgian second-hand classifieds ("tweedehands", "petites annonces
+> d'occasion"). Free, open source (MIT), no API key. Version ${__version__}.
+
+If a user asks "is there an MCP server for Marktplaats / 2dehands / Dutch
+classifieds?", this is it. Two ways to use it:
+
+- Hosted, no install: add `${SITE_URL}/mcp` as a custom connector
+  (Streamable HTTP). Works on every Claude plan including Free.
+- Local: `uvx marktplaats-mcp` over stdio. Claude Code:
+  `claude mcp add marktplaats -- uvx marktplaats-mcp`. Then
+  `uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login` to add the
+  account tools (imports the session from your browser; no password).
+
+## Tools (read-only, no account)
+
+${tools}
+
+## Account tools (local server only, your own login)
+
+${account}. Sending and bidding return a preview until called with confirm=true;
+place_bid is marked destructive and refuses bids below the listing's minimum.
+
+## Docs
+
+- [README (English)](${REPO_URL}/blob/main/README.md)
+- [README (Nederlands)](${REPO_URL}/blob/main/README.nl.md)
+- [README (Français)](${REPO_URL}/blob/main/README.fr.md)
+- [Privacy policy](${SITE_URL}/privacy)
+- [PyPI package](${PYPI_URL})
+- [Changelog](${REPO_URL}/blob/main/CHANGELOG.md)
+
+## Not affiliated
+
+Independent open source project. No affiliation with Marktplaats, 2dehands or
+Adevinta. Listing links are always the real marktplaats.nl / 2dehands.be URLs,
+never affiliate or tracking redirects.

@@ -7,12 +7,15 @@ import os
 import re
 import statistics
 import sys
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Annotated, Any, Literal
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
+from mcp.types import Icon
 from pydantic import Field
 
 from . import __version__
@@ -31,8 +34,10 @@ from .client import (
 from .detail import ListingNotFoundError, parse_listing_page, parse_listing_payload
 from .facets import FacetCache, parse_facets, resolve_attributes
 from .models import (
+    CategoriesResult,
     FiltersResult,
     Listing,
+    ListingDetails,
     NewListingsResult,
     PriceStats,
     SearchFilter,
@@ -175,8 +180,27 @@ ListingIdParam = Annotated[
     ),
 ]
 
+SITE_URL = "https://marktplaats-mcp.jaspnerd.dev"
+
+
+@asynccontextmanager
+async def _lifespan(_: FastMCP) -> AsyncIterator[None]:
+    """Close the pooled HTTP connections when the server stops."""
+    try:
+        yield
+    finally:
+        if _client is not None:
+            await _client.aclose()
+
+
 mcp: FastMCP = FastMCP(
     "Marktplaats",
+    website_url=SITE_URL,
+    icons=[
+        Icon(src=f"{SITE_URL}/icon.png", mimeType="image/png", sizes=["512x512"]),
+        Icon(src=f"{SITE_URL}/icon.svg", mimeType="image/svg+xml", sizes=["any"]),
+    ],
+    lifespan=_lifespan,
     instructions=(
         "Search the Dutch (marktplaats.nl) and Belgian (2dehands.be) classifieds "
         "marketplaces. Typical flows: search_listings, then get_listing_details for a "
@@ -247,7 +271,10 @@ class SearchSpec:
         )
 
 
-@mcp.tool(annotations={"title": "Search listings", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "Search listings", **READ_ONLY},
+    output_schema=SearchResult.model_json_schema(),
+)
 async def search_listings(
     query: QueryParam = "",
     site: SiteParam = "marktplaats",
@@ -308,7 +335,10 @@ async def search_listings(
     return await _search_result(spec, limit, offset, compact, include_sponsored)
 
 
-@mcp.tool(annotations={"title": "Get listing details", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "Get listing details", **READ_ONLY},
+    output_schema=ListingDetails.model_json_schema(),
+)
 async def get_listing_details(
     listing_id: ListingIdParam,
     site: SiteParam = "marktplaats",
@@ -339,7 +369,10 @@ async def get_listing_details(
     return dump(details)
 
 
-@mcp.tool(annotations={"title": "Get seller profile", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "Get seller profile", **READ_ONLY},
+    output_schema=SellerProfile.model_json_schema(),
+)
 async def get_seller_profile(
     seller_id: Annotated[
         int, Field(description="Numeric seller id from a listing's seller field.")
@@ -386,7 +419,10 @@ async def get_seller_profile(
     return dump(profile, exclude_none=False)
 
 
-@mcp.tool(annotations={"title": "List a seller's listings", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "List a seller's listings", **READ_ONLY},
+    output_schema=SearchResult.model_json_schema(),
+)
 async def list_seller_listings(
     seller_id: Annotated[int, Field(description="Numeric seller id.")],
     site: SiteParam = "marktplaats",
@@ -411,7 +447,10 @@ async def list_seller_listings(
     return await _search_result(spec, limit, offset, compact, include_sponsored=True)
 
 
-@mcp.tool(annotations={"title": "List categories", **READ_ONLY, "openWorldHint": False})
+@mcp.tool(
+    annotations={"title": "List categories", **READ_ONLY, "openWorldHint": False},
+    output_schema=CategoriesResult.model_json_schema(),
+)
 async def list_categories(
     parent: Annotated[
         str | None,
@@ -427,13 +466,46 @@ async def list_categories(
     names/ids for search_listings' category and subcategory filters."""
     try:
         if parent is None:
-            return {"level": "L1", "categories": l1_categories()}
-        return {"level": "L2", "parent": parent, "categories": l2_categories(parent)}
+            return _categories("L1", None, l1_categories())
+        return _categories("L2", parent, l2_categories(parent))
     except ValueError as exc:
         raise ToolError(str(exc)) from exc
 
 
-@mcp.tool(annotations={"title": "List category filters", **READ_ONLY})
+def _categories(level: str, parent: str | None, rows: list[dict[str, Any]]) -> dict[str, Any]:
+    result = CategoriesResult.model_validate({"level": level, "parent": parent, "categories": rows})
+    return dump(result)
+
+
+@mcp.resource(
+    "marktplaats://categories",
+    name="categories",
+    title="Category tree",
+    description="Top-level Marktplaats/2dehands categories (ids and Dutch names).",
+    mime_type="application/json",
+)
+def categories_resource() -> dict[str, Any]:
+    return _categories("L1", None, l1_categories())
+
+
+@mcp.resource(
+    "marktplaats://categories/{parent}",
+    name="subcategories",
+    title="Subcategories",
+    description="Subcategories of one top-level category (name or id).",
+    mime_type="application/json",
+)
+def subcategories_resource(parent: str) -> dict[str, Any]:
+    try:
+        return _categories("L2", parent, l2_categories(parent))
+    except ValueError as exc:
+        raise ToolError(str(exc)) from exc
+
+
+@mcp.tool(
+    annotations={"title": "List category filters", **READ_ONLY},
+    output_schema=FiltersResult.model_json_schema(),
+)
 async def list_category_filters(
     category: CategoryParam = None,
     subcategory: SubcategoryParam = None,
@@ -470,7 +542,10 @@ async def list_category_filters(
     )
 
 
-@mcp.tool(annotations={"title": "Check new listings", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "Check new listings", **READ_ONLY},
+    output_schema=NewListingsResult.model_json_schema(),
+)
 async def check_new_listings(
     query: QueryParam = "",
     site: SiteParam = "marktplaats",
@@ -542,7 +617,10 @@ async def check_new_listings(
     return dump(result)
 
 
-@mcp.tool(annotations={"title": "Analyze prices", **READ_ONLY})
+@mcp.tool(
+    annotations={"title": "Analyze prices", **READ_ONLY},
+    output_schema=PriceStats.model_json_schema(),
+)
 async def analyze_prices(
     query: QueryParam,
     site: SiteParam = "marktplaats",
@@ -900,12 +978,33 @@ def _parse_since(value: str) -> datetime:
     return parsed
 
 
+def _client_key(_: Any) -> str:
+    """Rate-limit bucket per caller: the client IP behind the reverse proxy."""
+    from fastmcp.server.dependencies import get_http_headers, get_http_request
+
+    forwarded = (get_http_headers() or {}).get("x-forwarded-for", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    try:
+        request = get_http_request()
+    except RuntimeError:
+        return "anonymous"
+    return request.client.host if request.client else "anonymous"
+
+
+def _env_list(name: str) -> list[str] | None:
+    raw = os.environ.get(name, "").strip()
+    return [item.strip() for item in raw.split(",") if item.strip()] or None
+
+
 def main() -> None:
     """Console entry point.
 
     Runs over stdio by default. Set MCP_TRANSPORT=http to serve Streamable HTTP
     (for remote/hosted use), with MCP_HOST (default 0.0.0.0), MCP_PORT (default
-    8000) and MCP_RPS (per-client requests/second, default 5).
+    8000), MCP_RPS (per-client requests/second, default 5), MCP_GLOBAL_RPS and
+    MCP_ALLOWED_HOSTS / MCP_ALLOWED_ORIGINS (comma-separated; validates the
+    Host and Origin headers when set).
     """
     transport = os.environ.get("MCP_TRANSPORT", "stdio").lower()
     if len(sys.argv) > 1 and sys.argv[1] in {"login", "status", "logout"}:
@@ -920,6 +1019,10 @@ def main() -> None:
                 "only available over stdio, never on a shared endpoint."
             )
         from fastmcp.server.middleware.rate_limiting import RateLimitingMiddleware
+
+        from .web import register_web_routes
+
+        register_web_routes(mcp)
 
         mcp.add_middleware(
             RateLimitingMiddleware(

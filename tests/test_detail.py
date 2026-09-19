@@ -65,6 +65,15 @@ def test_html_entities_are_unescaped(listing_vip):
     assert details.description == "Prijs € 1.500 & meer\nok"
 
 
+def test_long_descriptions_are_clipped(listing_vip):
+    payload = {**listing_vip, "adCore": {**listing_vip["adCore"], "description": "x" * 5000}}
+    details = parse_listing_payload(payload, "m1", NL)
+    assert details.description is not None
+    assert len(details.description) == 4001
+    assert details.description.endswith("…")
+    assert details.note is not None
+
+
 def test_app_payload_respects_max_images(listing_vip):
     assert parse_listing_payload(listing_vip, "m1", NL, max_images=0).image_urls is None
     details = parse_listing_payload(listing_vip, "m1", NL, max_images=2)

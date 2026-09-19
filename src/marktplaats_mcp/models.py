@@ -32,6 +32,18 @@ class Listing(BaseModel):
     category_id: int | None = None
 
 
+class Category(BaseModel):
+    id: int
+    name: str
+    parent: str | None = None
+
+
+class CategoriesResult(BaseModel):
+    level: Literal["L1", "L2"]
+    parent: str | None = None
+    categories: list[Category]
+
+
 class SearchResult(BaseModel):
     site: str
     total_count: int
@@ -103,6 +115,7 @@ class ListingDetails(BaseModel):
     image_count: int | None = None
     image_urls: list[str] | None = None
     seller: Seller | SellerDetails | None = None
+    note: str | None = None
 
 
 class NewListingsResult(BaseModel):

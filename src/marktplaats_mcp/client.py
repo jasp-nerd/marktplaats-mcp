@@ -130,10 +130,16 @@ class MarktplaatsClient:
         )
         self._gate = asyncio.Lock()
         self._next_slot = 0.0
+        self._timeout = timeout
         self._http = httpx.AsyncClient(timeout=timeout, follow_redirects=True)
 
     async def aclose(self) -> None:
         await self._http.aclose()
+
+    def _ensure_open(self) -> None:
+        """Reopen the connection pool after aclose(); caches and settings survive."""
+        if self._http.is_closed:
+            self._http = httpx.AsyncClient(timeout=self._timeout, follow_redirects=True)
 
     async def _wait_for_slot(self) -> None:
         async with self._gate:
@@ -154,6 +160,7 @@ class MarktplaatsClient:
         all_headers = {**BASE_HEADERS, "Referer": f"{site.base_url}/", **(headers or {})}
         query = httpx.QueryParams(tuple(params)) if params is not None else None
         last_error: Exception | None = None
+        self._ensure_open()
         for attempt in range(self.max_retries + 1):
             await self._wait_for_slot()
             try:

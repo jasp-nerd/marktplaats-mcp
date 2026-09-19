@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy policy - marktplaats-mcp</title>
+<style>body{margin:0;padding:0 16px;font:16px/1.55 system-ui,sans-serif;color-scheme:light dark}main{max-width:760px;margin:0 auto;padding:32px 0 64px}</style>
+</head><body><main>
+<h1>Privacy policy</h1>
+<p><strong>marktplaats-mcp</strong> is an open source MCP server. This page covers both the hosted endpoint at <code>${SITE_URL}/mcp</code> and the local server installed from PyPI.</p>
+<h2>Hosted endpoint</h2>
+<ul>
+<li>It only offers the read-only tools (search, listing details, seller profiles, categories, filters, price statistics, new-listing monitoring). It never accepts, stores or uses Marktplaats account credentials or session cookies.</li>
+<li>Tool arguments (your search terms, postcode, listing ids) are forwarded to marktplaats.nl or 2dehands.be to answer the request and are not stored beyond standard, short-lived web server logs (timestamp, IP address, request path, status code) used to keep the service running and rate-limited.</li>
+<li>No analytics, no advertising, no tracking cookies, no affiliate links. Listing URLs are returned exactly as the marketplaces publish them.</li>
+<li>The server runs in the European Union (Hetzner, Germany).</li>
+</ul>
+<h2>Local server</h2>
+<ul>
+<li>Runs on your own machine; requests go directly from your computer to marktplaats.nl / 2dehands.be.</li>
+<li>If you run <code>marktplaats-mcp login</code>, your marketplace session cookie is read from your browser and stored only in a private file on your computer (<code>~/.config/marktplaats-mcp/session.json</code>, readable by your user only). It is sent only to the marketplace itself. <code>marktplaats-mcp logout</code> deletes it.</li>
+<li>Actions taken on your account (messages sent, bids placed, favorites changed) are appended to a local audit log (<code>~/.local/state/marktplaats-mcp/writes.jsonl</code>) so you can always review what your agent did. Nothing is sent to the project's authors.</li>
+</ul>
+<h2>Contact</h2>
+<p>Questions or requests: open an issue at <a href="${REPO_URL}/issues">${REPO_URL}/issues</a>.</p>
+<p>Last updated 2026-09-19.</p>
+</main></body></html>

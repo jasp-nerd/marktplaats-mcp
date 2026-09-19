@@ -1,20 +1,65 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.jasp-nerd/marktplaats-mcp",
-  "description": "Search Marktplaats and 2dehands: listings, sellers, categories and new-listing monitoring.",
-  "version": "0.1.1",
+  "title": "Marktplaats & 2dehands",
+  "description": "Search Marktplaats & 2dehands (NL/BE classifieds), vet sellers, compare prices, use your account.",
+  "version": "0.2.0",
+  "websiteUrl": "https://marktplaats-mcp.jaspnerd.dev",
+  "icons": [
+    {
+      "src": "https://marktplaats-mcp.jaspnerd.dev/icon.png",
+      "mimeType": "image/png",
+      "sizes": [
+        "512x512"
+      ]
+    },
+    {
+      "src": "https://marktplaats-mcp.jaspnerd.dev/icon.svg",
+      "mimeType": "image/svg+xml",
+      "sizes": [
+        "any"
+      ]
+    }
+  ],
   "repository": {
     "url": "https://github.com/jasp-nerd/marktplaats-mcp",
     "source": "github"
   },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://marktplaats-mcp.jaspnerd.dev/mcp"
+    }
+  ],
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "marktplaats-mcp",
-      "version": "0.1.1",
+      "version": "0.2.0",
+      "runtimeHint": "uvx",
       "transport": {
         "type": "stdio"
-      }
+      },
+      "environmentVariables": [
+        {
+          "name": "MARKTPLAATS_COOKIE",
+          "description": "Optional. Your marktplaats.nl session Cookie header for the account tools; prefer running 'marktplaats-mcp login' instead.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "TWEEDEHANDS_COOKIE",
+          "description": "Optional. Your 2dehands.be session Cookie header for the account tools.",
+          "isRequired": false,
+          "isSecret": true
+        },
+        {
+          "name": "MARKTPLAATS_READ_ONLY",
+          "description": "Set to 1 to disable sending messages, bidding and changing favorites.",
+          "isRequired": false,
+          "default": "0"
+        }
+      ]
     }
   ]
 }
