@@ -1,6 +1,7 @@
 """The login/status/logout CLI, with browsers and HTTP faked."""
 
 import json
+import os
 import sys
 import types
 
@@ -71,7 +72,8 @@ def test_login_imports_from_first_browser_with_a_session(monkeypatch, tmp_path, 
     assert saved["sites"]["marktplaats"]["source"] == "firefox"
     assert saved["read_only"] is False
     assert "2dehands" not in saved["sites"]
-    assert oct(session_path.stat().st_mode & 0o777) == "0o600"
+    if os.name != "nt":  # Windows has no POSIX file modes
+        assert oct(session_path.stat().st_mode & 0o777) == "0o600"
     out = capsys.readouterr().out
     assert "www.marktplaats.nl: logged in via firefox (2 unread messages)" in out
 
