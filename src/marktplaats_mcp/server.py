@@ -1032,22 +1032,33 @@ def main() -> None:
                 "Account cookies are configured but MCP_TRANSPORT=http: account tools are "
                 "only available over stdio, never on a shared endpoint."
             )
+        import uvicorn
         from fastmcp.server.middleware.rate_limiting import RateLimitingMiddleware
 
         from .web import register_web_routes
 
         register_web_routes(mcp)
-
         mcp.add_middleware(
             RateLimitingMiddleware(
                 max_requests_per_second=float(os.environ.get("MCP_RPS", "5")),
                 burst_capacity=20,
+                get_client_id=_client_key,
             )
         )
-        mcp.run(
-            transport="http",
+        mcp.add_middleware(
+            RateLimitingMiddleware(
+                max_requests_per_second=float(os.environ.get("MCP_GLOBAL_RPS", "40")),
+                burst_capacity=80,
+                global_limit=True,
+            )
+        )
+        # Build the ASGI app explicitly so the Host/Origin guard settings are
+        # applied exactly as tested, then serve it with uvicorn.
+        uvicorn.run(
+            mcp.http_app(**http_guard_config(os.environ)),
             host=os.environ.get("MCP_HOST", "0.0.0.0"),
             port=int(os.environ.get("MCP_PORT", "8000")),
+            log_level="info",
         )
     else:
         if credentials is not None:
