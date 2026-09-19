@@ -341,7 +341,6 @@ Paid promotions (DAGTOPPER, TOPADVERTENTIE) are filtered out by default; pass `i
 
 ## 🗺️ Roadmap
 
-- FastMCP 4 / MCP 2026-07-28 protocol support
 - Cross-site search (NL and BE in one call)
 - Saved-search creation from the agent
 - Claude Desktop extension bundle (MCPB)

@@ -341,7 +341,6 @@ Betaalde promoties (DAGTOPPER, TOPADVERTENTIE) worden standaard weggefilterd; ge
 
 ## 🗺️ Roadmap
 
-- Ondersteuning voor FastMCP 4 / MCP-protocol 2026-07-28
 - Zoeken over beide sites tegelijk (NL en BE in één aanroep)
 - Opgeslagen zoekopdrachten aanmaken vanuit de agent
 - Extensiebundel voor Claude Desktop (MCPB)

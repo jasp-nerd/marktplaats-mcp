@@ -26,6 +26,7 @@ All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](ht
 - Actionable errors for missing listings, rate limiting and stale sessions instead of raw HTTP messages.
 
 ### Changed
+- Built on FastMCP 4 / MCP SDK 2: speaks both the 2025-11-25 and the sessionless 2026-07-28 protocol eras. Requires pydantic 2.12 or newer.
 - Outbound requests are spaced by `MARKTPLAATS_MIN_INTERVAL_MS` (default 200 ms) and search pages are cached for 60 s.
 - `total_count` remains the marketplace's raw count; `returned`, `next_offset` and `note` describe the filtered page.
 

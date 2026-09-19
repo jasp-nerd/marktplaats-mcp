@@ -341,7 +341,6 @@ Les promotions payantes (DAGTOPPER, TOPADVERTENTIE) sont filtrées par défaut ;
 
 ## 🗺️ Feuille de route
 
-- Prise en charge de FastMCP 4 / du protocole MCP 2026-07-28
 - Recherche multi-sites (NL et BE en un seul appel)
 - Création de recherches sauvegardées depuis l'agent
 - Bundle d'extension pour Claude Desktop (MCPB)
