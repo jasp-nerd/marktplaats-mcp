@@ -265,11 +265,12 @@ def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
         try:
             cookies = list(loader([domain]))
         except Exception as exc:  # not installed, locked profile, or blocked by the OS
-            cookies = _read_locked_chromium_cookies(rookiepy, name, domain)
-            if cookies is None:
+            recovered = _read_locked_chromium_cookies(rookiepy, name, domain)
+            if recovered is None:
                 if "unable to open database" in str(exc) or "Failed to open" in str(exc):
                     blocked.append(name)
                 continue
+            cookies = recovered
         header = cookie_header(cookies, site)
         if header:
             return header, name
