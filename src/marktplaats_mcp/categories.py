@@ -39,11 +39,38 @@ def l2_categories(parent: str | int | None = None) -> list[dict[str, Any]]:
 def resolve_category_ids(
     category: str | int | None,
     subcategory: str | int | None,
-) -> tuple[int | None, int | None]:
-    """Resolve category/subcategory (name or numeric id) to (l1CategoryId, l2CategoryId)."""
+) -> tuple[int | None, list[int]]:
+    """Resolve category/subcategory (name or numeric id) to (l1CategoryId, [l2CategoryIds]).
+
+    The API requires the parent id alongside a subcategory, so a subcategory
+    given on its own resolves its parent from the vendored tree.
+    """
+    l2_entry = _find_l2(subcategory) if subcategory is not None else None
     l1_id = _find_l1(category)["id"] if category is not None else None
-    l2_id = _find_l2(subcategory)["id"] if subcategory is not None else None
-    return l1_id, l2_id
+    if l2_entry is not None:
+        parent_id = _find_l1(l2_entry["parent"])["id"]
+        if l1_id is not None and l1_id != parent_id:
+            raise ValueError(
+                f"Subcategory {l2_entry['name']!r} belongs to {l2_entry['parent']!r}, "
+                f"not to category {category!r}."
+            )
+        l1_id = parent_id
+    return l1_id, [l2_entry["id"]] if l2_entry else []
+
+
+def category_names(l1_id: int | None, l2_ids: list[int]) -> tuple[str | None, str | None]:
+    l1_name = next(
+        (e["name"] for e in _load("l1_categories.json").values() if e["id"] == l1_id), None
+    )
+    l2_name = next(
+        (
+            e["name"]
+            for e in _load("l2_categories.json").values()
+            if l2_ids and e["id"] == l2_ids[0]
+        ),
+        None,
+    )
+    return l1_name, l2_name
 
 
 def _find_l1(ref: str | int) -> dict[str, Any]:

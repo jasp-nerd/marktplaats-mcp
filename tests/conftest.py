@@ -10,10 +10,33 @@ FIXTURES = Path(__file__).parent / "fixtures"
 
 
 @pytest.fixture(autouse=True)
-def _fresh_page_cache() -> None:
-    """The server's client is a process-wide singleton; never let one test's
-    cached search page leak into the next."""
-    server.get_client().cache.clear()
+def _fresh_caches() -> None:
+    """The server's client and facet cache are process-wide singletons; never let
+    one test's cached page or filters leak into the next."""
+    client = server.get_client()
+    client.cache.clear()
+    client.min_interval = 0
+    client.backoff_base = 0.001
+    client.backoff_cap = 0.002
+    server._facets.clear()
+
+
+@pytest.fixture(scope="session")
+def facets_bikes() -> dict[str, Any]:
+    """Recorded search response for Fietsen | Racefietsen (facets only)."""
+    return json.loads((FIXTURES / "facets_bikes.json").read_text())
+
+
+@pytest.fixture(scope="session")
+def facets_cars() -> dict[str, Any]:
+    """Recorded facets for Auto's: range facets and car-specific condition ids."""
+    return json.loads((FIXTURES / "facets_cars.json").read_text())
+
+
+@pytest.fixture(scope="session")
+def listing_vip() -> dict[str, Any]:
+    """Recorded app/vip/v4/item payload (seller name scrubbed)."""
+    return json.loads((FIXTURES / "listing_vip.json").read_text())
 
 
 @pytest.fixture(scope="session")

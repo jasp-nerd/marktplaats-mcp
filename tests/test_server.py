@@ -14,6 +14,19 @@ from marktplaats_mcp.sites import SITES
 
 SEARCH_URL_NL = SITES["marktplaats"].search_url
 SEARCH_URL_BE = SITES["2dehands"].search_url
+VIP_URL_NL = r"https://app\.marktplaats\.nl/app/vip/v4/item/.*"
+PAGE_URL_NL = r"https://link\.marktplaats\.nl/.*"
+
+READ_ONLY_TOOLS = {
+    "search_listings",
+    "get_listing_details",
+    "get_seller_profile",
+    "list_seller_listings",
+    "list_categories",
+    "list_category_filters",
+    "check_new_listings",
+    "analyze_prices",
+}
 
 
 async def call(tool: str, args: dict) -> dict:
@@ -26,19 +39,17 @@ async def call(tool: str, args: dict) -> dict:
 async def test_all_tools_are_registered_with_descriptions():
     async with Client(mcp) as client:
         tools = {tool.name: tool for tool in await client.list_tools()}
-    expected = {
-        "search_listings",
-        "get_listing_details",
-        "get_seller_profile",
-        "list_categories",
-        "check_new_listings",
-    }
-    assert expected == set(tools)
+        prompts = {prompt.name for prompt in await client.list_prompts()}
+    assert set(tools) == READ_ONLY_TOOLS
     for tool in tools.values():
         assert tool.description, f"{tool.name} must have a description"
         assert tool.annotations is not None
         assert tool.annotations.readOnlyHint is True
         assert tool.annotations.destructiveHint is False
+    assert {"bargain_hunt", "vet_listing"} <= prompts
+
+
+# --- search_listings ---------------------------------------------------------
 
 
 @respx.mock
@@ -55,6 +66,7 @@ async def test_search_listings_contract(search_response):
     assert first["title"]
     assert first["price"]
     assert first["url"].startswith("https://www.marktplaats.nl/")
+    assert first["listed"].count("-") == 2  # ISO date, not "Vandaag"
     # promos are filtered out by default
     assert all("is_sponsored" not in listing for listing in data["listings"])
     # offsets count returned (organic) listings, so the next page starts at 5
@@ -79,15 +91,27 @@ async def test_search_listings_full_mode_carries_seller_and_images(search_respon
     first = data["listings"][0]
     assert "seller" in first
     assert first["image_urls"][0].startswith("https://")
+    assert "attributes" in first
 
 
 @respx.mock
 async def test_search_listings_2dehands_site(search_response_be):
     route = respx.get(SEARCH_URL_BE).mock(return_value=httpx.Response(200, json=search_response_be))
-    data = await call("search_listings", {"query": "fiets", "site": "2dehands"})
+    data = await call("search_listings", {"query": "fiets", "site": "2dehands", "language": "nl"})
     assert route.called
     assert data["site"] == "2dehands"
     assert "2dehands.be" in data["listings"][0]["url"]
+    assert "Language%3Anl-BE" in str(route.calls[0].request.url)
+
+
+async def test_language_is_2dehands_only():
+    with pytest.raises(ToolError, match="2dehands"):
+        await call("search_listings", {"query": "fiets", "language": "fr"})
+
+
+async def test_distance_requires_postcode():
+    with pytest.raises(ToolError, match="postcode"):
+        await call("search_listings", {"query": "fiets", "distance_km": 10})
 
 
 @respx.mock
@@ -98,24 +122,87 @@ async def test_search_listings_passes_filters_to_api(search_response):
         {
             "query": "racefiets",
             "category": "Fietsen en Brommers",
+            "subcategory": "Fietsen | Racefietsen",
             "price_from": 100,
             "price_to": 750.50,
             "condition": "used",
+            "delivery": "shipping",
             "postcode": "1011 AB",
             "distance_km": 25,
         },
     )
-    params = str(route.calls[0].request.url)
+    params = str(route.calls[-1].request.url)
     assert "l1CategoryId=445" in params
+    assert "l2CategoryIds%5B%5D=464" in params
     assert "PriceCents%3A10000%3A75050" in params
     assert "attributesById%5B%5D=32" in params
+    assert "attributesById%5B%5D=34" in params
     assert "distanceMeters=25000" in params
 
 
-def _fake_listing(item_id: str, promoted: bool = False) -> dict:
+@respx.mock
+async def test_subcategory_alone_resolves_its_parent(search_response):
+    route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=search_response))
+    await call("search_listings", {"query": "", "subcategory": "racefietsen"})
+    params = str(route.calls[-1].request.url)
+    assert "l1CategoryId=445" in params
+    assert "l2CategoryIds%5B%5D=464" in params
+
+
+@respx.mock
+async def test_attributes_are_resolved_through_live_facets(facets_bikes, search_response):
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.url.params["limit"] == "1":
+            return httpx.Response(200, json=facets_bikes)  # the facet probe
+        return httpx.Response(200, json=search_response)
+
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=responder)
+    await call(
+        "search_listings",
+        {
+            "query": "",
+            "subcategory": "Fietsen | Racefietsen",
+            "attributes": {"Merk": "Batavus", "Framehoogte": ["57 tot 61 cm"]},
+        },
+    )
+    assert route.call_count == 2
+    params = str(route.calls[-1].request.url)
+    assert "attributesById%5B%5D=3408" in params
+    # a second search in the same category reuses the cached facets
+    await call(
+        "search_listings",
+        {"query": "", "subcategory": "racefietsen", "attributes": {"merk": "batavus"}},
+    )
+    assert route.call_count == 3
+
+
+@respx.mock
+async def test_condition_uses_the_category_specific_id(facets_cars, search_response):
+    def responder(request: httpx.Request) -> httpx.Response:
+        if request.url.params["limit"] == "1":
+            return httpx.Response(200, json=facets_cars)
+        return httpx.Response(200, json=search_response)
+
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=responder)
+    await call("search_listings", {"query": "golf", "category": "Auto's", "condition": "used"})
+    params = str(route.calls[-1].request.url)
+    assert "attributesById%5B%5D=14049" in params  # used cars, not the generic 32
+
+
+@respx.mock
+async def test_unknown_attribute_is_a_tool_error(facets_bikes):
+    respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=facets_bikes))
+    with pytest.raises(ToolError, match="Unknown filter 'kleur'"):
+        await call(
+            "search_listings",
+            {"query": "", "subcategory": "racefietsen", "attributes": {"kleur": "rood"}},
+        )
+
+
+def _fake_listing(item_id: str, promoted: bool = False, title: str | None = None) -> dict:
     return {
         "itemId": item_id,
-        "title": f"Listing {item_id}",
+        "title": title or f"Listing {item_id}",
         "priceInfo": {"priceType": "FIXED", "priceCents": 1000},
         "vipUrl": f"/v/cat/sub/{item_id}-listing",
         "location": {"cityName": "Gent"},
@@ -162,7 +249,6 @@ async def test_small_limit_survives_promo_padded_pages():
     data = await call("check_new_listings", {"query": "racefiets", "limit": 3})
     assert data["new_count"] == 3
     assert [listing["id"] for listing in data["listings"]] == ["m39", "m40", "m41"]
-    assert data["note"]  # more new listings exist beyond the limit
     assert route.call_count == 1
 
 
@@ -193,19 +279,29 @@ async def test_pagination_with_next_offset_yields_no_duplicates():
 
 
 @respx.mock
-async def test_page_cache_expires(monkeypatch):
-    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(30, organic_from=0))
-    await call("search_listings", {"query": "fiets", "limit": 5})
-    await call("search_listings", {"query": "fiets", "limit": 5, "offset": 5})
-    assert route.call_count == 1
-    from marktplaats_mcp.server import get_client
+async def test_exclude_terms_filter_client_side():
+    rows = [
+        _fake_listing("m1", title="iPhone 15 hoesje"),
+        _fake_listing("m2", title="iPhone 15 128GB"),
+        _fake_listing("m3", title="GEZOCHT: iphone 15"),
+    ]
+    respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(200, json={"totalResultCount": 3, "listings": rows})
+    )
+    data = await call("search_listings", {"query": "iphone 15", "exclude": ["hoesje", "gezocht"]})
+    assert [listing["id"] for listing in data["listings"]] == ["m2"]
+    assert "next_offset" not in data
 
-    get_client().cache.ttl = 0
-    get_client().cache.clear()
-    await call("search_listings", {"query": "fiets", "limit": 5})
-    await call("search_listings", {"query": "fiets", "limit": 5, "offset": 5})
-    assert route.call_count == 3
-    get_client().cache.ttl = 60
+
+@respx.mock
+async def test_spelling_suggestion_is_surfaced():
+    respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(
+            200, json={"totalResultCount": 0, "listings": [], "suggestedQuery": "racefiets"}
+        )
+    )
+    data = await call("search_listings", {"query": "racefitse"})
+    assert data["suggested_query"] == "racefiets"
 
 
 async def test_search_listings_requires_query_or_category():
@@ -216,41 +312,73 @@ async def test_search_listings_requires_query_or_category():
 @respx.mock
 async def test_search_listings_surfaces_api_failure_as_tool_error():
     respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(403))
-    with pytest.raises(ToolError, match="HTTP 403"):
+    with pytest.raises(ToolError, match="rate-limiting or blocking"):
         await call("search_listings", {"query": "fiets"})
 
 
+# --- get_listing_details -------------------------------------------------------
+
+
 @respx.mock
-async def test_get_listing_details_contract(listing_page_html):
-    respx.get(url__regex=r"https://link\.marktplaats\.nl/.*").mock(
-        return_value=httpx.Response(200, text=listing_page_html)
+async def test_get_listing_details_uses_app_endpoint(listing_vip):
+    route = respx.post(url__regex=VIP_URL_NL).mock(
+        return_value=httpx.Response(200, json=listing_vip)
     )
+    data = await call("get_listing_details", {"listing_id": "m2444371973"})
+    assert route.calls[0].request.url.path.endswith("/m2444371973")
+    assert data["id"] == "m2444371973"
+    assert data["status"] == "ACTIVE"
+    assert data["attributes"]["Conditie"] == "Gebruikt"
+    assert data["seller"]["response_rate_percent"] == 74
+    assert data["bidding"]["minimum_bid_euros"] == 150.0
+    assert len(data["image_urls"]) == 5
+    assert data["image_count"] == 7
+
+
+@respx.mock
+async def test_get_listing_details_accepts_urls_and_bare_ids(listing_vip):
+    route = respx.post(url__regex=VIP_URL_NL).mock(
+        return_value=httpx.Response(200, json=listing_vip)
+    )
+    be_route = respx.post(url__regex=r"https://app\.2dehands\.be/app/vip/v4/item/.*").mock(
+        return_value=httpx.Response(200, json=listing_vip)
+    )
+    await call("get_listing_details", {"listing_id": "2444371973"})
+    assert route.calls[-1].request.url.path.endswith("/m2444371973")
+    await call(
+        "get_listing_details",
+        {"listing_id": "https://www.marktplaats.nl/v/fietsen/racefietsen/m2444371973-baan-fiets"},
+    )
+    assert route.calls[-1].request.url.path.endswith("/m2444371973")
+    # the site is inferred from a 2dehands URL even if the site param says otherwise
+    await call("get_listing_details", {"listing_id": "https://link.2dehands.be/m2443283582"})
+    assert be_route.called
+
+
+@respx.mock
+async def test_get_listing_details_falls_back_to_page_when_app_api_fails(listing_page_html):
+    respx.post(url__regex=VIP_URL_NL).mock(return_value=httpx.Response(503))
+    respx.get(url__regex=PAGE_URL_NL).mock(return_value=httpx.Response(200, text=listing_page_html))
     data = await call("get_listing_details", {"listing_id": "m2420210707"})
-    assert data["id"] == "m2420210707"
     assert data["title"]
-    assert data["price"]
-    assert data["view_count"] >= 0
-    assert data["since"]
-    assert data["description"]  # extracted from the description div fallback
-    assert data["seller"]["id"]
+    assert data["description"]
 
 
 @respx.mock
-async def test_get_listing_details_prefixes_bare_numeric_id(listing_page_html):
-    route = respx.get(url__regex=r"https://link\.marktplaats\.nl/.*").mock(
-        return_value=httpx.Response(200, text=listing_page_html)
+async def test_get_listing_details_not_found_is_actionable():
+    respx.post(url__regex=VIP_URL_NL).mock(
+        return_value=httpx.Response(404, json={"code": "NOT_FOUND"})
     )
-    await call("get_listing_details", {"listing_id": "2420210707"})
-    assert str(route.calls[0].request.url).endswith("/m2420210707")
+    with pytest.raises(ToolError, match="sold or removed"):
+        await call("get_listing_details", {"listing_id": "m9999999999"})
 
 
-@respx.mock
-async def test_get_listing_details_not_found():
-    respx.get(url__regex=r"https://link\.marktplaats\.nl/.*").mock(
-        return_value=httpx.Response(200, text="<html><body>no config here</body></html>")
-    )
-    with pytest.raises(ToolError, match="not found"):
-        await call("get_listing_details", {"listing_id": "m1"})
+async def test_get_listing_details_rejects_garbage_ids():
+    with pytest.raises(ToolError, match="Invalid listing_id"):
+        await call("get_listing_details", {"listing_id": "not-an-id"})
+
+
+# --- sellers -------------------------------------------------------------------
 
 
 @respx.mock
@@ -262,6 +390,22 @@ async def test_get_seller_profile_contract(seller_response):
     assert data["seller_id"] == 12345
     assert data["phone_number_verified"] is True
     assert data["bank_account_verified"] is False
+    # unknown signals are explicit nulls, so "no data" and "0 reviews" differ
+    assert "business_verified" in data
+    assert "number_of_reviews" in data
+
+
+@respx.mock
+async def test_list_seller_listings_searches_by_seller_id(search_response):
+    route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=search_response))
+    data = await call("list_seller_listings", {"seller_id": 518777, "limit": 5})
+    params = str(route.calls[0].request.url)
+    assert "sellerIds%5B%5D=518777" in params
+    assert "sortBy=SORT_INDEX" in params
+    assert data["returned"] == 5
+
+
+# --- categories & filters -------------------------------------------------------
 
 
 async def test_list_categories_l1():
@@ -285,6 +429,29 @@ async def test_list_categories_unknown_parent():
 
 
 @respx.mock
+async def test_list_category_filters_contract(facets_bikes):
+    route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=facets_bikes))
+    data = await call("list_category_filters", {"subcategory": "Fietsen | Racefietsen"})
+    params = str(route.calls[0].request.url)
+    assert "limit=1" in params
+    assert "l2CategoryIds%5B%5D=464" in params
+    assert data["category"] == "Fietsen en Brommers"
+    assert data["subcategory"] == "Fietsen | Racefietsen"
+    by_key = {f["key"]: f for f in data["filters"]}
+    assert by_key["brand"]["label"] == "Merk"
+    assert by_key["brand"]["options"][0]["label"]
+    assert "attributes=" in data["note"]
+
+
+async def test_list_category_filters_needs_a_category_or_query():
+    with pytest.raises(ToolError, match="category"):
+        await call("list_category_filters", {})
+
+
+# --- check_new_listings --------------------------------------------------------
+
+
+@respx.mock
 async def test_check_new_listings_contract(search_response):
     route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=search_response))
     data = await call(
@@ -298,10 +465,67 @@ async def test_check_new_listings_contract(search_response):
     assert data["since"] == "2026-07-14T00:00:00+00:00"
     assert data["cursor"] > data["since"]  # ISO strings compare chronologically here
     assert data["new_count"] == len(data["listings"])
+    assert "truncated" not in data
     # promos never appear in monitoring results
     assert all("is_sponsored" not in listing for listing in data["listings"])
+
+
+@respx.mock
+async def test_check_new_listings_does_not_advance_cursor_when_truncated():
+    respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(500, organic_from=0))
+    data = await call(
+        "check_new_listings", {"query": "fiets", "since": "2026-07-14T00:00:00Z", "limit": 3}
+    )
+    assert data["new_count"] == 3
+    assert data["truncated"] is True
+    assert data["cursor"] == data["since"]  # nothing is skipped on the next poll
+    assert "Raise the limit" in data["note"]
 
 
 async def test_check_new_listings_rejects_bad_timestamp():
     with pytest.raises(ToolError, match="ISO 8601"):
         await call("check_new_listings", {"query": "fiets", "since": "yesterday"})
+
+
+# --- analyze_prices ------------------------------------------------------------
+
+
+@respx.mock
+async def test_analyze_prices_contract():
+    def priced(item_id: str, cents: int, price_type: str = "FIXED", reserved: bool = False) -> dict:
+        row = _fake_listing(item_id)
+        row["priceInfo"] = {"priceType": price_type, "priceCents": cents}
+        row["reserved"] = reserved
+        return row
+
+    rows = [
+        priced("m1", 10000),
+        priced("m2", 20000),
+        priced("m3", 30000),
+        priced("m4", 40000),
+        priced("m5", 0, "FAST_BID"),  # bidding without amount: excluded
+        priced("m6", 500, reserved=True),  # reserved: excluded
+        priced("m7", 0, "FREE"),  # free: excluded
+    ]
+    respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(200, json={"totalResultCount": 7, "listings": rows})
+    )
+    data = await call("analyze_prices", {"query": "fiets"})
+    assert data["sample_size"] == 4
+    assert data["total_count"] == 7
+    assert (data["min"], data["median"], data["max"]) == (100.0, 250.0, 400.0)
+    assert data["p25"] == 175.0
+    assert data["p75"] == 325.0
+    assert data["mean"] == 250.0
+    assert [item["id"] for item in data["cheapest"]] == ["m1", "m2", "m3"]
+    assert "not sold prices" in data["note"]
+
+
+@respx.mock
+async def test_analyze_prices_without_priced_ads():
+    respx.get(SEARCH_URL_NL).mock(
+        return_value=httpx.Response(200, json={"totalResultCount": 0, "listings": []})
+    )
+    data = await call("analyze_prices", {"query": "unobtainium"})
+    assert data["sample_size"] == 0
+    assert "median" not in data

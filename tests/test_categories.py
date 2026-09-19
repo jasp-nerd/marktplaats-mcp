@@ -1,6 +1,7 @@
 import pytest
 
 from marktplaats_mcp.categories import (
+    category_names,
     l1_categories,
     l2_categories,
     resolve_category_ids,
@@ -26,24 +27,35 @@ def test_l2_categories_by_parent_id():
 
 
 def test_resolve_by_name_is_case_insensitive():
-    l1_id, l2_id = resolve_category_ids("fietsen EN brommers", None)
+    l1_id, l2_ids = resolve_category_ids("fietsen EN brommers", None)
     assert l1_id == 445
-    assert l2_id is None
+    assert l2_ids == []
 
 
 def test_resolve_by_numeric_id_and_numeric_string():
-    assert resolve_category_ids(445, None) == (445, None)
-    assert resolve_category_ids("445", None) == (445, None)
+    assert resolve_category_ids(445, None) == (445, [])
+    assert resolve_category_ids("445", None) == (445, [])
 
 
-def test_resolve_subcategory_by_full_key():
-    _, l2_id = resolve_category_ids(None, "antiek | bestek")
-    assert l2_id == 2
+def test_resolve_subcategory_by_full_key_also_resolves_parent():
+    # the API needs the parent id next to the subcategory id
+    assert resolve_category_ids(None, "antiek | bestek") == (1, [2])
 
 
 def test_resolve_subcategory_by_unique_suffix():
-    _, l2_id = resolve_category_ids(None, "racefietsen")
-    assert isinstance(l2_id, int)
+    l1_id, l2_ids = resolve_category_ids(None, "racefietsen")
+    assert l1_id == 445
+    assert l2_ids == [464]
+
+
+def test_subcategory_under_wrong_parent_is_rejected():
+    with pytest.raises(ValueError, match="belongs to"):
+        resolve_category_ids("Auto's", "racefietsen")
+
+
+def test_category_names_round_trip():
+    assert category_names(445, [464]) == ("Fietsen en Brommers", "Fietsen | Racefietsen")
+    assert category_names(None, []) == (None, None)
 
 
 def test_ambiguous_subcategory_suffix_raises():
