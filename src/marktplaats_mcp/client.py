@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import asyncio
 import random
+import time
+from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
@@ -55,6 +57,42 @@ class ApiError(Exception):
     """The Marktplaats API returned an unusable response."""
 
 
+class PageCache:
+    """Small TTL cache for raw search pages.
+
+    Pagination walks aligned pages from offset 0 (see server._collect_listings),
+    so consecutive tool calls in one session re-read the same page. Serving it
+    from memory keeps us polite towards the upstream API.
+    """
+
+    def __init__(self, ttl: float = 60.0, max_entries: int = 64) -> None:
+        self.ttl = ttl
+        self.max_entries = max_entries
+        self._entries: OrderedDict[Any, tuple[float, dict[str, Any]]] = OrderedDict()
+
+    def get(self, key: Any) -> dict[str, Any] | None:
+        entry = self._entries.get(key)
+        if entry is None:
+            return None
+        expires_at, value = entry
+        if expires_at < time.monotonic():
+            del self._entries[key]
+            return None
+        self._entries.move_to_end(key)
+        return value
+
+    def put(self, key: Any, value: dict[str, Any]) -> None:
+        if self.ttl <= 0:
+            return
+        self._entries[key] = (time.monotonic() + self.ttl, value)
+        self._entries.move_to_end(key)
+        while len(self._entries) > self.max_entries:
+            self._entries.popitem(last=False)
+
+    def clear(self) -> None:
+        self._entries.clear()
+
+
 class MarktplaatsClient:
     def __init__(
         self,
@@ -62,10 +100,12 @@ class MarktplaatsClient:
         max_retries: int = 3,
         backoff_base: float = 1.0,
         backoff_cap: float = 30.0,
+        cache_ttl: float = 60.0,
     ) -> None:
         self.max_retries = max_retries
         self.backoff_base = backoff_base
         self.backoff_cap = backoff_cap
+        self.cache = PageCache(ttl=cache_ttl)
         self._http = httpx.AsyncClient(timeout=timeout, follow_redirects=True)
 
     async def aclose(self) -> None:
@@ -104,8 +144,14 @@ class MarktplaatsClient:
         raise ApiError(f"Request failed after {self.max_retries + 1} attempts: {last_error}")
 
     async def search(self, site: Site, params: list[tuple[str, str]]) -> dict[str, Any]:
+        key = (site.key, tuple(params))
+        cached = self.cache.get(key)
+        if cached is not None:
+            return cached
         response = await self._get(site.search_url, site, params=params)
-        return _decode_json(response)
+        data = _decode_json(response)
+        self.cache.put(key, data)
+        return data
 
     async def seller_profile(self, site: Site, seller_id: int) -> dict[str, Any]:
         response = await self._get(site.seller_url(seller_id), site)

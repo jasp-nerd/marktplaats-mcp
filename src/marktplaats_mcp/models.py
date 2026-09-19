@@ -47,6 +47,7 @@ class SearchResult(BaseModel):
     offset: int
     limit: int
     returned: int
+    next_offset: int | None = None
     listings: list[Listing]
     note: str | None = None
 

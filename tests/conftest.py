@@ -4,7 +4,16 @@ from typing import Any
 
 import pytest
 
+from marktplaats_mcp import server
+
 FIXTURES = Path(__file__).parent / "fixtures"
+
+
+@pytest.fixture(autouse=True)
+def _fresh_page_cache() -> None:
+    """The server's client is a process-wide singleton; never let one test's
+    cached search page leak into the next."""
+    server.get_client().cache.clear()
 
 
 @pytest.fixture(scope="session")

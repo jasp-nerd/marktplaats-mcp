@@ -13,7 +13,7 @@ from pydantic import Field
 
 from . import __version__
 from .categories import l1_categories, l2_categories, resolve_category_ids
-from .client import ApiError, MarktplaatsClient, build_search_params, since_days_ago
+from .client import MAX_LIMIT, ApiError, MarktplaatsClient, build_search_params, since_days_ago
 from .detail import ListingNotFoundError, parse_listing_page
 from .models import Listing, NewListingsResult, SearchResult, SellerProfile, dump
 from .parsing import is_promoted, parse_listing
@@ -124,7 +124,10 @@ async def search_listings(
     ] = "relevance",
     sort_order: Annotated[SortOrder, Field(description="'asc' or 'desc'.")] = "desc",
     limit: Annotated[int, Field(description="Results per page (1-100).", ge=1, le=100)] = 10,
-    offset: Annotated[int, Field(description="Pagination offset: page_number * limit.", ge=0)] = 0,
+    offset: Annotated[
+        int,
+        Field(description="Pagination: pass 'next_offset' from the previous result.", ge=0),
+    ] = 0,
     compact: Annotated[
         bool,
         Field(
@@ -145,7 +148,7 @@ async def search_listings(
 ) -> dict[str, Any]:
     """Search second-hand listings on Marktplaats or 2dehands with filters for
     category, price range, condition, recency and distance from a postal code."""
-    listings, total = await _collect_listings(
+    listings, total, has_more = await _collect_listings(
         site=site,
         query=query,
         category=category,
@@ -163,9 +166,10 @@ async def search_listings(
         compact=compact,
         include_sponsored=include_sponsored,
     )
+    next_offset = offset + len(listings) if has_more else None
     note = None
-    if total > offset + limit:
-        note = f"More results available: repeat with offset={offset + limit}."
+    if next_offset is not None:
+        note = f"More results available: repeat with offset={next_offset}."
     return dump(
         SearchResult(
             site=site,
@@ -173,6 +177,7 @@ async def search_listings(
             offset=offset,
             limit=limit,
             returned=len(listings),
+            next_offset=next_offset,
             listings=listings,
             note=note,
         )
@@ -290,7 +295,7 @@ async def check_new_listings(
     on the next call to only see genuinely new listings."""
     since_dt = _parse_since(since) if since else since_days_ago(1)
     cursor = datetime.now(timezone.utc).replace(microsecond=0)
-    listings, _ = await _collect_listings(
+    listings, _, has_more = await _collect_listings(
         site=site,
         query=query,
         category=category,
@@ -309,9 +314,9 @@ async def check_new_listings(
         include_sponsored=False,
     )
     note = None
-    if len(listings) == limit:
+    if has_more:
         note = (
-            "Result hit the limit; there may be more new listings. "
+            "Result hit the limit; there are more new listings. "
             "Narrow the search or raise the limit."
         )
     return dump(
@@ -326,11 +331,14 @@ async def check_new_listings(
     )
 
 
-# Page 1 can be padded almost entirely with paid promotions (especially on
-# 2dehands), so after filtering them we may come up short. Fetch a few more
-# pages — politely capped — until the requested number of organic listings
-# is filled.
-MAX_FILL_PAGES = 3
+# The search API pads date-sorted pages with paid promotions (57 of the first
+# 100 "racefiets" results were DAGTOPPERs when measured; the first organic ad
+# sat at raw position 39) and it aligns any offset down to a multiple of the
+# requested limit, so offsets are only meaningful on page boundaries. We
+# therefore walk fixed, aligned pages of the API maximum, skip promotions, and
+# count the caller's ``offset`` in returned listings rather than raw rows.
+PAGE_SIZE = MAX_LIMIT
+MAX_PAGES_PER_CALL = 5
 
 
 async def _collect_listings(
@@ -351,13 +359,21 @@ async def _collect_listings(
     offset: int,
     compact: bool,
     include_sponsored: bool,
-) -> tuple[list[Listing], int]:
+) -> tuple[list[Listing], int, bool]:
+    """Return (listings, raw_total_count, has_more).
+
+    ``offset`` counts listings as this tool returns them (promotions excluded
+    unless ``include_sponsored``), so ``offset + returned`` is always the next
+    page. ``has_more`` is False once the underlying result set is exhausted.
+    """
     resolved_site = resolve_site(site)
+    to_skip = offset
     listings: list[Listing] = []
-    seen_raw: set[str] = set()
+    seen: set[str] = set()
     total = 0
-    fetch_offset = offset
-    for page in range(MAX_FILL_PAGES):
+    has_more = False
+    page_offset = 0
+    for _ in range(MAX_PAGES_PER_CALL):
         data = await _search(
             site=site,
             query=query,
@@ -371,29 +387,42 @@ async def _collect_listings(
             offered_since=offered_since,
             sort_by=sort_by,
             sort_order=sort_order,
-            limit=limit,
-            offset=fetch_offset,
+            limit=PAGE_SIZE,
+            offset=page_offset,
         )
         total = int(data.get("totalResultCount") or 0)
-        raw_items = [(raw, False) for raw in data.get("listings") or []]
-        if include_sponsored and page == 0:
-            raw_items += [(raw, True) for raw in data.get("topBlock") or []]
-
-        page_ids = {str(raw.get("itemId")) for raw, _ in raw_items}
-        if not raw_items or page_ids <= seen_raw:
+        page_items: list[tuple[dict[str, Any], bool]] = [
+            (raw, False) for raw in data.get("listings") or []
+        ]
+        if include_sponsored and page_offset == 0:
+            page_items = [(raw, True) for raw in data.get("topBlock") or []] + page_items
+        page_ids = {str(raw.get("itemId")) for raw, _ in page_items}
+        if not page_items or page_ids <= seen:
             break  # exhausted, or the API is repeating itself
-        for raw, sponsored in raw_items:
+        for raw, from_top_block in page_items:
             item_id = str(raw.get("itemId"))
-            if item_id in seen_raw:
+            if item_id in seen:
                 continue
-            seen_raw.add(item_id)
+            seen.add(item_id)
             if not include_sponsored and is_promoted(raw):
                 continue
-            listings.append(parse_listing(raw, resolved_site, compact=compact, sponsored=sponsored))
-        fetch_offset += limit
-        if len(listings) >= limit or fetch_offset >= total:
+            if to_skip:
+                to_skip -= 1
+                continue
+            if len(listings) == limit:
+                has_more = True
+                break
+            listings.append(
+                parse_listing(raw, resolved_site, compact=compact, sponsored=from_top_block)
+            )
+        if has_more:
             break
-    return listings[:limit], total
+        page_offset += PAGE_SIZE
+        if page_offset >= total:
+            break
+    else:
+        has_more = True  # gave up before exhausting the result set
+    return listings, total, has_more
 
 
 async def _search(

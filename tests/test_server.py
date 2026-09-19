@@ -1,6 +1,8 @@
 """Tool-contract tests: the server is exercised through FastMCP's in-memory
 client (real MCP round-trip), with HTTP mocked by respx using recorded payloads."""
 
+from collections.abc import Callable
+
 import httpx
 import pytest
 import respx
@@ -55,7 +57,8 @@ async def test_search_listings_contract(search_response):
     assert first["url"].startswith("https://www.marktplaats.nl/")
     # promos are filtered out by default
     assert all("is_sponsored" not in listing for listing in data["listings"])
-    # more results exist, so the tool must hint at pagination
+    # offsets count returned (organic) listings, so the next page starts at 5
+    assert data["next_offset"] == 5
     assert "offset=5" in data["note"]
 
 
@@ -122,36 +125,87 @@ def _fake_listing(item_id: str, promoted: bool = False) -> dict:
 
 
 @respx.mock
-async def test_search_fills_up_from_next_pages_when_page_one_is_all_promos():
-    # 2dehands pads page 1 with paid promos; the tool must fetch further pages
-    # so the user still gets the organic listings they asked for.
-    page1 = {
-        "listings": [_fake_listing(f"m{i}", promoted=True) for i in range(3)],
-        "totalResultCount": 50,
-    }
-    page2 = {
-        "listings": [_fake_listing(f"m{i + 10}") for i in range(3)],
-        "totalResultCount": 50,
-    }
-    route = respx.get(SEARCH_URL_NL).mock(
-        side_effect=[httpx.Response(200, json=page1), httpx.Response(200, json=page2)]
-    )
-    data = await call("search_listings", {"query": "fiets", "limit": 3})
-    assert route.call_count == 2
-    assert data["returned"] == 3
-    assert [listing["id"] for listing in data["listings"]] == ["m10", "m11", "m12"]
-
-
-@respx.mock
 async def test_search_stops_when_api_repeats_itself():
     page = {
         "listings": [_fake_listing("m1", promoted=True)],
-        "totalResultCount": 100,
+        "totalResultCount": 300,
     }
     route = respx.get(SEARCH_URL_NL).mock(return_value=httpx.Response(200, json=page))
     data = await call("search_listings", {"query": "fiets", "limit": 5})
     assert data["returned"] == 0
     assert route.call_count == 2  # second page repeated the same ids → stop
+
+
+def fake_search_api(total: int, organic_from: int) -> Callable[[httpx.Request], httpx.Response]:
+    """Simulate lrp/api/search: every raw row before ``organic_from`` is a paid
+    promotion, and, like the real API, the offset is aligned down to a multiple
+    of the requested limit."""
+
+    def responder(request: httpx.Request) -> httpx.Response:
+        params = request.url.params
+        size = int(params["limit"])
+        start = (int(params["offset"]) // size) * size
+        rows = [
+            _fake_listing(f"m{i}", promoted=i < organic_from)
+            for i in range(start, min(start + size, total))
+        ]
+        return httpx.Response(200, json={"totalResultCount": total, "listings": rows})
+
+    return responder
+
+
+@respx.mock
+async def test_small_limit_survives_promo_padded_pages():
+    """Regression: date-sorted page 1 is often 100% DAGTOPPER. A poll with a small
+    limit used to fetch three tiny pages of promos and return nothing."""
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(500, organic_from=39))
+    data = await call("check_new_listings", {"query": "racefiets", "limit": 3})
+    assert data["new_count"] == 3
+    assert [listing["id"] for listing in data["listings"]] == ["m39", "m40", "m41"]
+    assert data["note"]  # more new listings exist beyond the limit
+    assert route.call_count == 1
+
+
+@respx.mock
+async def test_search_fills_up_from_next_pages_when_page_one_is_all_promos():
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(250, organic_from=120))
+    data = await call("search_listings", {"query": "fiets", "limit": 3})
+    assert route.call_count == 2
+    assert [listing["id"] for listing in data["listings"]] == ["m120", "m121", "m122"]
+
+
+@respx.mock
+async def test_pagination_with_next_offset_yields_no_duplicates():
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(160, organic_from=110))
+    seen: list[str] = []
+    offset = 0
+    for _ in range(10):
+        data = await call("search_listings", {"query": "fiets", "limit": 20, "offset": offset})
+        seen += [listing["id"] for listing in data["listings"]]
+        if data.get("next_offset") is None:
+            assert "note" not in data
+            break
+        assert data["next_offset"] == offset + data["returned"]
+        offset = data["next_offset"]
+    assert seen == [f"m{i}" for i in range(110, 160)]
+    # pages are cached between calls, so walking 50 listings hits the API twice
+    assert route.call_count == 2
+
+
+@respx.mock
+async def test_page_cache_expires(monkeypatch):
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(30, organic_from=0))
+    await call("search_listings", {"query": "fiets", "limit": 5})
+    await call("search_listings", {"query": "fiets", "limit": 5, "offset": 5})
+    assert route.call_count == 1
+    from marktplaats_mcp.server import get_client
+
+    get_client().cache.ttl = 0
+    get_client().cache.clear()
+    await call("search_listings", {"query": "fiets", "limit": 5})
+    await call("search_listings", {"query": "fiets", "limit": 5, "offset": 5})
+    assert route.call_count == 3
+    get_client().cache.ttl = 60
 
 
 async def test_search_listings_requires_query_or_category():
