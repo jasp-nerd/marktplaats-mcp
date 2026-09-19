@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import concurrent.futures
 import contextlib
 import json
 import os
@@ -331,7 +332,13 @@ def _verify(site: Site, cookie: str) -> int | None:
             await client.aclose()
         return unread if unread is not None else 0
 
-    return asyncio.run(check())
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        return asyncio.run(check())
+    # Called from inside Playwright's sync API, which owns this thread's loop.
+    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+        return executor.submit(asyncio.run, check()).result()
 
 
 def _status(path: Path) -> int:
