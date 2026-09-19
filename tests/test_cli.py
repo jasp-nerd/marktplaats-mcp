@@ -28,7 +28,25 @@ def fake_rookiepy(monkeypatch, cookies_by_browser: dict[str, list[dict]]) -> Non
 
     for name in cli.BROWSERS:
         setattr(module, name, loader_for(name))
+    module.chromium_based = lambda db_path, domains=None: cookies_by_browser.get("copied", [])
     monkeypatch.setitem(sys.modules, "rookiepy", module)
+
+
+@respx.mock
+def test_login_copies_a_locked_chromium_database(monkeypatch, tmp_path):
+    session_path = tmp_path / "session.json"
+    monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(session_path))
+    mock_verification()
+    locked = [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "copied"}]
+    fake_rookiepy(monkeypatch, {"copied": locked})  # brave itself raises (locked)
+    cookie_file = tmp_path / "Brave/Default/Cookies"
+    cookie_file.parent.mkdir(parents=True)
+    cookie_file.write_bytes(b"sqlite")
+    monkeypatch.setattr(cli, "_chromium_cookie_files", lambda name: [cookie_file])
+    assert cli.main(["login", "--browser", "brave", "--site", "marktplaats"]) == 0
+    saved = json.loads(session_path.read_text())
+    assert saved["sites"]["marktplaats"]["cookie"] == "MpSession=copied"
+    assert saved["sites"]["marktplaats"]["source"] == "brave"
 
 
 def mock_verification(ok: bool = True) -> None:
@@ -66,7 +84,7 @@ def test_login_imports_from_first_browser_with_a_session(monkeypatch, tmp_path, 
             "firefox": [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "s3cret"}],
         },
     )
-    assert cli.main(["login", "--import", "--site", "both"]) == 0
+    assert cli.main(["login", "--site", "both"]) == 0
     saved = json.loads(session_path.read_text())
     assert saved["sites"]["marktplaats"]["cookie"] == "MpSession=s3cret"
     assert saved["sites"]["marktplaats"]["source"] == "firefox"
@@ -83,7 +101,7 @@ def test_login_fails_cleanly_when_no_browser_has_a_session(monkeypatch, tmp_path
     monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
     mock_verification()
     fake_rookiepy(monkeypatch, {})
-    assert cli.main(["login", "--import", "--site", "marktplaats"]) == 1
+    assert cli.main(["login", "--site", "marktplaats"]) == 1
     assert "No working session found" in capsys.readouterr().err
 
 
@@ -95,7 +113,7 @@ def test_login_rejects_stale_cookie(monkeypatch, tmp_path, capsys):
         monkeypatch,
         {"chrome": [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "old"}]},
     )
-    assert cli.main(["login", "--import", "chrome", "--site", "marktplaats"]) == 1
+    assert cli.main(["login", "--browser", "chrome", "--site", "marktplaats"]) == 1
     assert "rejected it" in capsys.readouterr().out
 
 
@@ -114,7 +132,7 @@ def test_login_paste_and_read_only(monkeypatch, tmp_path):
 def test_login_without_rookiepy_explains_the_extra(monkeypatch, tmp_path, capsys):
     monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
     monkeypatch.setitem(sys.modules, "rookiepy", None)  # simulate ImportError
-    assert cli.main(["login", "--import", "--site", "marktplaats"]) == 1
+    assert cli.main(["login", "--site", "marktplaats"]) == 1
     assert "marktplaats-mcp[login]" in capsys.readouterr().err
 
 
@@ -179,7 +197,7 @@ def test_login_window_captures_session_after_user_logs_in(monkeypatch, tmp_path,
         [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "fromwindow"}],
         launches,
     )
-    assert cli.main(["login"]) == 0
+    assert cli.main(["login", "--window"]) == 0
     saved = json.loads(session_path.read_text())
     assert saved["sites"]["marktplaats"]["cookie"] == "MpSession=fromwindow"
     assert saved["sites"]["marktplaats"]["source"] == "browser window"
@@ -192,7 +210,7 @@ def test_login_window_without_playwright_explains_the_extra(monkeypatch, tmp_pat
     monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
     monkeypatch.setitem(sys.modules, "playwright", None)
     monkeypatch.setitem(sys.modules, "playwright.sync_api", None)
-    assert cli.main(["login"]) == 1
+    assert cli.main(["login", "--window"]) == 1
     assert "marktplaats-mcp[login]" in capsys.readouterr().err
 
 

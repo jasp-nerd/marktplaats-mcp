@@ -1,11 +1,11 @@
 """``marktplaats-mcp login|status|logout``: manage the local account session.
 
-``login`` opens a browser window on the site's login page; the user logs in
-there as usual (two-factor code included) and the command captures the
-resulting session, verifies it against the site and stores it in a private
-file the server reads on startup. Alternatives: ``--import`` reads the session
-from a browser the user is already logged into (yt-dlp's cookies-from-browser
-approach, which macOS may block), and ``--paste`` takes a Cookie header.
+``login`` copies the Marktplaats / 2dehands session from a browser the user is
+already logged into (yt-dlp's cookies-from-browser approach), verifies it
+against the site and stores it in a private file the server reads on startup.
+Chromium browsers keep their cookie database locked while running, so it is
+copied before reading. Alternatives: ``--window`` opens a browser window to
+log in there, and ``--paste`` takes a Cookie header.
 """
 
 from __future__ import annotations
@@ -79,7 +79,7 @@ def main(argv: list[str] | None = None) -> int:
 
     login = commands.add_parser(
         "login",
-        help="Open a browser window to log in; the session is captured and stored locally.",
+        help="Copy your session from a browser you are logged into and store it locally.",
     )
     login.add_argument(
         "--site",
@@ -88,15 +88,14 @@ def main(argv: list[str] | None = None) -> int:
         help="Which marketplace to log in to (default: marktplaats).",
     )
     login.add_argument(
-        "--import",
-        dest="import_from",
-        nargs="?",
-        const="any",
-        choices=[*BROWSERS, "any"],
-        help=(
-            "Instead of opening a window, read the session from a browser you are already "
-            "logged into (optionally name the browser)."
-        ),
+        "--browser",
+        choices=BROWSERS,
+        help="Only read this browser (default: try them all).",
+    )
+    login.add_argument(
+        "--window",
+        action="store_true",
+        help="Open a browser window to log in there instead of reading an existing session.",
     )
     login.add_argument(
         "--paste",
@@ -130,11 +129,10 @@ def _login(args: argparse.Namespace, path: Path) -> int:
     for site in sites:
         if args.paste:
             result = _paste_cookie(site)
-        elif args.import_from:
-            browser = None if args.import_from == "any" else args.import_from
-            result = _import_cookie(site, browser)
-        else:
+        elif args.window:
             result = _window_login(site)
+        else:
+            result = _import_cookie(site, args.browser)
         if result is None:
             continue
         cookie, source = result
@@ -151,7 +149,8 @@ def _login(args: argparse.Namespace, path: Path) -> int:
         print(f"  {site.host}: logged in via {source} ({unread} unread messages).")
     if not found:
         print(
-            "\nNo working session found. Run 'marktplaats-mcp login' again, or use --paste.",
+            "\nNo working session found. Log in at https://www.marktplaats.nl in your browser "
+            "and run this again, or use --window or --paste.",
             file=sys.stderr,
         )
         return 1
@@ -177,8 +176,8 @@ def _window_login(site: Site) -> tuple[str, str] | None:
     except ImportError:
         print(
             "The login window needs the 'login' extra: run\n"
-            "  uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login\n"
-            "or use --import / --paste.",
+            "  uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login --window\n"
+            "or use --paste.",
             file=sys.stderr,
         )
         return None
@@ -258,16 +257,19 @@ def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
     print(f"Looking for a {site.host} session in: {', '.join(names)} ...")
     print("  (macOS may ask for keychain access to read a browser's cookies; click Allow.)")
     blocked: list[str] = []
+    domain = site.host.removeprefix("www.")
     for name in names:
         loader: Callable[..., Iterable[dict[str, Any]]] | None = getattr(rookiepy, name, None)
         if loader is None:
             continue
         try:
-            cookies = list(loader([site.host.removeprefix("www.")]))
+            cookies = list(loader([domain]))
         except Exception as exc:  # not installed, locked profile, or blocked by the OS
-            if "unable to open database" in str(exc) or "Failed to open" in str(exc):
-                blocked.append(name)
-            continue
+            cookies = _read_locked_chromium_cookies(rookiepy, name, domain)
+            if cookies is None:
+                if "unable to open database" in str(exc) or "Failed to open" in str(exc):
+                    blocked.append(name)
+                continue
         header = cookie_header(cookies, site)
         if header:
             return header, name
@@ -279,6 +281,58 @@ def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
             "Full Disk Access in System Settings > Privacy & Security.",
             file=sys.stderr,
         )
+    return None
+
+
+# Where Chromium-based browsers keep their cookie database. A running browser
+# holds it locked, so it is copied to a temporary file first (as yt-dlp does).
+_CHROMIUM_DIRS = {
+    "chrome": ("Google/Chrome", "google-chrome", "Google/Chrome/User Data"),
+    "brave": (
+        "BraveSoftware/Brave-Browser",
+        "BraveSoftware/Brave-Browser",
+        "BraveSoftware/Brave-Browser/User Data",
+    ),
+    "edge": ("Microsoft Edge", "microsoft-edge", "Microsoft/Edge/User Data"),
+    "chromium": ("Chromium", "chromium", "Chromium/User Data"),
+    "vivaldi": ("Vivaldi", "vivaldi", "Vivaldi/User Data"),
+    "arc": ("Arc/User Data", "", ""),
+}
+
+
+def _chromium_cookie_files(name: str) -> list[Path]:
+    dirs = _CHROMIUM_DIRS.get(name)
+    if dirs is None:
+        return []
+    mac, linux, windows = dirs
+    if sys.platform == "darwin":
+        base = Path.home() / "Library/Application Support" / mac
+    elif sys.platform.startswith("win"):
+        base = Path(os.environ.get("LOCALAPPDATA", "")) / windows if windows else Path()
+    else:
+        base = Path.home() / ".config" / linux if linux else Path()
+    if not base.is_dir():
+        return []
+    return sorted(base.glob("*/Cookies")) + sorted(base.glob("*/Network/Cookies"))
+
+
+def _read_locked_chromium_cookies(
+    rookiepy: Any, name: str, domain: str
+) -> list[dict[str, Any]] | None:
+    """Copy each profile's cookie database and read the copy."""
+    import shutil
+    import tempfile
+
+    for cookie_file in _chromium_cookie_files(name):
+        try:
+            with tempfile.TemporaryDirectory() as tmp:
+                copy = Path(tmp) / "Cookies"
+                shutil.copy2(cookie_file, copy)
+                cookies = list(rookiepy.chromium_based(str(copy), [domain]))
+        except Exception:  # unreadable profile; try the next one
+            continue
+        if cookies:
+            return cookies
     return None
 
 

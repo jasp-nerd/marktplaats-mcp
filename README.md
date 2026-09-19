@@ -48,18 +48,18 @@ Then ask: *"Find a racefiets under €500 within 25 km of 1011 AB, frame 57-61 c
 
 ## 👤 Use your own account (messages, favorites, bids, your ads)
 
-Marktplaats has no public API and its login uses SMS two-factor authentication and reCAPTCHA, so this server never asks for your password. Instead, one command opens a browser window on the Marktplaats login page; you log in there as usual and the session is captured:
+Marktplaats has no public API and its login uses SMS two-factor authentication and reCAPTCHA, so this server never asks for your password. Instead it copies the session from a browser you are already logged into, the way `yt-dlp --cookies-from-browser` does:
 
 ```bash
 uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login
 ```
 
-It uses your installed Chrome or Edge (or downloads a browser once), verifies the session against the site, and stores it in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear. Useful commands:
+That looks for a Marktplaats session in Chrome, Brave, Firefox, Safari, Edge, Arc and friends, verifies it against the site, and stores it in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear. On macOS, give your terminal app **Full Disk Access** (System Settings → Privacy & Security) once, otherwise the OS silently refuses to hand over browser data. Useful commands:
 
 ```bash
-marktplaats-mcp login --site 2dehands  # log in to 2dehands.be as well
+marktplaats-mcp login --site 2dehands  # also import your 2dehands.be session
 marktplaats-mcp login --read-only      # never send, bid or change favorites
-marktplaats-mcp login --import brave   # copy the session from a browser you're logged into
+marktplaats-mcp login --window         # open a browser window and log in there instead
 marktplaats-mcp login --paste          # paste a Cookie header from DevTools instead
 marktplaats-mcp status                 # is the stored session still valid?
 marktplaats-mcp logout                 # delete it
