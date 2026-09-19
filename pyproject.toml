@@ -1,7 +1,7 @@
 [project]
 name = "marktplaats-mcp"
 version = "0.2.0"
-description = "MCP server for Marktplaats & 2dehands - search Dutch and Belgian classifieds from Claude, Cursor, Codex and any MCP client."
+description = "MCP server for Marktplaats.nl and 2dehands.be: search, monitor and manage Dutch and Belgian classifieds from Claude, ChatGPT, Cursor and any MCP client."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
@@ -9,13 +9,22 @@ authors = [{ name = "jasp-nerd" }]
 requires-python = ">=3.10"
 keywords = [
     "mcp",
-    "model-context-protocol",
     "mcp-server",
+    "model-context-protocol",
+    "fastmcp",
     "marktplaats",
     "2dehands",
+    "tweedehands",
     "classifieds",
+    "second-hand",
+    "marketplace",
+    "netherlands",
+    "belgium",
+    "dutch",
     "claude",
+    "anthropic",
     "llm",
+    "ai-agents",
     "agents",
 ]
 classifiers = [
@@ -40,10 +49,11 @@ dependencies = [
 login = ["rookiepy>=0.5,<1"]
 
 [project.urls]
-Homepage = "https://github.com/jasp-nerd/marktplaats-mcp"
+Homepage = "https://marktplaats-mcp.jaspnerd.dev"
 Repository = "https://github.com/jasp-nerd/marktplaats-mcp"
 Issues = "https://github.com/jasp-nerd/marktplaats-mcp/issues"
-Changelog = "https://github.com/jasp-nerd/marktplaats-mcp/releases"
+Changelog = "https://github.com/jasp-nerd/marktplaats-mcp/blob/main/CHANGELOG.md"
+"Hosted endpoint" = "https://marktplaats-mcp.jaspnerd.dev/mcp"
 
 [project.scripts]
 marktplaats-mcp = "marktplaats_mcp.server:main"

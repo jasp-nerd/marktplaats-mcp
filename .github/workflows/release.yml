@@ -34,6 +34,25 @@ jobs:
           # tolerate re-runs and manual pre-publishes of the same version
           skip-existing: true
 
+  mcp-registry:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/').tar.gz" | tar xz mcp-publisher
+      - name: Check server.json version matches the tag
+        run: |
+          test "v$(python3 -c 'import json; print(json.load(open("server.json"))["version"])')" = "$GITHUB_REF_NAME"
+      - name: Publish to the MCP registry
+        run: |
+          ./mcp-publisher login github-oidc
+          ./mcp-publisher publish
+
   github-release:
     needs: publish
     runs-on: ubuntu-latest
@@ -54,5 +73,6 @@ jobs:
           else
             gh release create "$GITHUB_REF_NAME" dist/* \
               --title "$GITHUB_REF_NAME" \
+              --notes "See CHANGELOG.md: https://github.com/$GITHUB_REPOSITORY/blob/main/CHANGELOG.md" \
               --generate-notes
           fi
