@@ -980,7 +980,7 @@ def register_account_tools(server: FastMCP, client: AccountClient, allow_writes:
             )
         if details.status and details.status != "ACTIVE":
             raise ToolError(f"Listing {item_id} is no longer active ({details.status}).")
-        target = {
+        target: dict[str, Any] = {
             "listing_id": item_id,
             "listing_title": details.title,
             "asking_price": details.price,
@@ -988,6 +988,8 @@ def register_account_tools(server: FastMCP, client: AccountClient, allow_writes:
             "amount_euros": amount_euros,
             "message": message.strip(),
         }
+        if details.price_euros is not None and amount_euros < details.price_euros:
+            target["below_asking_price"] = True
         if not confirm:
             return dump(
                 WriteReceipt(
@@ -998,6 +1000,12 @@ def register_account_tools(server: FastMCP, client: AccountClient, allow_writes:
                     note=(
                         "No bid was placed. A bid is binding: show this to the user and call "
                         "again with confirm=true only after they explicitly agree."
+                        + (
+                            " The amount is below the seller's asking price; the site accepts "
+                            "it but the seller may ignore or reject it."
+                            if target.get("below_asking_price")
+                            else ""
+                        )
                     ),
                 )
             )

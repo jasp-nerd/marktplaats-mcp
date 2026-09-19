@@ -54,7 +54,7 @@ Marktplaats has no public API and its login uses SMS two-factor authentication a
 uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login
 ```
 
-That looks for a Marktplaats session in Chrome, Brave, Firefox, Safari, Edge, Arc and friends, verifies it against the site, and stores it in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear. On macOS, give your terminal app **Full Disk Access** (System Settings → Privacy & Security) once, otherwise the OS silently refuses to hand over browser data. Useful commands:
+That looks for a Marktplaats session in Chrome, Brave, Firefox, Safari, Edge, Arc and friends, verifies it against the site, and stores it in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear. Useful commands:
 
 ```bash
 marktplaats-mcp login --site 2dehands  # also import your 2dehands.be session
@@ -64,6 +64,15 @@ marktplaats-mcp login --paste          # paste a Cookie header from DevTools ins
 marktplaats-mcp status                 # is the stored session still valid?
 marktplaats-mcp logout                 # delete it
 ```
+
+<details>
+<summary><b>If login says it could not read your browser's cookies</b></summary>
+
+- **macOS**: the system blocks command-line tools from reading browser data and does not ask. Once, open System Settings → Privacy & Security → **Full Disk Access**, add the terminal app you use (Terminal, iTerm, Warp, or VS Code), then quit and reopen it. Then run the login command again.
+- **Windows**: Chrome and Edge lock their cookie file while they run; the tool copies it first, so this normally just works. If it doesn't, close the browser and run the login again, or use `--paste`.
+- **Linux**: Chromium browsers store the cookie key in your keyring (GNOME Keyring or KWallet), which must be unlocked; Firefox needs nothing. Snap or Flatpak browsers keep their profile elsewhere, so use `--paste` there.
+- Everywhere: `marktplaats-mcp login --paste` never needs permissions. In your browser on marktplaats.nl press F12 → Network, click any request, copy the `Cookie` request header and paste it.
+</details>
 
 Or set `MARKTPLAATS_COOKIE` / `TWEEDEHANDS_COOKIE` (the request `Cookie` header) in your client's config. Sessions last weeks; when one expires the tools tell you to log in again.
 

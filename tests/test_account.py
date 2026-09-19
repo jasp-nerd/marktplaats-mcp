@@ -601,6 +601,8 @@ async def test_place_bid_checks_minimum_and_previews(listing_vip):
     preview = await call(server, "place_bid", {"listing_id": "m2444371973", "amount_euros": 160})
     assert preview["preview"] is True
     assert preview["target"]["minimum_bid_euros"] == 150.0
+    assert preview["target"]["below_asking_price"] is True  # asking price is € 250
+    assert "below the seller's asking price" in preview["note"]
     assert preview["target"]["listing_title"] == "Baan fiets"
     assert "binding" in preview["note"]
     assert not bid.called
