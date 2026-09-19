@@ -37,3 +37,36 @@ def test_llms_txt_privacy_icons_and_health():
     assert client.get("/robots.txt").text.startswith("User-agent: *")
     assert "<urlset" in client.get("/sitemap.xml").text
     assert client.get("/health").text == "ok"
+
+
+def test_host_and_origin_guard_from_environment():
+    from marktplaats_mcp.server import http_guard_config, mcp
+
+    assert http_guard_config({}) == {}
+    config = http_guard_config(
+        {
+            "MCP_ALLOWED_HOSTS": "marktplaats-mcp.jaspnerd.dev",
+            "MCP_ALLOWED_ORIGINS": "https://claude.ai, https://*.claude.ai",
+        }
+    )
+    init = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {},
+            "clientInfo": {"name": "p", "version": "0"},
+        },
+    }
+    headers = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"}
+    with TestClient(mcp.http_app(**config), base_url="https://marktplaats-mcp.jaspnerd.dev") as c:
+        assert c.post("/mcp", headers=headers, json=init).status_code == 200
+        assert (
+            c.post("/mcp", headers={**headers, "Host": "evil.example"}, json=init).status_code
+            == 421
+        )
+        bad = {**headers, "Origin": "https://evil.example"}
+        assert c.post("/mcp", headers=bad, json=init).status_code == 403
+        good = {**headers, "Origin": "https://app.claude.ai"}
+        assert c.post("/mcp", headers=good, json=init).status_code == 200

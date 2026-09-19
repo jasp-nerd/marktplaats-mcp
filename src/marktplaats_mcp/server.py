@@ -992,8 +992,22 @@ def _client_key(_: Any) -> str:
     return request.client.host if request.client else "anonymous"
 
 
-def _env_list(name: str) -> list[str] | None:
-    raw = os.environ.get(name, "").strip()
+def http_guard_config(environ: Any) -> dict[str, Any]:
+    """Host/Origin validation for hosted mode. FastMCP leaves the guard off by
+    default, so it is switched on explicitly whenever an allowlist is set."""
+    hosts = _env_list(environ, "MCP_ALLOWED_HOSTS")
+    origins = _env_list(environ, "MCP_ALLOWED_ORIGINS")
+    if not hosts and not origins:
+        return {}
+    return {
+        "host_origin_protection": True,
+        "allowed_hosts": hosts or [],
+        "allowed_origins": origins or [],
+    }
+
+
+def _env_list(environ: Any, name: str) -> list[str] | None:
+    raw = environ.get(name, "").strip()
     return [item.strip() for item in raw.split(",") if item.strip()] or None
 
 
