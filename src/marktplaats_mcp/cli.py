@@ -171,8 +171,12 @@ def _window_login(site: Site) -> tuple[str, str] | None:
     under the config directory, so "remember this device" survives.
     """
     try:
-        from playwright.sync_api import Error as PlaywrightError
-        from playwright.sync_api import sync_playwright
+        from playwright.sync_api import (  # type: ignore[import-not-found,unused-ignore]
+            Error as PlaywrightError,
+        )
+        from playwright.sync_api import (  # type: ignore[import-not-found,unused-ignore]
+            sync_playwright,
+        )
     except ImportError:
         print(
             "The login window needs the 'login' extra: run\n"
