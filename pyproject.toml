@@ -46,7 +46,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-login = ["rookiepy>=0.5,<1"]
+login = ["playwright>=1.50,<2", "rookiepy>=0.5,<1"]
 
 [project.urls]
 Homepage = "https://marktplaats-mcp.jaspnerd.dev"

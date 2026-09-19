@@ -38,7 +38,7 @@ img.logo{width:64px;height:64px;vertical-align:middle;margin-right:12px}
 <h2>Run it locally (adds account tools)</h2>
 <pre>claude mcp add marktplaats -- uvx marktplaats-mcp
 uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login   # optional: your own account</pre>
-<p>The local server imports your Marktplaats session from the browser you are already logged into, so there is no password to type and two-factor login stays in your browser. Config snippets for Claude Desktop, Cursor, VS Code, Codex, Gemini CLI, Windsurf and JetBrains are in the <a href="${REPO_URL}#readme">README</a>.</p>
+<p>The local server opens a browser window where you log in to Marktplaats as usual and captures the session, so the server never sees your password and two-factor login works normally. Config snippets for Claude Desktop, Cursor, VS Code, Codex, Gemini CLI, Windsurf and JetBrains are in the <a href="${REPO_URL}#readme">README</a>.</p>
 
 <h2>Tools</h2>
 <table><tbody>${tool_rows}</tbody></table>

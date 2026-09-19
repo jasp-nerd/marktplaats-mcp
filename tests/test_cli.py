@@ -66,7 +66,7 @@ def test_login_imports_from_first_browser_with_a_session(monkeypatch, tmp_path, 
             "firefox": [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "s3cret"}],
         },
     )
-    assert cli.main(["login"]) == 0
+    assert cli.main(["login", "--import", "--site", "both"]) == 0
     saved = json.loads(session_path.read_text())
     assert saved["sites"]["marktplaats"]["cookie"] == "MpSession=s3cret"
     assert saved["sites"]["marktplaats"]["source"] == "firefox"
@@ -83,7 +83,7 @@ def test_login_fails_cleanly_when_no_browser_has_a_session(monkeypatch, tmp_path
     monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
     mock_verification()
     fake_rookiepy(monkeypatch, {})
-    assert cli.main(["login", "--site", "marktplaats"]) == 1
+    assert cli.main(["login", "--import", "--site", "marktplaats"]) == 1
     assert "No working session found" in capsys.readouterr().err
 
 
@@ -95,7 +95,7 @@ def test_login_rejects_stale_cookie(monkeypatch, tmp_path, capsys):
         monkeypatch,
         {"chrome": [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "old"}]},
     )
-    assert cli.main(["login", "--site", "marktplaats", "--browser", "chrome"]) == 1
+    assert cli.main(["login", "--import", "chrome", "--site", "marktplaats"]) == 1
     assert "rejected it" in capsys.readouterr().out
 
 
@@ -114,7 +114,85 @@ def test_login_paste_and_read_only(monkeypatch, tmp_path):
 def test_login_without_rookiepy_explains_the_extra(monkeypatch, tmp_path, capsys):
     monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
     monkeypatch.setitem(sys.modules, "rookiepy", None)  # simulate ImportError
-    assert cli.main(["login", "--site", "marktplaats"]) == 1
+    assert cli.main(["login", "--import", "--site", "marktplaats"]) == 1
+    assert "marktplaats-mcp[login]" in capsys.readouterr().err
+
+
+def fake_playwright(monkeypatch, cookies_after_login: list[dict], launches: list[str]) -> None:
+    """A minimal stand-in for playwright.sync_api: the 'user' logs in on the second poll."""
+
+    class Error(Exception):
+        pass
+
+    class Page:
+        def goto(self, url, wait_until=None):
+            self.url = url
+
+        def wait_for_timeout(self, ms):
+            pass
+
+    class Context:
+        def __init__(self):
+            self.pages = [Page()]
+            self.polls = 0
+
+        def cookies(self, url=None):
+            self.polls += 1
+            return cookies_after_login if self.polls >= 2 else []
+
+        def close(self):
+            pass
+
+    class Chromium:
+        def launch_persistent_context(self, profile, channel=None, **kwargs):
+            launches.append(channel or "bundled")
+            if channel == "chrome":
+                raise Error("chrome not installed")
+            return Context()
+
+    class Playwright:
+        chromium = Chromium()
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *exc):
+            return False
+
+    api = types.ModuleType("playwright.sync_api")
+    api.Error = Error
+    api.sync_playwright = lambda: Playwright()
+    pkg = types.ModuleType("playwright")
+    pkg.sync_api = api
+    monkeypatch.setitem(sys.modules, "playwright", pkg)
+    monkeypatch.setitem(sys.modules, "playwright.sync_api", api)
+
+
+@respx.mock
+def test_login_window_captures_session_after_user_logs_in(monkeypatch, tmp_path, capsys):
+    session_path = tmp_path / "session.json"
+    monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(session_path))
+    mock_verification()
+    launches: list[str] = []
+    fake_playwright(
+        monkeypatch,
+        [{"domain": ".marktplaats.nl", "name": "MpSession", "value": "fromwindow"}],
+        launches,
+    )
+    assert cli.main(["login"]) == 0
+    saved = json.loads(session_path.read_text())
+    assert saved["sites"]["marktplaats"]["cookie"] == "MpSession=fromwindow"
+    assert saved["sites"]["marktplaats"]["source"] == "browser window"
+    assert launches == ["chrome", "msedge"]  # chrome missing -> edge used
+    assert (tmp_path / "browser-profile").is_dir()
+    assert "Log in there" in capsys.readouterr().out
+
+
+def test_login_window_without_playwright_explains_the_extra(monkeypatch, tmp_path, capsys):
+    monkeypatch.setenv("MARKTPLAATS_SESSION_FILE", str(tmp_path / "s.json"))
+    monkeypatch.setitem(sys.modules, "playwright", None)
+    monkeypatch.setitem(sys.modules, "playwright.sync_api", None)
+    assert cli.main(["login"]) == 1
     assert "marktplaats-mcp[login]" in capsys.readouterr().err
 
 

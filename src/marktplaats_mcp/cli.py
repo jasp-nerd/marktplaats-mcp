@@ -1,9 +1,11 @@
 """``marktplaats-mcp login|status|logout``: manage the local account session.
 
-``login`` imports the Marktplaats / 2dehands session from a browser the user is
-already logged into (the same approach yt-dlp's ``--cookies-from-browser``
-uses), verifies it against the site, and stores it in a private file the
-server reads on startup. Pasting a ``Cookie`` header by hand is the fallback.
+``login`` opens a browser window on the site's login page; the user logs in
+there as usual (two-factor code included) and the command captures the
+resulting session, verifies it against the site and stores it in a private
+file the server reads on startup. Alternatives: ``--import`` reads the session
+from a browser the user is already logged into (yt-dlp's cookies-from-browser
+approach, which macOS may block), and ``--paste`` takes a Cookie header.
 """
 
 from __future__ import annotations
@@ -14,6 +16,7 @@ import contextlib
 import json
 import os
 import sys
+import time
 from collections.abc import Callable, Iterable
 from datetime import datetime, timezone
 from pathlib import Path
@@ -74,18 +77,25 @@ def main(argv: list[str] | None = None) -> int:
     commands = parser.add_subparsers(dest="command", required=True)
 
     login = commands.add_parser(
-        "login", help="Import your session from a browser you are logged into (or paste it)."
+        "login",
+        help="Open a browser window to log in; the session is captured and stored locally.",
     )
     login.add_argument(
         "--site",
         choices=["marktplaats", "2dehands", "both"],
-        default="both",
-        help="Which marketplace account to import (default: both, whichever is logged in).",
+        default="marktplaats",
+        help="Which marketplace to log in to (default: marktplaats).",
     )
     login.add_argument(
-        "--browser",
-        choices=BROWSERS,
-        help="Only read this browser (default: try them all).",
+        "--import",
+        dest="import_from",
+        nargs="?",
+        const="any",
+        choices=[*BROWSERS, "any"],
+        help=(
+            "Instead of opening a window, read the session from a browser you are already "
+            "logged into (optionally name the browser)."
+        ),
     )
     login.add_argument(
         "--paste",
@@ -117,7 +127,13 @@ def _login(args: argparse.Namespace, path: Path) -> int:
     stored = stored_sites(session)
     found = False
     for site in sites:
-        result = _paste_cookie(site) if args.paste else _import_cookie(site, args.browser)
+        if args.paste:
+            result = _paste_cookie(site)
+        elif args.import_from:
+            browser = None if args.import_from == "any" else args.import_from
+            result = _import_cookie(site, browser)
+        else:
+            result = _window_login(site)
         if result is None:
             continue
         cookie, source = result
@@ -134,8 +150,7 @@ def _login(args: argparse.Namespace, path: Path) -> int:
         print(f"  {site.host}: logged in via {source} ({unread} unread messages).")
     if not found:
         print(
-            "\nNo working session found. Log in at https://www.marktplaats.nl in your browser "
-            "and run this again, or use --paste.",
+            "\nNo working session found. Run 'marktplaats-mcp login' again, or use --paste.",
             file=sys.stderr,
         )
         return 1
@@ -143,6 +158,88 @@ def _login(args: argparse.Namespace, path: Path) -> int:
     mode = "read-only" if args.read_only else "reads and writes (every write asks for confirmation)"
     print(f"\nSaved to {path} ({mode}). Restart your MCP client to load the account tools.")
     return 0
+
+
+LOGIN_TIMEOUT_SECONDS = 600
+
+
+def _window_login(site: Site) -> tuple[str, str] | None:
+    """Open a real browser window on the login page and wait for a valid session.
+
+    Uses the user's installed Chrome/Edge when available (a normal browser, so
+    captcha and SMS verification behave as usual) and a persistent profile
+    under the config directory, so "remember this device" survives.
+    """
+    try:
+        from playwright.sync_api import Error as PlaywrightError
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        print(
+            "The login window needs the 'login' extra: run\n"
+            "  uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login\n"
+            "or use --import / --paste.",
+            file=sys.stderr,
+        )
+        return None
+
+    profile_dir = session_file().parent / "browser-profile"
+    profile_dir.mkdir(parents=True, exist_ok=True)
+    login_url = f"{site.base_url}/identity/v2/login"
+    print(f"Opening a browser window for {site.host}. Log in there as you normally do.")
+    with sync_playwright() as playwright:
+        context = _launch_browser(playwright, PlaywrightError, profile_dir)
+        if context is None:
+            return None
+        try:
+            page = context.pages[0] if context.pages else context.new_page()
+            page.goto(login_url, wait_until="domcontentloaded")
+            deadline = time.monotonic() + LOGIN_TIMEOUT_SECONDS
+            last_header: str | None = None
+            while time.monotonic() < deadline:
+                try:
+                    header = cookie_header(context.cookies(site.base_url), site)
+                except PlaywrightError:  # window closed by the user
+                    break
+                if header and header != last_header:
+                    last_header = header
+                    if _verify(site, header) is not None:
+                        return header, "browser window"
+                try:
+                    page.wait_for_timeout(2000)
+                except PlaywrightError:
+                    break
+        finally:
+            with contextlib.suppress(PlaywrightError):
+                context.close()
+    print(f"  {site.host}: no login detected before the window closed or timed out.")
+    return None
+
+
+def _launch_browser(playwright: Any, error_type: type[Exception], profile_dir: Path) -> Any:
+    """Prefer the installed Chrome/Edge; fall back to Playwright's Chromium,
+    downloading it on first use."""
+    launch = playwright.chromium.launch_persistent_context
+    options = {"headless": False, "viewport": {"width": 1100, "height": 900}}
+    for channel in ("chrome", "msedge"):
+        try:
+            return launch(str(profile_dir), channel=channel, **options)
+        except error_type:
+            continue
+    try:
+        return launch(str(profile_dir), **options)
+    except error_type as exc:
+        if "install" not in str(exc).lower():
+            print(f"  Could not start a browser: {str(exc).splitlines()[0]}", file=sys.stderr)
+            return None
+    print("  Downloading a browser for the login window (one-time, ~150 MB) ...")
+    import subprocess
+
+    subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=False)
+    try:
+        return launch(str(profile_dir), **options)
+    except error_type as exc:
+        print(f"  Could not start a browser: {str(exc).splitlines()[0]}", file=sys.stderr)
+        return None
 
 
 def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
