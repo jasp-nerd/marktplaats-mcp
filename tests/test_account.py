@@ -204,6 +204,112 @@ async def test_conversations_fall_back_to_legacy_endpoint():
     assert conversation.listing_id == "m123"
 
 
+def test_normalize_live_conversation_shape():
+    """Shape recorded from a real inbox on 2026-09-19 (values replaced)."""
+    conversation = normalize_conversation(
+        {
+            "title": "Boek",
+            "unreadMessagesCount": 1,
+            "itemId": "m1",
+            "otherParticipant": {"id": 14545042, "name": "Watson", "userId": 14545042},
+            "sellerId": 46236448,
+            "latestMessage": {
+                "senderId": -1,
+                "text": "Geef vandaag je pakket af",
+                "receivedDate": "2026-09-19T19:00:09.801Z",
+                "messageType": "systemMessage",
+                "from": "system",
+            },
+            "conversationId": "pj39:5871xhr:2psmwk4mr",
+            "latestReceivedDate": "2026-09-19T19:00:09.801Z",
+            "latestPaymentRequest": {"status": "RESERVED"},
+        }
+    )
+    assert conversation.id == "pj39:5871xhr:2psmwk4mr"
+    assert conversation.role == "seller"  # the other party is not the seller, so I am
+    assert conversation.last_message_from == "system"
+    assert conversation.last_message_at == "2026-09-19T19:00:09.801Z"
+    assert conversation.payment_status == "RESERVED"
+    assert conversation.unread_count == 1
+
+
+def test_normalize_live_listing_favorite_bid_and_saved_search_shapes():
+    from marktplaats_mcp.account import (
+        normalize_bid,
+        normalize_favorite,
+        normalize_my_listing,
+        normalize_saved_search,
+    )
+
+    listing = normalize_my_listing(
+        {
+            "itemId": "m2",
+            "categoryName": "Kattenvoerbakken",
+            "title": "Voerbak",
+            "vipUrl": "/v/dieren/m2-voerbak",
+            "highestBid": 1250,
+            "viewCount": 37,
+            "closeDate": "2026-09-23T17:13:23Z",
+            "reserved": False,
+            "priceCents": 7000,
+            "priceType": "MIN_BID",
+            "biddingEnabled": True,
+            "status": "EXPIRING",
+            "expiring": True,
+        },
+        NL,
+    )
+    assert listing.price == "Bieden vanaf € 70,00"
+    assert listing.price_euros == 70.0
+    assert listing.highest_bid_euros == 12.5
+    assert listing.expires_at == "2026-09-23T17:13:23Z"
+    assert listing.category == "Kattenvoerbakken"
+    assert listing.bidding_enabled is True
+
+    row = {
+        "itemId": "m3",
+        "title": "MacBook",
+        "pricing": {"label": "€ 1.800,00", "type": "min_bid"},
+        "published": True,
+        "bidding": {
+            "userPlacedHighestBid": False,
+            "highestUserBidValue": "€ 1.300,00",
+            "userPlacedBid": True,
+            "highestBidValue": "€ 1.350,00",
+            "allowPlaceBid": True,
+        },
+        "category": {"id": 339, "name": "Windows Laptops"},
+        "location": {"label": "Zutphen", "type": "city"},
+        "vipUrl": "/v/computers/m3-macbook",
+        "seller": {"name": "Pods"},
+    }
+    favorite = normalize_favorite(row, NL)
+    assert favorite.city == "Zutphen"
+    assert favorite.category == "Windows Laptops"
+    assert favorite.my_bid == "€ 1.300,00"
+    assert favorite.my_bid_is_highest is False
+    bid = normalize_bid(row, NL)
+    assert bid.my_bid_euros == 1300.0
+    assert bid.highest_bid == "€ 1.350,00"
+    assert bid.status == "outbid"
+    assert bid.available is True
+
+    saved = normalize_saved_search(
+        {
+            "id": "17675195584363",
+            "title": "Danielle",
+            "url": "https://www.marktplaats.nl/s/17675195584363.html",
+            "searchType": "seller",
+            "emailEnabled": True,
+            "pushEnabled": False,
+        }
+    )
+    assert saved.name == "Danielle"
+    assert saved.type == "seller"
+    assert saved.email_alerts is True
+    assert saved.push_alerts is False
+
+
 def test_normalize_trpc_conversation():
     conversation = normalize_conversation(
         {
@@ -281,7 +387,57 @@ async def test_get_my_account_contract():
 
 
 @respx.mock
+async def test_get_conversation_current_shape_with_payment_offer():
+    respx.get(
+        url__regex=rf"{BASE}/messages/api/rpc/conversations\.getMessagesForConversation.*"
+    ).mock(
+        return_value=httpx.Response(
+            200,
+            json={
+                "result": {
+                    "data": {
+                        "messages": [
+                            {
+                                "messageId": "1",
+                                "text": "[Betaling]",
+                                "receivedDate": "2026-09-19T18:20:16.776Z",
+                                "isRead": True,
+                                "from": "otherParticipant",
+                                "type": "paymentOffer",
+                                "attachment": {
+                                    "type": "paymentOffer",
+                                    "paymentOffer": {"status": "ACCEPTED", "offerPrice": 19000},
+                                },
+                            },
+                            {"text": "Ok!", "from": "me", "type": "text", "isRead": True},
+                            {"text": "Pakket verstuurd", "from": "system", "type": "text"},
+                        ],
+                        "actions": [],
+                    }
+                }
+            },
+        )
+    )
+    data = await call(
+        server_with(account_client(), False),
+        "get_conversation",
+        {"conversation_id": "x", "limit": 2},
+    )
+    assert [m["sender"] for m in data["messages"]] == ["me", "system"]  # last two only
+    full = await call(
+        server_with(account_client(), False), "get_conversation", {"conversation_id": "x"}
+    )
+    assert full["messages"][0]["type"] == "paymentOffer"
+    assert full["messages"][0]["offer_euros"] == 190.0
+    assert full["messages"][0]["offer_status"] == "ACCEPTED"
+    assert "type" not in full["messages"][1]
+
+
+@respx.mock
 async def test_get_conversation_marks_senders():
+    respx.get(
+        url__regex=rf"{BASE}/messages/api/rpc/conversations\.getMessagesForConversation.*"
+    ).mock(return_value=httpx.Response(404))
     respx.get(url__regex=rf"{BASE}/messages/api/conversations/abc/messages/.*").mock(
         return_value=httpx.Response(
             200,
@@ -400,7 +556,7 @@ async def test_list_favorites_and_bids_and_saved_searches():
     assert favorites["more_available"] is False
     bids = await call(server, "list_my_bids", {})
     assert bids["bids"][0]["my_bid_euros"] == 120.0
-    assert bids["bids"][0]["status"] == "OPEN"
+    assert bids["bids"][0]["status"] == "unknown"  # legacy shape carries no highest-bid flag
     saved = await call(server, "list_saved_searches", {})
     assert saved["saved_searches"][0]["new_ads_count"] == 4
 

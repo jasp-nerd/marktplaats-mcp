@@ -184,11 +184,14 @@ class Conversation(BaseModel):
     id: str
     listing_id: str | None = None
     title: str | None = None
+    role: Literal["buyer", "seller"] | None = None
     other_party: str | None = None
     other_party_id: int | None = None
     last_message: str | None = None
+    last_message_from: Literal["me", "them", "system"] | None = None
     last_message_at: str | None = None
     unread_count: int | None = None
+    payment_status: str | None = None
 
 
 class ConversationsResult(BaseModel):
@@ -200,10 +203,13 @@ class ConversationsResult(BaseModel):
 
 
 class Message(BaseModel):
-    sender: Literal["me", "them", "unknown"]
+    sender: Literal["me", "them", "system", "unknown"]
     text: str
     sent_at: str | None = None
     read: bool | None = None
+    type: str | None = None
+    offer_euros: float | None = None
+    offer_status: str | None = None
 
 
 class ConversationDetail(BaseModel):
@@ -218,12 +224,14 @@ class ConversationDetail(BaseModel):
 class MyListing(BaseModel):
     id: str
     title: str | None = None
+    category: str | None = None
     price: str | None = None
     price_euros: float | None = None
     status: str | None = None
     url: str | None = None
     view_count: int | None = None
     favorited_count: int | None = None
+    bidding_enabled: bool | None = None
     highest_bid_euros: float | None = None
     created_at: str | None = None
     expires_at: str | None = None
@@ -244,10 +252,14 @@ class Favorite(BaseModel):
     id: str
     title: str | None = None
     price: str | None = None
+    category: str | None = None
     url: str | None = None
     city: str | None = None
     seller: str | None = None
     available: bool | None = None
+    highest_bid: str | None = None
+    my_bid: str | None = None
+    my_bid_is_highest: bool | None = None
 
 
 class FavoritesResult(BaseModel):
@@ -262,8 +274,11 @@ class MyBid(BaseModel):
     listing_id: str
     title: str | None = None
     asking_price: str | None = None
+    my_bid: str | None = None
     my_bid_euros: float | None = None
-    status: str | None = None
+    highest_bid: str | None = None
+    status: Literal["highest", "outbid", "unknown"] | None = None
+    available: bool | None = None
     url: str | None = None
 
 
@@ -277,7 +292,10 @@ class MyBidsResult(BaseModel):
 class SavedSearch(BaseModel):
     id: str | None = None
     name: str | None = None
+    type: str | None = None
     url: str | None = None
+    email_alerts: bool | None = None
+    push_alerts: bool | None = None
     new_ads_count: int | None = None
     created_at: str | None = None
 
