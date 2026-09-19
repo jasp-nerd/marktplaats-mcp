@@ -1,0 +1,275 @@
+{
+  "adCore": {
+    "attributes": [
+      {
+        "id": 565,
+        "key": "condition",
+        "name": "Conditie",
+        "values": [
+          {
+            "id": 32,
+            "name": "Gebruikt"
+          }
+        ],
+        "attributeType": "STRING"
+      },
+      {
+        "id": 593,
+        "key": "brand",
+        "name": "Merk",
+        "values": [
+          {
+            "id": 59,
+            "name": "Overige merken"
+          }
+        ],
+        "attributeType": "STRING"
+      },
+      {
+        "id": 595,
+        "key": "numberOfGears",
+        "name": "Aantal versnellingen",
+        "values": [
+          {
+            "id": 3544,
+            "name": "Minder dan 10 versnellingen"
+          }
+        ],
+        "attributeType": "STRING"
+      },
+      {
+        "id": 605,
+        "key": "material",
+        "name": "Materiaal",
+        "values": [
+          {
+            "id": 2843,
+            "name": "Aluminium"
+          }
+        ],
+        "attributeType": "STRING"
+      },
+      {
+        "id": 597,
+        "key": "frameHeight",
+        "name": "Framehoogte",
+        "values": [
+          {
+            "id": 3553,
+            "name": "57 tot 61 cm"
+          }
+        ],
+        "attributeType": "STRING"
+      },
+      {
+        "id": 8,
+        "key": "delivery",
+        "name": "Levering",
+        "values": [
+          {
+            "id": 33,
+            "name": "Ophalen"
+          }
+        ],
+        "attributeType": "STRING"
+      }
+    ],
+    "carAttributes": [],
+    "urn": "m2444371973",
+    "title": "Baan fiets",
+    "description": "Piste fiets<br/>frame maat 57<br/><br/>Heeft gebruik sporen maar nog in goede staat, alleen niewe stuur tape nodig<br/><br/>Heb ook ook andere pedalen en race zadel erbij<br/><br/>Aluminium velgen<br/>Geen rem",
+    "categoryId": 464,
+    "price": {
+      "priceAmount": 25000,
+      "priceType": "MIN_BID",
+      "priceTypeLabel": "€ 250,00",
+      "initialMinimumBid": 15000
+    },
+    "adAddress": {
+      "city": "Amsterdam",
+      "country": "Nederland",
+      "countryAbbreviation": "NL",
+      "zipCode": "1057KH",
+      "latitude": 52.366118865632,
+      "longitude": 4.8600476363835
+    },
+    "highlights": [],
+    "pictures": [
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d1a93c7c-101f-4147-af03-91d995e49da2?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d1a93c7c-101f-4147-af03-91d995e49da2?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d1a93c7c-101f-4147-af03-91d995e49da2?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d1a93c7c-101f-4147-af03-91d995e49da2?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d1a93c7c-101f-4147-af03-91d995e49da2?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 3,
+          "height": 4
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/e2651c43-6874-4deb-ab62-18f8e0c47505?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/e2651c43-6874-4deb-ab62-18f8e0c47505?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/e2651c43-6874-4deb-ab62-18f8e0c47505?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/e2651c43-6874-4deb-ab62-18f8e0c47505?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/e2651c43-6874-4deb-ab62-18f8e0c47505?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 4,
+          "height": 3
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/9c3a63cb-d095-4170-9d4a-7992390393ca?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/9c3a63cb-d095-4170-9d4a-7992390393ca?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/9c3a63cb-d095-4170-9d4a-7992390393ca?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/9c3a63cb-d095-4170-9d4a-7992390393ca?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/9c3a63cb-d095-4170-9d4a-7992390393ca?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 3,
+          "height": 4
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/a2f852f6-2138-4308-a706-168e03a22057?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/a2f852f6-2138-4308-a706-168e03a22057?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/a2f852f6-2138-4308-a706-168e03a22057?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/a2f852f6-2138-4308-a706-168e03a22057?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/a2f852f6-2138-4308-a706-168e03a22057?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 4,
+          "height": 3
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d068676b-2e8c-43b1-9033-e3166b1153f0?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d068676b-2e8c-43b1-9033-e3166b1153f0?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d068676b-2e8c-43b1-9033-e3166b1153f0?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d068676b-2e8c-43b1-9033-e3166b1153f0?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/d068676b-2e8c-43b1-9033-e3166b1153f0?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 3,
+          "height": 4
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/3dfcefca-ccb6-4bd5-93e1-e3808954acd2?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/3dfcefca-ccb6-4bd5-93e1-e3808954acd2?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/3dfcefca-ccb6-4bd5-93e1-e3808954acd2?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/3dfcefca-ccb6-4bd5-93e1-e3808954acd2?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/3dfcefca-ccb6-4bd5-93e1-e3808954acd2?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 3,
+          "height": 4
+        }
+      },
+      {
+        "extraSmall": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/b328cb01-a30f-45da-bcd1-64e72622db84?rule=ecg_mp_eps$_14.jpg",
+        "medium": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/b328cb01-a30f-45da-bcd1-64e72622db84?rule=ecg_mp_eps$_82.jpg",
+        "large": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/b328cb01-a30f-45da-bcd1-64e72622db84?rule=ecg_mp_eps$_83.jpg",
+        "extraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/b328cb01-a30f-45da-bcd1-64e72622db84?rule=ecg_mp_eps$_85.jpg",
+        "extraExtraExtraExtraLarge": "https://images.marktplaats.com/api/v1/hz-mp-pro-listing/images/b328cb01-a30f-45da-bcd1-64e72622db84?rule=ecg_mp_eps$_87.jpg",
+        "aspectRatio": {
+          "width": 3,
+          "height": 4
+        }
+      }
+    ],
+    "link": "https://link.marktplaats.nl/m2444371973",
+    "showBanner": true,
+    "traits": [
+      "PACKAGE_FREE"
+    ],
+    "buyersProtectionAllowed": false,
+    "isBuyerProtectionApplicableForDefaultOn": false,
+    "largeItemShippingLogicalAllowed": false
+  },
+  "sellerInformation": {
+    "id": 58924831,
+    "name": "Sample Seller",
+    "sellerTitle": "Sample Seller",
+    "phoneNumberHidden": false,
+    "encryptedId": "E2D5F42156FF341030755738B9637B22",
+    "type": "CONSUMER",
+    "allowAsq": true,
+    "allow_asq": true,
+    "savedForUser": false,
+    "kycState": {
+      "_links": {
+        "describedby": {
+          "href": "https://api.marktplaats.nl/p2p-payment/v1/docs/kyc-state.html"
+        }
+      },
+      "merchantState": "NOT_CREATED",
+      "bankAccountState": "NOT_CREATED",
+      "twoFactorVerificationState": "VERIFIED",
+      "contactVerificationState": "NOT_NEEDED_VERIFICATION",
+      "uboVerificationState": "NOT_NEEDED_VERIFICATION",
+      "tinVerificationState": "NOT_NEEDED_VERIFICATION",
+      "addressVerificationState": "NOT_NEEDED_VERIFICATION"
+    },
+    "reviewSummary": {
+      "averageScore": 5,
+      "numberOfReviews": 1
+    },
+    "activeSince": {
+      "timestamp": "2026-02-16T21:51:18.000+00:00",
+      "label": "7 maanden"
+    },
+    "responseData": {
+      "speed": 634,
+      "rate": 74,
+      "label": "Beantwoordt 74% van de berichten, meestal binnen 1 dag"
+    },
+    "hasProfile": false,
+    "profilePicture": {},
+    "savingSellerEnabled": false,
+    "is_verified": false,
+    "isFinanceAvailable": false,
+    "businessHours": {},
+    "totalAmountOfListings": 1,
+    "postCode": "1057KH",
+    "availableReviewSystems": [
+      "INTERNAL"
+    ]
+  },
+  "metaData": {
+    "viewAdCount": 23,
+    "adFavoritedCount": 0,
+    "adStatus": "ACTIVE",
+    "sortDateTime": "2026-09-19T13:01:54.000+00:00",
+    "startDateTime": "2026-09-19T13:01:54.000+00:00",
+    "adType": "OFFERED"
+  },
+  "flags": {
+    "editable": false,
+    "savingEnabled": true,
+    "savedAdForUser": false,
+    "allowBids": true,
+    "showExactLocation": false,
+    "allowUpcall": false,
+    "deletable": false,
+    "adFavoritedCountEnabled": true,
+    "hasCallTracking": false,
+    "isCarDealer": false,
+    "allowTradeInRequest": false,
+    "allowTestDriveRequest": false,
+    "hasAutomotiveExtendedAsq": false,
+    "hasMotorsAsq": false,
+    "shippable": true,
+    "requestForVipFeeds": false,
+    "requestRelevantItems": true,
+    "isBoosted": false,
+    "buyItNowEnabled": false,
+    "carsPersonalLoan": false,
+    "verifiedRefurbished": false,
+    "reserved": false,
+    "isPlusOrPremiumDealer": false,
+    "showSellerOtherItems": true
+  },
+  "bids": [],
+  "currentMinimumBid": 15000,
+  "shippingLabel": {
+    "labelText": null,
+    "shouldShowMoreInfo": false
+  },
+  "isFullyLoaded": true
+}

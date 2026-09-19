@@ -10,6 +10,8 @@ class Site:
     key: str
     host: str
     link_host: str
+    app_host: str
+    locale: str
 
     @property
     def base_url(self) -> str:
@@ -25,10 +27,16 @@ class Site:
     def listing_url(self, item_id: str) -> str:
         return f"https://{self.link_host}/{item_id}"
 
+    def vip_url(self, item_id: str) -> str:
+        """JSON listing endpoint used by the mobile apps (POST)."""
+        return f"https://{self.app_host}/app/vip/v4/item/{item_id}"
+
 
 SITES: dict[str, Site] = {
-    "marktplaats": Site("marktplaats", "www.marktplaats.nl", "link.marktplaats.nl"),
-    "2dehands": Site("2dehands", "www.2dehands.be", "link.2dehands.be"),
+    "marktplaats": Site(
+        "marktplaats", "www.marktplaats.nl", "link.marktplaats.nl", "app.marktplaats.nl", "nl-NL"
+    ),
+    "2dehands": Site("2dehands", "www.2dehands.be", "link.2dehands.be", "app.2dehands.be", "nl-BE"),
 }
 
 

@@ -1,0 +1,513 @@
+{
+  "totalResultCount": 13363,
+  "searchRequest": {
+    "categories": {
+      "l1Category": {
+        "id": 445,
+        "key": "fietsen-en-brommers",
+        "fullName": "Fietsen en Brommers"
+      },
+      "l2Categories": [
+        {
+          "id": 464,
+          "key": "fietsen-racefietsen",
+          "fullName": "Fietsen | Racefietsen"
+        }
+      ]
+    }
+  },
+  "facets": [
+    {
+      "key": "PriceCents",
+      "type": "AttributeRangeFacet"
+    },
+    {
+      "key": "RelevantCategories",
+      "type": "CategoryTreeFacet",
+      "categories": [
+        {
+          "id": 445,
+          "selected": false,
+          "isValuableForSeo": true,
+          "dominant": false,
+          "label": "Fietsen en Brommers",
+          "key": "fietsen-en-brommers",
+          "parentId": null,
+          "parentKey": false
+        },
+        {
+          "id": 464,
+          "histogramCount": 13363,
+          "selected": true,
+          "isValuableForSeo": true,
+          "dominant": false,
+          "label": "Fietsen | Racefietsen",
+          "key": "fietsen-racefietsen",
+          "parentId": 445,
+          "parentKey": "fietsen-en-brommers"
+        }
+      ]
+    },
+    {
+      "id": 2947,
+      "key": "buyitnow",
+      "type": "AttributeGroupFacet",
+      "label": "Direct Kopen",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Direct Kopen",
+          "attributeValueId": 14055,
+          "attributeValueLabel": "Direct Kopen",
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 1
+    },
+    {
+      "id": 565,
+      "key": "condition",
+      "type": "AttributeGroupFacet",
+      "label": "Conditie",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Nieuw",
+          "attributeValueId": 30,
+          "attributeValueLabel": "Nieuw",
+          "histogramCount": 2268,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "Zo goed als nieuw",
+          "attributeValueId": 31,
+          "attributeValueLabel": "Zo goed als nieuw",
+          "histogramCount": 4293,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "Gebruikt",
+          "attributeValueId": 32,
+          "attributeValueLabel": "Gebruikt",
+          "histogramCount": 6172,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 10
+    },
+    {
+      "id": 588,
+      "key": "intendedFor",
+      "type": "AttributeGroupFacet",
+      "label": "Bestemd voor",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Dames",
+          "attributeValueId": 3518,
+          "attributeValueLabel": "Dames",
+          "histogramCount": 450,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Heren",
+          "attributeValueId": 3519,
+          "attributeValueLabel": "Heren",
+          "histogramCount": 5628,
+          "selected": false,
+          "isValuableForSeo": true
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 20
+    },
+    {
+      "id": 593,
+      "key": "brand",
+      "type": "AttributeGroupFacet",
+      "label": "Merk",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Batavus",
+          "attributeValueId": 3408,
+          "attributeValueLabel": "Batavus",
+          "histogramCount": 227,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Gazelle",
+          "attributeValueId": 3494,
+          "attributeValueLabel": "Gazelle",
+          "histogramCount": 365,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Giant",
+          "attributeValueId": 3530,
+          "attributeValueLabel": "Giant",
+          "histogramCount": 969,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Koga Miyata",
+          "attributeValueId": 3539,
+          "attributeValueLabel": "Koga Miyata",
+          "histogramCount": 493,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Overige merken",
+          "attributeValueId": 59,
+          "attributeValueLabel": "Overige merken",
+          "histogramCount": 10156,
+          "selected": false,
+          "isValuableForSeo": true
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 30
+    },
+    {
+      "id": 595,
+      "key": "numberOfGears",
+      "type": "AttributeGroupFacet",
+      "label": "Aantal versnellingen",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Minder dan 10 versnellingen",
+          "attributeValueId": 3544,
+          "attributeValueLabel": "Minder dan 10 versnellingen",
+          "histogramCount": 820,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "10 tot 15 versnellingen",
+          "attributeValueId": 3545,
+          "attributeValueLabel": "10 tot 15 versnellingen",
+          "histogramCount": 1757,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "15 tot 20 versnellingen",
+          "attributeValueId": 3546,
+          "attributeValueLabel": "15 tot 20 versnellingen",
+          "histogramCount": 1092,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "Meer dan 20 versnellingen",
+          "attributeValueId": 3547,
+          "attributeValueLabel": "Meer dan 20 versnellingen",
+          "histogramCount": 7975,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 40
+    },
+    {
+      "id": 594,
+      "key": "wheelSize",
+      "type": "AttributeGroupFacet",
+      "label": "Wielgrootte",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "26 inch",
+          "attributeValueId": 3541,
+          "attributeValueLabel": "26 inch",
+          "histogramCount": 245,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "28 inch",
+          "attributeValueId": 3542,
+          "attributeValueLabel": "28 inch",
+          "histogramCount": 6657,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "Overige maten",
+          "attributeValueId": 3543,
+          "attributeValueLabel": "Overige maten",
+          "histogramCount": 491,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 50
+    },
+    {
+      "id": 3061,
+      "key": "brakeType",
+      "type": "AttributeGroupFacet",
+      "label": "Rem",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "schijfrem",
+          "attributeValueId": 443405,
+          "attributeValueLabel": "Schijfrem",
+          "histogramCount": 2612,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "terugtraprem",
+          "attributeValueId": 443406,
+          "attributeValueLabel": "Terugtraprem",
+          "histogramCount": 21,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "trommelrem",
+          "attributeValueId": 443407,
+          "attributeValueLabel": "Trommelrem",
+          "histogramCount": 20,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "velgrem",
+          "attributeValueId": 443408,
+          "attributeValueLabel": "Velgrem",
+          "histogramCount": 4663,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 55
+    },
+    {
+      "id": 605,
+      "key": "material",
+      "type": "AttributeGroupFacet",
+      "label": "Materiaal",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Aluminium",
+          "attributeValueId": 2843,
+          "attributeValueLabel": "Aluminium",
+          "histogramCount": 4619,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Carbon",
+          "attributeValueId": 3584,
+          "attributeValueLabel": "Carbon",
+          "histogramCount": 5560,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Staal",
+          "attributeValueId": 3517,
+          "attributeValueLabel": "Staal",
+          "histogramCount": 1450,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Titanium",
+          "attributeValueId": 3586,
+          "attributeValueLabel": "Titanium",
+          "histogramCount": 61,
+          "selected": false,
+          "isValuableForSeo": true
+        },
+        {
+          "attributeValueKey": "Overige materialen",
+          "attributeValueId": 7,
+          "attributeValueLabel": "Overige materialen",
+          "histogramCount": 105,
+          "selected": false,
+          "isValuableForSeo": true
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 60
+    },
+    {
+      "id": 597,
+      "key": "frameHeight",
+      "type": "AttributeGroupFacet",
+      "label": "Framehoogte",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Minder dan 49 cm",
+          "attributeValueId": 3550,
+          "attributeValueLabel": "Minder dan 49 cm",
+          "histogramCount": 299,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "49 tot 53 cm",
+          "attributeValueId": 3551,
+          "attributeValueLabel": "49 tot 53 cm",
+          "histogramCount": 987,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "53 tot 57 cm",
+          "attributeValueId": 3552,
+          "attributeValueLabel": "53 tot 57 cm",
+          "histogramCount": 5523,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "57 tot 61 cm",
+          "attributeValueId": 3553,
+          "attributeValueLabel": "57 tot 61 cm",
+          "histogramCount": 2719,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "61 tot 65 cm",
+          "attributeValueId": 11379,
+          "attributeValueLabel": "61 tot 65 cm",
+          "histogramCount": 415,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "65 cm of meer",
+          "attributeValueId": 11380,
+          "attributeValueLabel": "65 cm of meer",
+          "histogramCount": 90,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 70
+    },
+    {
+      "id": 2303,
+      "key": "urgency",
+      "type": "AttributeGroupFacet",
+      "label": "Moet nu weg",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Moet nu weg",
+          "attributeValueId": 11603,
+          "attributeValueLabel": "Moet nu weg",
+          "histogramCount": 11,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 600
+    },
+    {
+      "id": 8,
+      "key": "delivery",
+      "type": "AttributeGroupFacet",
+      "label": "Levering",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Ophalen",
+          "attributeValueId": 33,
+          "attributeValueLabel": "Ophalen",
+          "histogramCount": 12560,
+          "selected": false,
+          "isValuableForSeo": false
+        },
+        {
+          "attributeValueKey": "Verzenden",
+          "attributeValueId": 34,
+          "attributeValueLabel": "Verzenden",
+          "histogramCount": 2979,
+          "selected": false,
+          "isValuableForSeo": false
+        }
+      ],
+      "singleSelect": false,
+      "categoryId": 464,
+      "sortIndex": 666
+    },
+    {
+      "id": 987654321,
+      "key": "offeredSince",
+      "type": "AttributeGroupFacet",
+      "label": "Aangeboden sinds",
+      "attributeGroup": [
+        {
+          "attributeValueKey": "Vandaag",
+          "attributeValueLabel": "Vandaag",
+          "histogramCount": 400,
+          "selected": false,
+          "isValuableForSeo": false,
+          "default": false
+        },
+        {
+          "attributeValueKey": "Gisteren",
+          "attributeValueLabel": "Gisteren",
+          "histogramCount": 758,
+          "selected": false,
+          "isValuableForSeo": false,
+          "default": false
+        },
+        {
+          "attributeValueKey": "Een week",
+          "attributeValueLabel": "Een week",
+          "histogramCount": 2372,
+          "selected": false,
+          "isValuableForSeo": false,
+          "default": false
+        },
+        {
+          "attributeValueKey": "Altijd",
+          "attributeValueLabel": "Altijd",
+          "histogramCount": 12746,
+          "selected": true,
+          "isValuableForSeo": false,
+          "default": true
+        }
+      ],
+      "singleSelect": true,
+      "categoryId": 0
+    }
+  ],
+  "listings": [
+    {
+      "itemId": "m2444366383",
+      "title": "3T Primo2 WPNT 10th Anniversary edition maat M Sram Rival",
+      "priceInfo": {
+        "priceCents": 479900,
+        "priceType": "MIN_BID"
+      },
+      "priorityProduct": "DAGTOPPER"
+    }
+  ]
+}
