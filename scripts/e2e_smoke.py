@@ -129,8 +129,8 @@ async def probe_derived(client: Client, check: Check) -> None:
 
 async def call(client: Client, tool: str, args: dict[str, Any]) -> dict[str, Any]:
     result = await client.call_tool(tool, args)
-    assert result.data is not None, f"{tool} returned no data"
-    return dict(result.data)
+    assert result.structured_content is not None, f"{tool} returned no data"
+    return dict(result.structured_content)
 
 
 if __name__ == "__main__":
