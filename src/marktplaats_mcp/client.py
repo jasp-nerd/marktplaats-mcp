@@ -149,6 +149,7 @@ class MarktplaatsClient:
         site: Site,
         params: list[tuple[str, str]] | None = None,
         headers: dict[str, str] | None = None,
+        json_body: Any | None = None,
     ) -> httpx.Response:
         all_headers = {**BASE_HEADERS, "Referer": f"{site.base_url}/", **(headers or {})}
         query = httpx.QueryParams(tuple(params)) if params is not None else None
@@ -156,7 +157,9 @@ class MarktplaatsClient:
         for attempt in range(self.max_retries + 1):
             await self._wait_for_slot()
             try:
-                response = await self._http.request(method, url, params=query, headers=all_headers)
+                response = await self._http.request(
+                    method, url, params=query, headers=all_headers, json=json_body
+                )
             except httpx.HTTPError as exc:
                 last_error = exc
             else:

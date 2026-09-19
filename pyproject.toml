@@ -36,6 +36,9 @@ dependencies = [
     "pydantic>=2.11,<3",
 ]
 
+[project.optional-dependencies]
+login = ["rookiepy>=0.5,<1"]
+
 [project.urls]
 Homepage = "https://github.com/jasp-nerd/marktplaats-mcp"
 Repository = "https://github.com/jasp-nerd/marktplaats-mcp"

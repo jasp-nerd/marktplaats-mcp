@@ -155,5 +155,133 @@ class PriceStats(BaseModel):
     note: str | None = None
 
 
+class AccountStatus(BaseModel):
+    site: str
+    logged_in: bool
+    user_id: int | None = None
+    user_name: str | None = None
+    unread_messages: int | None = None
+    unread_notifications: int | None = None
+    writes_enabled: bool
+    note: str | None = None
+
+
+class Conversation(BaseModel):
+    id: str
+    listing_id: str | None = None
+    title: str | None = None
+    other_party: str | None = None
+    other_party_id: int | None = None
+    last_message: str | None = None
+    last_message_at: str | None = None
+    unread_count: int | None = None
+
+
+class ConversationsResult(BaseModel):
+    site: str
+    offset: int
+    returned: int
+    conversations: list[Conversation]
+    note: str | None = None
+
+
+class Message(BaseModel):
+    sender: Literal["me", "them", "unknown"]
+    text: str
+    sent_at: str | None = None
+    read: bool | None = None
+
+
+class ConversationDetail(BaseModel):
+    site: str
+    conversation_id: str
+    other_party: str | None = None
+    other_party_id: int | None = None
+    total_count: int | None = None
+    messages: list[Message]
+
+
+class MyListing(BaseModel):
+    id: str
+    title: str | None = None
+    price: str | None = None
+    price_euros: float | None = None
+    status: str | None = None
+    url: str | None = None
+    view_count: int | None = None
+    favorited_count: int | None = None
+    highest_bid_euros: float | None = None
+    created_at: str | None = None
+    expires_at: str | None = None
+    expiring: bool | None = None
+    reserved: bool | None = None
+
+
+class MyListingsResult(BaseModel):
+    site: str
+    total_count: int | None = None
+    batch: int
+    returned: int
+    listings: list[MyListing]
+    note: str | None = None
+
+
+class Favorite(BaseModel):
+    id: str
+    title: str | None = None
+    price: str | None = None
+    url: str | None = None
+    city: str | None = None
+    seller: str | None = None
+    available: bool | None = None
+
+
+class FavoritesResult(BaseModel):
+    site: str
+    batch: int
+    returned: int
+    more_available: bool | None = None
+    favorites: list[Favorite]
+
+
+class MyBid(BaseModel):
+    listing_id: str
+    title: str | None = None
+    asking_price: str | None = None
+    my_bid_euros: float | None = None
+    status: str | None = None
+    url: str | None = None
+
+
+class MyBidsResult(BaseModel):
+    site: str
+    returned: int
+    more_available: bool | None = None
+    bids: list[MyBid]
+
+
+class SavedSearch(BaseModel):
+    id: str | None = None
+    name: str | None = None
+    url: str | None = None
+    new_ads_count: int | None = None
+    created_at: str | None = None
+
+
+class SavedSearchesResult(BaseModel):
+    site: str
+    returned: int
+    saved_searches: list[SavedSearch]
+
+
+class WriteReceipt(BaseModel):
+    action: str
+    site: str
+    preview: bool
+    target: dict[str, Any]
+    success: bool | None = None
+    note: str | None = None
+
+
 def dump(model: BaseModel, exclude_none: bool = True) -> dict[str, Any]:
     return model.model_dump(exclude_none=exclude_none)
