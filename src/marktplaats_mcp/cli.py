@@ -147,7 +147,7 @@ def _login(args: argparse.Namespace, path: Path) -> int:
 
 def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
     try:
-        import rookiepy  # type: ignore[import-not-found]
+        import rookiepy  # type: ignore[import-not-found,unused-ignore]
     except ImportError:
         print(
             "Browser import needs the 'login' extra: run\n"
@@ -159,17 +159,28 @@ def _import_cookie(site: Site, browser: str | None) -> tuple[str, str] | None:
     names = [browser] if browser else list(BROWSERS)
     print(f"Looking for a {site.host} session in: {', '.join(names)} ...")
     print("  (macOS may ask for keychain access to read a browser's cookies; click Allow.)")
+    blocked: list[str] = []
     for name in names:
         loader: Callable[..., Iterable[dict[str, Any]]] | None = getattr(rookiepy, name, None)
         if loader is None:
             continue
         try:
             cookies = list(loader([site.host.removeprefix("www.")]))
-        except Exception:
+        except Exception as exc:  # not installed, locked profile, or blocked by the OS
+            if "unable to open database" in str(exc) or "Failed to open" in str(exc):
+                blocked.append(name)
             continue
         header = cookie_header(cookies, site)
         if header:
             return header, name
+    if blocked:
+        print(
+            f"  Could not read the cookies of: {', '.join(blocked)}. On macOS this means the "
+            "app you ran this from has no permission to read browser data: run this command "
+            "in the Terminal app and click Allow when macOS asks, or give your terminal "
+            "Full Disk Access in System Settings > Privacy & Security.",
+            file=sys.stderr,
+        )
     return None
 
 
