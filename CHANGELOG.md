@@ -19,7 +19,7 @@ All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](ht
 
 ### Fixed
 - The subcategory filter never applied: the API ignores `l2CategoryId` and only honours `l2CategoryIds[]`. Every subcategory search previously returned the whole parent category.
-- Small-limit searches and polls sorted by date returned nothing because the first pages are padded with paid promotions; pages are now fetched at full size and paginated on returned listings, so `offset`/`next_offset` no longer skip or repeat ads.
+- Small-limit searches and polls sorted by date returned nothing because the first pages are padded with paid promotions; pages are now fetched at full size and `next_offset` is a position in the marketplace's own result list, so paging never skips or repeats ads and a deep page costs one request.
 - `check_new_listings` no longer skips ads when the result is truncated: the cursor advances only to the oldest ad returned.
 - `get_listing_details` returned no attributes and image URLs with an unresolved size placeholder.
 - Condition ids differ per category (a used car is not a used bike); they are now resolved from the category's own filters.

@@ -219,6 +219,7 @@ class ConversationDetail(BaseModel):
     other_party_id: int | None = None
     total_count: int | None = None
     messages: list[Message]
+    note: str | None = None
 
 
 class MyListing(BaseModel):

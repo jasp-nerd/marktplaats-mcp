@@ -434,6 +434,41 @@ async def test_get_conversation_current_shape_with_payment_offer():
 
 
 @respx.mock
+async def test_get_conversation_reports_server_errors_instead_of_trying_the_legacy_api():
+    """Only a 404 on the current RPC means 'use the legacy endpoint'; a stale
+    session (401) must surface as such, not as 'conversation not found'."""
+    respx.get(
+        url__regex=rf"{BASE}/messages/api/rpc/conversations\.getMessagesForConversation.*"
+    ).mock(return_value=httpx.Response(401))
+    legacy = respx.get(url__regex=rf"{BASE}/messages/api/conversations/abc/messages/.*").mock(
+        return_value=httpx.Response(404)
+    )
+    with pytest.raises(ToolError, match="rejected the session"):
+        await call(
+            server_with(account_client(), False), "get_conversation", {"conversation_id": "abc"}
+        )
+    assert not legacy.called
+
+
+@respx.mock
+async def test_get_conversation_mark_read_is_reported_when_read_only():
+    thread = respx.get(
+        url__regex=rf"{BASE}/messages/api/rpc/conversations\.getMessagesForConversation.*"
+    ).mock(return_value=httpx.Response(200, json={"result": {"data": {"messages": []}}}))
+    mark = respx.post(url__regex=rf"{BASE}/messages/api/rpc/conversations\.markAsRead").mock(
+        return_value=httpx.Response(200, json={"result": {"data": None}})
+    )
+    data = await call(
+        server_with(account_client(), False),
+        "get_conversation",
+        {"conversation_id": "abc", "mark_read": True},
+    )
+    assert thread.called
+    assert not mark.called
+    assert "NOT marked as read" in data["note"]
+
+
+@respx.mock
 async def test_get_conversation_marks_senders():
     respx.get(
         url__regex=rf"{BASE}/messages/api/rpc/conversations\.getMessagesForConversation.*"

@@ -24,16 +24,28 @@ jobs:
           python-version: "3.12"
       - run: uv sync --all-groups
       - id: smoke
+        # `shell: bash` turns on pipefail, so the script's exit status survives the tee.
+        shell: bash
         run: uv run python scripts/e2e_smoke.py | tee smoke.log
       - name: Open or update an issue on failure
         if: failure()
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          body="The daily live canary failed on $(date -u +%F). Log:\n\n\`\`\`\n$(tail -40 smoke.log)\n\`\`\`\n\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          {
+            echo "The daily live canary failed on $(date -u +%F). Log:"
+            echo
+            echo '```'
+            tail -40 smoke.log
+            echo '```'
+            echo
+            echo "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          } > body.md
+          gh label create e2e-failure --color d73a4a --force \
+            --description "The daily live canary against the marketplace API failed" >/dev/null 2>&1 || true
           existing=$(gh issue list --label e2e-failure --state open --json number --jq '.[0].number')
           if [ -n "$existing" ]; then
-            gh issue comment "$existing" --body "$(printf "$body")"
+            gh issue comment "$existing" --body-file body.md
           else
-            gh issue create --title "Live API canary failing" --label e2e-failure --body "$(printf "$body")"
+            gh issue create --title "Live API canary failing" --label e2e-failure --body-file body.md
           fi

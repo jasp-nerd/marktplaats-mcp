@@ -64,10 +64,13 @@ def stored_sites(session: dict[str, Any]) -> dict[str, Any]:
 
 
 def write_session(path: Path, data: dict[str, Any]) -> None:
+    """Store the session so that it is never readable by other users, not even
+    for the moment between creating the file and filling it."""
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
     with contextlib.suppress(OSError):
-        path.chmod(0o600)
+        path.touch(mode=0o600, exist_ok=True)
+        path.chmod(0o600)  # an existing file keeps its old mode on touch
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -108,7 +111,9 @@ def main(argv: list[str] | None = None) -> int:
         help="Never send messages, place bids or change favorites from this session.",
     )
     commands.add_parser("status", help="Show the stored sessions and check that they work.")
-    commands.add_parser("logout", help="Delete the stored sessions.")
+    commands.add_parser(
+        "logout", help="Delete the stored sessions and the browser profile used by --window."
+    )
 
     args = parser.parse_args(argv)
     path = session_file()
@@ -313,9 +318,14 @@ def _chromium_cookie_files(name: str) -> list[Path]:
     if sys.platform == "darwin":
         base = Path.home() / "Library/Application Support" / mac
     elif sys.platform.startswith("win"):
-        base = Path(os.environ.get("LOCALAPPDATA", "")) / windows if windows else Path()
+        local = os.environ.get("LOCALAPPDATA", "")
+        if not windows or not local:
+            return []  # the browser has no profile directory on this platform
+        base = Path(local) / windows
     else:
-        base = Path.home() / ".config" / linux if linux else Path()
+        if not linux:
+            return []
+        base = Path.home() / ".config" / linux
     if not base.is_dir():
         return []
     return sorted(base.glob("*/Cookies")) + sorted(base.glob("*/Network/Cookies"))
@@ -424,10 +434,21 @@ def _status(path: Path) -> int:
 
 
 def _logout(path: Path) -> int:
+    import shutil
+
+    removed = False
     try:
         path.unlink()
+        removed = True
+        print(f"Removed {path}.")
     except FileNotFoundError:
+        pass
+    profile_dir = path.parent / "browser-profile"
+    if profile_dir.is_dir():
+        # The persistent profile from `login --window` holds a live login too.
+        shutil.rmtree(profile_dir, ignore_errors=True)
+        removed = True
+        print(f"Removed {profile_dir}.")
+    if not removed:
         print("No stored session.")
-        return 0
-    print(f"Removed {path}.")
     return 0

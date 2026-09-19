@@ -226,9 +226,49 @@ def test_status_and_logout(monkeypatch, tmp_path, capsys):
     mock_verification()
     assert cli.main(["status"]) == 0
     assert "OK, 2 unread" in capsys.readouterr().out
+    profile_dir = tmp_path / "browser-profile"
+    (profile_dir / "Default").mkdir(parents=True)
+    (profile_dir / "Default" / "Cookies").write_bytes(b"live login")
     assert cli.main(["logout"]) == 0
     assert not session_path.exists()
+    assert not profile_dir.exists()  # the --window profile holds a login too
     assert cli.main(["logout"]) == 0
+    assert "No stored session" in capsys.readouterr().out
+
+
+def test_written_session_is_private_from_the_start(monkeypatch, tmp_path):
+    """The file must never exist with the umask's default mode, not even briefly."""
+    if sys.platform.startswith("win"):
+        pytest.skip("POSIX file modes")
+    calls: list[str] = []
+    original = cli.Path.write_text
+
+    def spy(self, *args, **kwargs):
+        calls.append(oct(self.stat().st_mode & 0o777))
+        return original(self, *args, **kwargs)
+
+    monkeypatch.setattr(cli.Path, "write_text", spy)
+    path = tmp_path / "session.json"
+    cli.write_session(path, {"version": 1})
+    assert calls == ["0o600"]  # already private when the content lands
+    path.chmod(0o644)
+    cli.write_session(path, {"version": 2})
+    assert oct(path.stat().st_mode & 0o777) == "0o600"  # an old, looser mode is tightened
+
+
+def test_browsers_without_a_profile_dir_on_this_platform_are_skipped(monkeypatch, tmp_path):
+    """Arc has no Linux build: the empty entry must not make the lookup glob the
+    current working directory for */Cookies."""
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "Default").mkdir()
+    (tmp_path / "Default" / "Cookies").write_bytes(b"")
+    monkeypatch.setattr(sys, "platform", "linux")
+    assert cli._chromium_cookie_files("arc") == []
+    monkeypatch.setattr(sys, "platform", "win32")
+    monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))
+    assert cli._chromium_cookie_files("arc") == []
+    monkeypatch.delenv("LOCALAPPDATA")
+    assert cli._chromium_cookie_files("chrome") == []
 
 
 @pytest.mark.parametrize("command", ["login", "status", "logout"])

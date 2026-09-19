@@ -84,9 +84,10 @@ async def test_search_listings_contract(search_response):
     assert first["listed"].count("-") == 2  # ISO date, not "Vandaag"
     # promos are filtered out by default
     assert all("is_sponsored" not in listing for listing in data["listings"])
-    # offsets count returned (organic) listings, so the next page starts at 5
-    assert data["next_offset"] == 5
-    assert "offset=5" in data["note"]
+    # next_offset is a position in the raw result list, so it lands past the
+    # five returned ads plus any promotions that were skipped in between
+    assert data["next_offset"] >= 5
+    assert f"offset={data['next_offset']}" in data["note"]
 
 
 @respx.mock
@@ -287,11 +288,38 @@ async def test_pagination_with_next_offset_yields_no_duplicates():
         if data.get("next_offset") is None:
             assert "note" not in data
             break
-        assert data["next_offset"] == offset + data["returned"]
+        assert data["next_offset"] > offset
         offset = data["next_offset"]
     assert seen == [f"m{i}" for i in range(110, 160)]
     # pages are cached between calls, so walking 50 listings hits the API twice
     assert route.call_count == 2
+
+
+@respx.mock
+async def test_deep_offsets_fetch_one_page_and_never_loop():
+    """Regression: offsets past the per-call page budget used to return nothing
+    with next_offset == offset, so an agent following the note paged forever."""
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(2000, organic_from=0))
+    data = await call("search_listings", {"query": "fiets", "limit": 20, "offset": 1234})
+    assert [listing["id"] for listing in data["listings"]] == [f"m{i}" for i in range(1234, 1254)]
+    assert data["next_offset"] == 1254
+    assert route.call_count == 1  # straight to the page that holds position 1234
+    last = await call("search_listings", {"query": "fiets", "limit": 20, "offset": 1990})
+    assert data["returned"] == 20
+    assert last["returned"] == 10
+    assert "next_offset" not in last  # the result set is exhausted
+
+
+@respx.mock
+async def test_offset_walk_terminates_when_everything_left_is_promoted():
+    route = respx.get(SEARCH_URL_NL).mock(side_effect=fake_search_api(1000, organic_from=900))
+    data = await call("search_listings", {"query": "fiets", "limit": 5, "offset": 0})
+    # five promo-only pages: nothing to return yet, but the cursor moved past them
+    assert data["returned"] == 0
+    assert data["next_offset"] == 500
+    assert route.call_count == 5
+    data = await call("search_listings", {"query": "fiets", "limit": 5, "offset": 500})
+    assert [listing["id"] for listing in data["listings"]] == [f"m{i}" for i in range(900, 905)]
 
 
 @respx.mock
@@ -369,6 +397,28 @@ async def test_get_listing_details_accepts_urls_and_bare_ids(listing_vip):
     # the site is inferred from a 2dehands URL even if the site param says otherwise
     await call("get_listing_details", {"listing_id": "https://link.2dehands.be/m2443283582"})
     assert be_route.called
+    await call("get_listing_details", {"listing_id": "www.2ememain.be/v/velos/m2443283582-velo"})
+    assert be_route.call_count == 2
+    # ...but only from the hostname, not from a word in the slug
+    await call(
+        "get_listing_details",
+        {"listing_id": "https://www.marktplaats.nl/v/fietsen/m2444371973-2dehands-racefiets"},
+    )
+    assert route.calls[-1].request.url.host == "app.marktplaats.nl"
+    assert be_route.call_count == 2
+
+
+def test_rate_limit_bucket_uses_the_proxy_added_forwarded_hop(monkeypatch):
+    """A client can put anything at the front of X-Forwarded-For; only the address
+    the reverse proxy appended identifies it."""
+    import fastmcp.server.dependencies as deps
+
+    from marktplaats_mcp.server import _client_key
+
+    monkeypatch.setattr(deps, "get_http_headers", lambda: {"x-forwarded-for": "1.2.3.4, 10.0.0.9"})
+    assert _client_key(None) == "10.0.0.9"
+    monkeypatch.setattr(deps, "get_http_headers", lambda: {"x-forwarded-for": "10.0.0.9"})
+    assert _client_key(None) == "10.0.0.9"
 
 
 @respx.mock

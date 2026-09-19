@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from typing import Annotated, Any, Literal
+from urllib.parse import urlparse
 
 from fastmcp import FastMCP
 from fastmcp.exceptions import ToolError
@@ -618,9 +619,10 @@ async def check_new_listings(
         sort_by="date",
         sort_order="desc",
     )
-    listings, _, has_more, _ = await _collect_listings(
+    listings, _, next_offset, _ = await _collect_listings(
         spec, limit=limit, offset=0, compact=True, include_sponsored=False
     )
+    has_more = next_offset is not None
     cursor = now
     note = None
     if has_more:
@@ -892,10 +894,9 @@ async def _facets_for(
 async def _search_result(
     spec: SearchSpec, limit: int, offset: int, compact: bool, include_sponsored: bool
 ) -> dict[str, Any]:
-    listings, total, has_more, suggested = await _collect_listings(
+    listings, total, next_offset, suggested = await _collect_listings(
         spec, limit=limit, offset=offset, compact=compact, include_sponsored=include_sponsored
     )
-    next_offset = offset + len(listings) if has_more else None
     return dump(
         SearchResult(
             site=spec.site.key,
@@ -919,68 +920,70 @@ async def _search_result(
 # 100 "racefiets" results were DAGTOPPERs when measured; the first organic ad
 # sat at raw position 39) and it aligns any offset down to a multiple of the
 # requested limit, so offsets are only meaningful on page boundaries. We
-# therefore walk fixed, aligned pages of the API maximum, skip promotions and
-# excluded terms, and count the caller's ``offset`` in returned listings.
+# therefore walk fixed, aligned pages of the API maximum and skip promotions
+# and excluded terms. The caller's ``offset`` is a position in the API's own
+# result list, so any page can be fetched directly and ``next_offset`` never
+# points at a row that was already returned.
 PAGE_SIZE = MAX_LIMIT
 MAX_PAGES_PER_CALL = 5
 
 
 async def _collect_listings(
     spec: SearchSpec, *, limit: int, offset: int, compact: bool, include_sponsored: bool
-) -> tuple[list[Listing], int, bool, str | None]:
-    """Return (listings, raw_total_count, has_more, suggested_query).
+) -> tuple[list[Listing], int, int | None, str | None]:
+    """Return (listings, raw_total_count, next_offset, suggested_query).
 
-    ``offset`` counts listings as the tools return them, so ``offset + returned``
-    is always the next page. ``has_more`` is False once the result set is exhausted.
+    ``offset`` and ``next_offset`` are positions in the marketplace's raw result
+    list (promotions included), so a deep page costs one request rather than a
+    walk from the start. ``next_offset`` is None once the result set is exhausted.
+    Sponsored ads from the page-one top block are added on the first page only
+    and do not count towards ``limit``.
     """
-    to_skip = offset
     listings: list[Listing] = []
     seen: set[str] = set()
     total = 0
-    has_more = False
     suggested: str | None = None
-    page_offset = 0
+    position = offset  # raw position of the next row still to be considered
+    page_offset = offset - offset % PAGE_SIZE
+
+    def keep(raw: dict[str, Any]) -> bool:
+        item_id = str(raw.get("itemId"))
+        if item_id in seen:
+            return False
+        seen.add(item_id)
+        if not include_sponsored and is_promoted(raw):
+            return False
+        if matches_exclusions(raw, spec.exclude):
+            return False
+        return not spec.require_price or has_asking_price(raw)
+
     for _ in range(MAX_PAGES_PER_CALL):
         data = await _search_page(spec, page_offset)
         total = int(data.get("totalResultCount") or 0)
         if page_offset == 0:
             suggested = _suggested_query(spec.query, data)
-        page_items: list[tuple[dict[str, Any], bool]] = [
-            (raw, False) for raw in data.get("listings") or []
-        ]
-        if include_sponsored and page_offset == 0:
-            page_items = [(raw, True) for raw in data.get("topBlock") or []] + page_items
-        page_ids = {str(raw.get("itemId")) for raw, _ in page_items}
-        if not page_items or page_ids <= seen:
-            break  # exhausted, or the API is repeating itself
-        for raw, from_top_block in page_items:
-            item_id = str(raw.get("itemId"))
-            if item_id in seen:
-                continue
-            seen.add(item_id)
-            if not include_sponsored and is_promoted(raw):
-                continue
-            if matches_exclusions(raw, spec.exclude):
-                continue
-            if spec.require_price and not has_asking_price(raw):
-                continue
-            if to_skip:
-                to_skip -= 1
-                continue
-            if len(listings) == limit:
-                has_more = True
-                break
-            listings.append(
-                parse_listing(raw, spec.site, compact=compact, sponsored=from_top_block)
-            )
-        if has_more:
-            break
+        rows: list[dict[str, Any]] = list(data.get("listings") or [])
+        if not rows or {str(raw.get("itemId")) for raw in rows} <= seen:
+            return listings, total, None, suggested  # exhausted, or the API repeats itself
+        if include_sponsored and offset == 0 and page_offset == 0:
+            for raw in data.get("topBlock") or []:
+                if keep(raw):
+                    listings.append(parse_listing(raw, spec.site, compact=compact, sponsored=True))
+        for index, raw in enumerate(rows):
+            row_position = page_offset + index
+            if row_position < position:
+                continue  # before the cursor on the first, aligned page
+            if len(listings) >= limit:
+                return listings, total, row_position, suggested
+            position = row_position + 1
+            if keep(raw):
+                listings.append(parse_listing(raw, spec.site, compact=compact))
         page_offset += PAGE_SIZE
         if page_offset >= total:
-            break
-    else:
-        has_more = True  # gave up before exhausting the result set
-    return listings, total, has_more, suggested
+            return listings, total, None, suggested
+        if len(listings) >= limit:
+            return listings, total, position, suggested
+    return listings, total, position, suggested  # page budget spent; more may exist
 
 
 async def _search_page(spec: SearchSpec, page_offset: int) -> dict[str, Any]:
@@ -1011,7 +1014,8 @@ def _parse_listing_ref(reference: str) -> tuple[str, str | None]:
         raise ToolError("Provide a listing_id, e.g. 'm2400641485'.")
     site_key = None
     if "://" in text or text.startswith("www."):
-        site_key = "2dehands" if "2dehands" in text else "marktplaats"
+        host = urlparse(text if "://" in text else f"https://{text}").hostname or ""
+        site_key = "2dehands" if host.endswith(("2dehands.be", "2ememain.be")) else "marktplaats"
         match = _LISTING_REF_RE.search(text)
         if not match:
             raise ToolError(f"No listing id found in URL {text!r}.")
@@ -1059,9 +1063,11 @@ def _client_key(_: Any) -> str:
     """Rate-limit bucket per caller: the client IP behind the reverse proxy."""
     from fastmcp.server.dependencies import get_http_headers, get_http_request
 
+    # The reverse proxy appends the address it saw to X-Forwarded-For; earlier
+    # entries are whatever the client chose to send, so only the last one counts.
     forwarded = (get_http_headers() or {}).get("x-forwarded-for", "")
     if forwarded:
-        return forwarded.split(",")[0].strip()
+        return forwarded.rsplit(",", 1)[-1].strip() or "anonymous"
     try:
         request = get_http_request()
     except RuntimeError:

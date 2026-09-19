@@ -242,7 +242,7 @@ class AccountClient(MarktplaatsClient):
                 site,
                 referer=referer,
             )
-        except (NotFoundError, ApiError):
+        except NotFoundError:
             data = await self._authed(
                 "GET",
                 f"{site.base_url}/messages/api/conversations/{quote(conversation_id, safe='')}"
@@ -592,8 +592,8 @@ def _as_str(value: Any) -> str | None:
 
 def _stale_session_message(site: Site) -> str:
     return (
-        f"{site.host} rejected the session. Log in at {site.base_url} in your browser, copy "
-        f"the request Cookie header again and update {COOKIE_ENV[site.key]}."
+        f"{site.host} rejected the session; log in again with 'marktplaats-mcp login' "
+        f"(or update {COOKIE_ENV[site.key]} with a fresh Cookie header from {site.base_url})."
     )
 
 
@@ -738,7 +738,13 @@ def register_account_tools(server: FastMCP, client: AccountClient, allow_writes:
                 await client.mark_conversation_read(resolved, conversation_id)
         except (ApiError, ListingNotFoundError) as exc:
             raise tool_error(exc) from exc
-        return dump(normalize_conversation_detail(data, resolved, conversation_id, limit))
+        detail = normalize_conversation_detail(data, resolved, conversation_id, limit)
+        if mark_read and not allow_writes:
+            detail.note = (
+                "The thread was NOT marked as read: this session is read-only "
+                "(login --read-only or MARKTPLAATS_READ_ONLY=1)."
+            )
+        return dump(detail)
 
     @server.tool(annotations={"title": "List my listings", **ACCOUNT_READ}, tags={"account"})
     async def list_my_listings(
