@@ -2,6 +2,11 @@
 
 All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [Unreleased]
+
+### Changed
+- README (EN/NL/FR) is now a short front door: one "Get started" section (hosted URL, Claude Code one-liner, standard config with one-click buttons for Cursor, VS Code, LM Studio and Kiro), account setup, tools, safety, FAQ and links. The step-by-step install guide for 40 clients moved to `docs/clients.md` (with `.nl` and `.fr` versions), each with the fastest path, the config file per OS, a check that it works and a link to the client's official guide. The environment-variable reference moved to `docs/configuration.md` and the comparison table to `docs/comparison.md`. Newly covered clients: ChatGPT Developer mode, Mistral Le Chat, Perplexity, Gemini app, Antigravity, Roo Code, Zed, Goose, LM Studio, GitHub Copilot CLI, Kiro, Warp, Continue, Trae, Amp, Factory Droid, Qwen Code, Kimi CLI, Raycast, Open WebUI, LibreChat, Jan, ChatWise, Msty, Cherry Studio, 5ire, n8n, Docker MCP Toolkit and Copilot Studio. Windsurf is documented under its new name Devin Desktop.
+
 ## [0.2.0] - 2026-09-19
 
 ### Added

@@ -8,7 +8,7 @@
 
 # marktplaats-mcp: the Marktplaats & 2dehands MCP server
 
-**marktplaats-mcp** is an MCP server for **Marktplaats.nl** (Netherlands) and **2dehands.be** (Belgium), the Dutch and Belgian second-hand classifieds (*tweedehands*, *petites annonces d'occasion*). It lets Claude, ChatGPT, Cursor, Codex, Gemini, VS Code Copilot, Cline, opencode and any other MCP client search listings, filter on category-specific attributes, vet sellers, compare prices, monitor new ads, and, with your own login, read and send messages, place bids and manage favorites and your own ads. No API key. Runs locally over stdio, or as a hosted endpoint you paste into claude.ai in one step.
+**marktplaats-mcp** is an MCP server for **Marktplaats.nl** (Netherlands) and **2dehands.be** (Belgium), the Dutch and Belgian second-hand classifieds (*tweedehands*, *petites annonces d'occasion*). Search listings, filter on category attributes, vet sellers, compare prices and watch for new ads from Claude, ChatGPT, Cursor, Codex, Gemini or any other MCP client. With your own login it also reads and sends messages, places bids and manages your favorites and ads. No API key.
 
 <p align="center">
   <a href="https://pypi.org/project/marktplaats-mcp/"><img src="https://img.shields.io/pypi/v/marktplaats-mcp.svg" alt="PyPI version"></a>
@@ -20,25 +20,25 @@
   <a href="https://registry.modelcontextprotocol.io/v0/servers?search=marktplaats"><img src="https://img.shields.io/badge/MCP%20registry-listed-blue" alt="MCP registry"></a>
 </p>
 
-## 🌐 Use on claude.ai (no install)
+## 🚀 Get started
 
-A hosted copy of this server runs at `https://marktplaats-mcp.jaspnerd.dev/mcp`, ready for [claude.ai](https://claude.ai) in your browser or the Claude mobile app. Custom connectors work on every Claude plan, including Free.
+**No install: paste a URL.** The hosted, read-only server runs at `https://marktplaats-mcp.jaspnerd.dev/mcp`. Add it as a custom connector in [claude.ai](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md#claudeai-web-and-mobile) (Settings → Connectors, works on the Free plan and mobile), [ChatGPT](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md#chatgpt), [Mistral Le Chat](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md#mistral-le-chat), [Perplexity](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md#perplexity) or the [Gemini app](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md#gemini-app).
 
-1. Open [claude.ai](https://claude.ai) → **Settings → Connectors → Add custom connector**.
-2. Paste `https://marktplaats-mcp.jaspnerd.dev/mcp` as the URL and click **Add**. No account or key needed.
-3. Ask Claude: *"Search Marktplaats for an OLED TV under €400 near 3011 AB and check the seller."*
-
-The hosted endpoint runs the same code as the PyPI package, is rate-limited per client and only offers the read-only tools. For your own account, install it locally below.
-
-## 🚀 Quickstart (local)
-
-The only prerequisite is [uv](https://docs.astral.sh/uv/) (`brew install uv` or `curl -LsSf https://astral.sh/uv/install.sh | sh`).
-
-**Claude Code**, one command:
+**Claude Code: one command.**
 
 ```bash
-claude mcp add marktplaats -- uvx marktplaats-mcp
+claude mcp add --scope user marktplaats -- uvx marktplaats-mcp
 ```
+
+**Any other client.** Install [uv](https://docs.astral.sh/uv/getting-started/installation/) (`brew install uv`, or `winget install --id=astral-sh.uv -e` on Windows), then add the standard MCP config:
+
+```json
+{ "mcpServers": { "marktplaats": { "command": "uvx", "args": ["marktplaats-mcp"] } } }
+```
+
+One click: [![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=marktplaats&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJtYXJrdHBsYWF0cy1tY3AiXX0=) [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=marktplaats&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22marktplaats-mcp%22%5D%7D) [![Add to LM Studio](https://files.lmstudio.ai/deeplink/mcp-install-dark.svg)](https://lmstudio.ai/install-mcp?name=marktplaats&config=eyJjb21tYW5kIjoidXZ4IiwiYXJncyI6WyJtYXJrdHBsYWF0cy1tY3AiXX0%3D) [![Add to Kiro](https://img.shields.io/badge/Kiro-Add-7B61FF?style=flat-square)](https://kiro.dev/launch/mcp/add?name=marktplaats&config=%7B%22command%22%3A%22uvx%22%2C%22args%22%3A%5B%22marktplaats-mcp%22%5D%7D)
+
+Step-by-step instructions for 40 clients (Cursor, VS Code, Codex, Gemini CLI, Cline, Windsurf, JetBrains, Zed, opencode, Goose, ...), with the config path per OS and a link to each client's official guide: **[docs/clients.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md)**.
 
 Then ask: *"Find a racefiets under €500 within 25 km of 1011 AB, frame 57-61 cm, and tell me if the sellers look legit."*
 
@@ -48,13 +48,13 @@ Then ask: *"Find a racefiets under €500 within 25 km of 1011 AB, frame 57-61 c
 
 ## 👤 Use your own account (messages, favorites, bids, your ads)
 
-Marktplaats has no public API and its login uses SMS two-factor authentication and reCAPTCHA, so this server never asks for your password. Instead it copies the session from a browser you are already logged into, the way `yt-dlp --cookies-from-browser` does:
+Marktplaats has no public API and its login uses SMS two-factor authentication, so this server never asks for your password. It copies the session from a browser you are already logged into:
 
 ```bash
 uvx --from 'marktplaats-mcp[login]' marktplaats-mcp login
 ```
 
-That looks for a Marktplaats session in Chrome, Brave, Firefox, Safari, Edge, Arc and friends, verifies it against the site, and stores it in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear. Useful commands:
+The session is stored in `~/.config/marktplaats-mcp/session.json`, readable by your user only. Restart your MCP client and the account tools appear.
 
 ```bash
 marktplaats-mcp login --site 2dehands  # also import your 2dehands.be session
@@ -76,172 +76,7 @@ marktplaats-mcp logout                 # delete it
 
 Or set `MARKTPLAATS_COOKIE` / `TWEEDEHANDS_COOKIE` (the request `Cookie` header) in your client's config. Sessions last weeks; when one expires the tools tell you to log in again.
 
-**What can go wrong, and what cannot.** Sending a message, contacting a seller and placing a bid return a preview first and only act when called again with `confirm=true`, so your agent shows you what it is about to do. A bid is binding on Marktplaats; the tool refuses bids below the listing's minimum and is marked destructive so clients ask before running it. Every confirmed write is appended to `~/.local/state/marktplaats-mcp/writes.jsonl`. Your session is only ever sent to marktplaats.nl or 2dehands.be, and the hosted endpoint never registers account tools. Automated ad placement is forbidden by Marktplaats' terms and is deliberately not implemented.
-
-## 📦 Install in your favorite client
-
-Every config runs the same stdio server via `uvx marktplaats-mcp`.
-
-<details>
-<summary><b>Claude Desktop</b></summary>
-
-Add to `claude_desktop_config.json` (macOS: `~/Library/Application Support/Claude/`, Windows: `%APPDATA%\Claude\`), then fully restart Claude Desktop:
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-
-If Claude Desktop can't find `uvx`, use the absolute path (`which uvx`, e.g. `/Users/you/.local/bin/uvx`).
-</details>
-
-<details>
-<summary><b>OpenAI Codex CLI</b></summary>
-
-Add to `~/.codex/config.toml`:
-
-```toml
-[mcp_servers.marktplaats]
-command = "uvx"
-args = ["marktplaats-mcp"]
-```
-
-Or: `codex mcp add marktplaats -- uvx marktplaats-mcp`
-</details>
-
-<details>
-<summary><b>opencode</b></summary>
-
-Add to `opencode.json`:
-
-```json
-{
-  "$schema": "https://opencode.ai/config.json",
-  "mcp": {
-    "marktplaats": {
-      "type": "local",
-      "command": ["uvx", "marktplaats-mcp"],
-      "enabled": true
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Cursor</b></summary>
-
-Add to `~/.cursor/mcp.json` (global) or `.cursor/mcp.json` (project):
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>VS Code / GitHub Copilot</b></summary>
-
-Add to `.vscode/mcp.json` (note the `servers` key and explicit `type`):
-
-```json
-{
-  "servers": {
-    "marktplaats": {
-      "type": "stdio",
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Cline</b></summary>
-
-MCP Servers → Configure → add to `cline_mcp_settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Windsurf</b></summary>
-
-Add to `~/.codeium/windsurf/mcp_config.json`:
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Gemini CLI</b></summary>
-
-Add to `~/.gemini/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>JetBrains IDEs (AI Assistant / Junie)</b></summary>
-
-Settings → Tools → AI Assistant → Model Context Protocol (MCP) → Add:
-
-```json
-{
-  "mcpServers": {
-    "marktplaats": {
-      "command": "uvx",
-      "args": ["marktplaats-mcp"]
-    }
-  }
-}
-```
-</details>
-
-<details>
-<summary><b>Any client that supports remote servers (ChatGPT, Gemini, others)</b></summary>
-
-Use the Streamable HTTP URL `https://marktplaats-mcp.jaspnerd.dev/mcp`, no authentication. Read-only tools only.
-</details>
+Sending, contacting a seller and bidding return a preview first and only act when called again with `confirm=true`. Bids are binding on Marktplaats; the tool refuses bids below the minimum. Automated ad placement is forbidden by Marktplaats' terms and deliberately not implemented. See [Safety model](#-safety-model).
 
 ## 🧰 Tools
 
@@ -284,28 +119,6 @@ Read-only tools carry the matching MCP annotations, so clients skip confirmation
 - **Polite to the marketplace.** Requests are spaced (`MARKTPLAATS_MIN_INTERVAL_MS`, default 200), retried with backoff and `Retry-After`, and search pages are cached for a minute. The hosted endpoint is rate-limited per client and globally.
 - **No affiliate links, no tracking.** Listing URLs are returned exactly as the marketplaces publish them.
 
-## ⚖️ How this compares
-
-| | **marktplaats-mcp** (this) | [PonClick/marktplaats-mcp](https://github.com/PonClick/marktplaats-mcp) | [gjoris/marktplaats-2dehands-mcp](https://github.com/gjoris/marktplaats-2dehands-mcp) |
-|---|:---:|:---:|:---:|
-| Marktplaats.nl | ✅ | ✅ | ✅ |
-| 2dehands.be (Belgium), with language filter | ✅ | ❌ | ✅ |
-| Subcategory filter that actually applies | ✅ | ❌ | ❌ |
-| Category attribute filters (brand, mileage, RAM, ...) by label | ✅ | ids only | ids only |
-| Price statistics, seller listings, spelling suggestions | ✅ | ❌ | ❌ |
-| Listing details with status, exact time, bids, seller response rate | ✅ | partial | partial |
-| Account: messages, favorites, bids, own ads | read + write | ❌ | read-only |
-| Login without password (browser session import) | ✅ | n/a | Playwright login |
-| New-listing monitoring | ✅ | ❌ | saved searches on disk |
-| Paid promotions filtered by default | ✅ | ❌ | ❌ |
-| Install | `uvx marktplaats-mcp` (PyPI) | `uvx git+https://…` (broken on current `mcp`) | from source |
-| Hosted endpoint, no install | ✅ | ❌ | ❌ |
-| Official MCP registry | ✅ | ❌ | ❌ |
-| Daily live-API canary | ✅ | ❌ | ✅ |
-| Last release | current | Feb 2026 | May 2026 |
-
-Credit where it is due: PonClick's server came first and its listing formatting informed this one, and gjoris pioneered the embedded-page parsing and the live canary. See [THIRD_PARTY_NOTICES.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/THIRD_PARTY_NOTICES.md).
-
 ## ❓ FAQ
 
 ### Is there an MCP server for Marktplaats?
@@ -327,7 +140,7 @@ In `~/.config/marktplaats-mcp/session.json` on your machine, readable by your us
 Yes: the hosted endpoint `https://marktplaats-mcp.jaspnerd.dev/mcp` works in claude.ai, including the Free plan and mobile apps. It offers the read-only tools.
 
 ### Does it work with ChatGPT, Cursor, Gemini, VS Code and Cline?
-Yes. Any client that runs stdio servers can use `uvx marktplaats-mcp`; clients that support remote servers can use the hosted URL.
+Yes. See [docs/clients.md](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md) for step-by-step instructions per client. Any client that runs stdio servers can use `uvx marktplaats-mcp`; clients that support remote servers can use the hosted URL.
 
 ### Is this official or affiliated with Marktplaats?
 No. It is an independent open source project with no ties to Marktplaats, 2dehands or Adevinta. It uses the same public JSON endpoints the websites use; that API is undocumented and may change, which is why a live canary runs every day.
@@ -338,17 +151,12 @@ Paid promotions (DAGTOPPER, TOPADVERTENTIE) are filtered out by default; pass `i
 ### Which Python versions are supported?
 3.10 and up. CI tests 3.11 through 3.13 on Linux, macOS and Windows.
 
-## ⚙️ Configuration
+## 📚 Docs
 
-| Variable | Purpose |
-|---|---|
-| `MARKTPLAATS_COOKIE`, `TWEEDEHANDS_COOKIE` | Session `Cookie` header per site (alternative to `marktplaats-mcp login`); `*_FILE` variants read it from a file |
-| `MARKTPLAATS_SESSION_FILE` | Where `login` stores sessions (default `~/.config/marktplaats-mcp/session.json`) |
-| `MARKTPLAATS_READ_ONLY` | `1` disables all write tools |
-| `MARKTPLAATS_AUDIT_LOG` | Path of the write audit log, or `off` |
-| `MARKTPLAATS_MIN_INTERVAL_MS` | Minimum spacing between upstream requests (default 200) |
-| `MCP_TRANSPORT`, `MCP_HOST`, `MCP_PORT` | `http` serves Streamable HTTP for hosting (default stdio) |
-| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Hosted-mode rate limits and Host/Origin validation |
+- [Install in your client](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/clients.md): step-by-step for 40 clients
+- [Configuration](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/configuration.md): environment variables for the local and hosted server
+- [How this compares](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/docs/comparison.md) to the other Marktplaats MCP servers
+- [Changelog](https://github.com/jasp-nerd/marktplaats-mcp/blob/main/CHANGELOG.md)
 
 ## 🗺️ Roadmap
 
