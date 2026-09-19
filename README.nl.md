@@ -63,6 +63,15 @@ marktplaats-mcp status                # is the stored session still valid?
 marktplaats-mcp logout                # delete it
 ```
 
+<details>
+<summary><b>Als login zegt dat de cookies van je browser niet gelezen konden worden</b></summary>
+
+- **macOS**: het systeem blokkeert terminalprogramma's die browserdata lezen en vraagt niets. Open eenmalig Systeeminstellingen → Privacy en beveiliging → **Volledige schijftoegang**, voeg je terminal-app toe (Terminal, iTerm, Warp of VS Code), sluit die helemaal af en open hem opnieuw. Voer daarna het login-commando opnieuw uit.
+- **Windows**: Chrome en Edge vergrendelen hun cookiebestand terwijl ze draaien; de tool kopieert het eerst, dus dit werkt normaal gewoon. Zo niet: sluit de browser en probeer opnieuw, of gebruik `--paste`.
+- **Linux**: Chromium-browsers bewaren de cookiesleutel in je sleutelhanger (GNOME Keyring of KWallet), die ontgrendeld moet zijn; Firefox heeft niets nodig. Snap- of Flatpak-browsers zetten hun profiel ergens anders neer; gebruik daar `--paste`.
+- Overal: `marktplaats-mcp login --paste` heeft geen rechten nodig. Druk in je browser op marktplaats.nl op F12 → Network, klik op een willekeurig verzoek, kopieer de `Cookie`-header en plak die.
+</details>
+
 Of zet `MARKTPLAATS_COOKIE` / `TWEEDEHANDS_COOKIE` (de `Cookie`-header van het verzoek) in de configuratie van je client. Sessies gaan weken mee; loopt er een af, dan geven de tools aan dat je opnieuw moet inloggen.
 
 **Wat er mis kan gaan, en wat niet.** Een bericht sturen, een verkoper benaderen en een bod plaatsen geven eerst een voorbeeld en voeren pas iets uit als ze opnieuw worden aangeroepen met `confirm=true`, zodat je agent je laat zien wat hij van plan is. Een bod is bindend op Marktplaats; de tool weigert biedingen onder het minimum van de advertentie en is gemarkeerd als destructief, zodat clients het vooraf vragen. Elke bevestigde schrijfactie wordt toegevoegd aan `~/.local/state/marktplaats-mcp/writes.jsonl`. Je sessie gaat alleen naar marktplaats.nl of 2dehands.be, en het gehoste endpoint registreert nooit accounttools. Het automatisch plaatsen van advertenties is verboden volgens de voorwaarden van Marktplaats en is bewust niet ingebouwd.

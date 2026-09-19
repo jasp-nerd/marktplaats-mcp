@@ -63,6 +63,15 @@ marktplaats-mcp status                # is the stored session still valid?
 marktplaats-mcp logout                # delete it
 ```
 
+<details>
+<summary><b>Si login indique qu'il n'a pas pu lire les cookies de votre navigateur</b></summary>
+
+- **macOS** : le système empêche les outils en ligne de commande de lire les données des navigateurs, sans rien demander. Une seule fois, ouvrez Réglages Système → Confidentialité et sécurité → **Accès complet au disque**, ajoutez votre application de terminal (Terminal, iTerm, Warp ou VS Code), quittez-la complètement et rouvrez-la. Relancez ensuite la commande de connexion.
+- **Windows** : Chrome et Edge verrouillent leur fichier de cookies pendant qu'ils tournent ; l'outil le copie d'abord, donc cela fonctionne normalement. Sinon, fermez le navigateur et réessayez, ou utilisez `--paste`.
+- **Linux** : les navigateurs Chromium gardent la clé des cookies dans votre trousseau (GNOME Keyring ou KWallet), qui doit être déverrouillé ; Firefox n'a besoin de rien. Les navigateurs Snap ou Flatpak rangent leur profil ailleurs : utilisez `--paste`.
+- Partout : `marktplaats-mcp login --paste` ne demande aucune permission. Dans votre navigateur sur marktplaats.nl, appuyez sur F12 → Network, cliquez sur une requête, copiez l'en-tête `Cookie` et collez-le.
+</details>
+
 Vous pouvez aussi définir `MARKTPLAATS_COOKIE` / `TWEEDEHANDS_COOKIE` (l'en-tête `Cookie` de la requête) dans la configuration de votre client. Une session reste valable plusieurs semaines ; quand elle expire, les outils vous invitent à vous reconnecter.
 
 **Ce qui peut mal tourner, et ce qui ne le peut pas.** Envoyer un message, contacter un vendeur et placer une enchère renvoient d'abord un aperçu et n'agissent que si l'outil est rappelé avec `confirm=true` : votre agent vous montre donc ce qu'il s'apprête à faire. Une enchère est contraignante sur Marktplaats ; l'outil refuse les enchères inférieures au minimum de l'annonce et est marqué comme destructif, si bien que les clients demandent confirmation avant de l'exécuter. Chaque écriture confirmée est ajoutée à `~/.local/state/marktplaats-mcp/writes.jsonl`. Votre session n'est jamais envoyée ailleurs qu'à marktplaats.nl ou 2dehands.be, et le point d'accès hébergé n'enregistre jamais les outils de compte. Le dépôt automatisé d'annonces est interdit par les conditions d'utilisation de Marktplaats et n'est délibérément pas implémenté.
