@@ -45,8 +45,31 @@ class Check:
             print(f"  FAIL: {message}")
 
 
+ATTEMPTS = 2
+RETRY_DELAY_SECONDS = 60
+
+
 async def run() -> int:
-    check = Check()
+    """Only a failure that survives a second run a minute later counts: one
+    upstream hiccup, or an ad sold between two calls, is not a broken API."""
+    for attempt in range(1, ATTEMPTS + 1):
+        check = Check()
+        try:
+            await probe_all(check)
+        except Exception as exc:
+            check.failures.append(f"{type(exc).__name__}: {exc}")
+            print(f"  FAIL: {type(exc).__name__}: {exc}")
+        stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        print(f"\n{check.passed} checks passed, {len(check.failures)} failed at {stamp}")
+        if not check.failures:
+            return 0
+        if attempt < ATTEMPTS:
+            print(f"Retrying in {RETRY_DELAY_SECONDS}s...\n")
+            await asyncio.sleep(RETRY_DELAY_SECONDS)
+    return 1
+
+
+async def probe_all(check: Check) -> None:
     async with Client(mcp) as client:
         tools = {tool.name for tool in await client.list_tools()}
         check.ok(tools >= TOOLS_EXPECTED, f"tools missing: {TOOLS_EXPECTED - tools}")
@@ -54,9 +77,6 @@ async def run() -> int:
             await probe_site(client, check, site, query, postcode)
         await probe_filters(client, check)
         await probe_derived(client, check)
-    stamp = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    print(f"\n{check.passed} checks passed, {len(check.failures)} failed at {stamp}")
-    return 1 if check.failures else 0
 
 
 async def probe_site(client: Client, check: Check, site: str, query: str, postcode: str) -> None:

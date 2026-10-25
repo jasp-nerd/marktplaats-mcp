@@ -2,22 +2,27 @@
 # requires-python = ">=3.10"
 # dependencies = ["requests>=2.32", "beautifulsoup4>=4.12"]
 # ///
-"""Refresh the vendored category JSON by scraping marktplaats.nl.
+"""Refresh the vendored category JSON from marktplaats.nl.
 
-Approach adapted from jensjeflensje/marktplaats-py (MIT), see
-THIRD_PARTY_NOTICES.md. Run with: uv run scripts/update_categories.py
+Top-level categories come from the homepage's /cp/<id>/<slug>/ links (no CSS
+class names, which change with every redesign); subcategories come from the
+same JSON search API the server uses. Originally adapted from
+jensjeflensje/marktplaats-py (MIT), see THIRD_PARTY_NOTICES.md.
+Run with: uv run scripts/update_categories.py
 """
 
 from __future__ import annotations
 
 import json
+import re
+import time
 from pathlib import Path
-from string import ascii_lowercase
 
 import requests
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
 DATA_DIR = Path(__file__).parent.parent / "src" / "marktplaats_mcp" / "data"
+SEARCH_URL = "https://www.marktplaats.nl/lrp/api/search"
 HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
@@ -25,64 +30,59 @@ HEADERS = {
     ),
     "Accept-Language": "nl-NL,nl;q=0.9,en;q=0.8",
 }
+L1_HREF = re.compile(r"^/cp/(\d+)/[^/]+/?$")
 
 
-def parse(url: str) -> BeautifulSoup:
-    response = requests.get(url, headers=HEADERS, timeout=15)
+def get(url: str, **params: str) -> requests.Response:
+    for attempt in range(3):
+        response = requests.get(url, params=params, headers=HEADERS, timeout=15)
+        if response.status_code < 500 and response.status_code != 429:
+            response.raise_for_status()
+            return response
+        time.sleep(5 * (attempt + 1))
     response.raise_for_status()
-    return BeautifulSoup(response.text, "html.parser")
+    return response
 
 
-def scrape_l1() -> dict[str, dict[str, object]]:
+def scrape_l1_ids() -> list[int]:
     print("Finding L1 categories...", flush=True)
+    soup = BeautifulSoup(get("https://www.marktplaats.nl/").text, "html.parser")
+    ids: list[int] = []
+    for a in soup.find_all("a", href=L1_HREF):
+        match = L1_HREF.match(str(a["href"]))
+        if match and int(match.group(1)) not in ids:
+            ids.append(int(match.group(1)))
+    print(f"Found {len(ids)} L1 categories")
+    if len(ids) < 20:
+        raise RuntimeError(f"Only {len(ids)} L1 categories on the homepage; layout changed?")
+    return ids
+
+
+def scrape(l1_ids: list[int]) -> tuple[dict[str, dict[str, object]], dict[str, dict[str, object]]]:
+    """Each L1 search lists the category itself plus its subcategories."""
     l1: dict[str, dict[str, object]] = {}
-    soup = parse("https://www.marktplaats.nl/")
-    ul = soup.find("ul", {"class": "CategoriesBlock-list"})
-    assert isinstance(ul, Tag), "homepage category block not found"
-    for li in ul.children:
-        assert isinstance(li, Tag)
-        a = next(iter(li.children))
-        assert isinstance(a, Tag)
-        href = a["href"]
-        assert isinstance(href, str)
-        _, _, id_, _ = href.split("/", 3)
-        l1[a.text.lower()] = {"id": int(id_), "name": a.text}
-    print(f"Found {len(l1)} L1 categories")
-    return l1
-
-
-def scrape_l2(l1: dict[str, dict[str, object]]) -> dict[str, dict[str, object]]:
     l2: dict[str, dict[str, object]] = {}
-    for entry in l1.values():
-        name = entry["name"]
-        assert isinstance(name, str)
-        stub = name.lower().replace(" | ", "-").replace(" ", "-").replace("'", "-")
-        stub = "".join(c for c in stub if c in ascii_lowercase + "-")
-        soup = parse(f"https://www.marktplaats.nl/l/{stub}/")
-        data_tag = soup.find("script", {"id": "__NEXT_DATA__"})
-        assert isinstance(data_tag, Tag), f"__NEXT_DATA__ missing for {name}"
-        data = json.loads(data_tag.text)
-        options = data["props"]["pageProps"]["searchRequestAndResponse"]["searchCategoryOptions"]
-        found = 0
-        for cat in options:
-            if cat["id"] == entry["id"]:
-                continue
-            l2[cat["fullName"].lower()] = {
-                "id": cat["id"],
-                "name": cat["fullName"],
-                "parent": name,
-            }
-            found += 1
-        print(f"{name}: {found} subcategories")
-        if found == 0:
+    for l1_id in l1_ids:
+        data = get(SEARCH_URL, l1CategoryId=str(l1_id), limit="1", offset="0").json()
+        options = data.get("searchCategoryOptions") or []
+        own = next((cat for cat in options if cat["id"] == l1_id), None)
+        if own is None:
+            raise RuntimeError(f"Category {l1_id} missing from its own search options")
+        name = own["fullName"]
+        l1[name.lower()] = {"id": l1_id, "name": name}
+        children = [cat for cat in options if cat.get("parentId") == l1_id]
+        for cat in children:
+            l2[cat["fullName"].lower()] = {"id": cat["id"], "name": cat["fullName"], "parent": name}
+        print(f"{name}: {len(children)} subcategories")
+        if not children:
             raise RuntimeError(f"Found no L2 categories for {name}")
+        time.sleep(0.5)
     print(f"Found {len(l2)} L2 categories in total")
-    return l2
+    return l1, l2
 
 
 def main() -> None:
-    l1 = scrape_l1()
-    l2 = scrape_l2(l1)
+    l1, l2 = scrape(scrape_l1_ids())
     (DATA_DIR / "l1_categories.json").write_text(
         json.dumps(l1, ensure_ascii=False), encoding="utf-8"
     )
