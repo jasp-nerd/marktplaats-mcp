@@ -16,7 +16,7 @@ permissions:
 jobs:
   smoke:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v10.3.2
@@ -49,3 +49,11 @@ jobs:
           else
             gh issue create --title "Live API canary failing" --label e2e-failure --body-file body.md
           fi
+      - name: Close the failure issue once the canary is green again
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for n in $(gh issue list --label e2e-failure --state open --json number --jq '.[].number'); do
+            gh issue close "$n" --comment "The canary passed again: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          done
