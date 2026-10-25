@@ -4,7 +4,14 @@ All notable changes to marktplaats-mcp. The format follows [Keep a Changelog](ht
 
 ## [Unreleased]
 
+### Fixed
+- Hosted endpoint: the HTTP transport now runs stateless. Clients that never closed their session left it in memory, so the public server grew to about 770 MB and, once 10,000 sessions were open, refused new clients with 503. Memory now stays flat at about 85 MB regardless of traffic.
+- Ads in the buyer's own town (distance 0) reported no `distance_km` when searching with a postcode.
+
 ### Changed
+- Response caches are bounded and drop expired entries on every write: the search page cache holds 16 pages (was 64) and the facet cache, previously unbounded, 256 entries.
+- Smaller container image: a multi-stage build without uv in the runtime image, bytecode compiled at build time, `MALLOC_ARENA_MAX=2`, and the server runs as the only process. New `MCP_MAX_CONNECTIONS` caps open connections (default 100, 32 in the image).
+- Dependencies: FastMCP 4.1.3, pydantic 2.14.1; dev tools ruff 0.17.2, mypy 2.4.0. CI uses setup-uv v10.3.2.
 - README (EN/NL/FR) is now a short front door: one "Get started" section (hosted URL, Claude Code one-liner, standard config with one-click buttons for Cursor, VS Code, LM Studio and Kiro), account setup, tools, safety, FAQ and links. The step-by-step install guide for 40 clients moved to `docs/clients.md` (with `.nl` and `.fr` versions), each with the fastest path, the config file per OS, a check that it works and a link to the client's official guide. The environment-variable reference moved to `docs/configuration.md` and the comparison table to `docs/comparison.md`. Newly covered clients: ChatGPT Developer mode, Mistral Le Chat, Perplexity, Gemini app, Antigravity, Roo Code, Zed, Goose, LM Studio, GitHub Copilot CLI, Kiro, Warp, Continue, Trae, Amp, Factory Droid, Qwen Code, Kimi CLI, Raycast, Open WebUI, LibreChat, Jan, ChatWise, Msty, Cherry Studio, 5ire, n8n, Docker MCP Toolkit and Copilot Studio. Windsurf is documented under its new name Devin Desktop.
 
 ## [0.2.0] - 2026-09-19

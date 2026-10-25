@@ -9,6 +9,7 @@ import respx
 from marktplaats_mcp.client import (
     ApiError,
     MarktplaatsClient,
+    TTLCache,
     build_search_params,
 )
 from marktplaats_mcp.sites import SITES
@@ -148,6 +149,22 @@ async def test_browser_headers_and_referer_are_sent():
     assert "Mozilla/5.0" in request.headers["User-Agent"]
     assert request.headers["Referer"] == "https://www.marktplaats.nl/"
     assert request.headers["Accept-Language"].startswith("nl-NL")
+
+
+def test_ttl_cache_is_bounded_and_drops_expired_entries(monkeypatch):
+    now = [0.0]
+    monkeypatch.setattr("marktplaats_mcp.client.time.monotonic", lambda: now[0])
+    cache: TTLCache[int] = TTLCache(ttl=10, max_entries=2)
+    cache.put("a", 1)
+    cache.put("b", 2)
+    assert cache.get("a") == 1
+    cache.put("c", 3)
+    assert cache.get("b") is None  # least recently used went first
+    assert len(cache) == 2
+    now[0] = 11
+    cache.put("d", 4)
+    assert len(cache) == 1  # "a" and "c" expired and were pruned on write
+    assert cache.get("d") == 4
 
 
 class TestBuildSearchParams:
