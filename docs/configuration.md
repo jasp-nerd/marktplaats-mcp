@@ -12,4 +12,4 @@ All settings are environment variables. The local server needs none of them; `ma
 | `MARKTPLAATS_AUDIT_LOG` | Path of the write audit log, or `off` |
 | `MARKTPLAATS_MIN_INTERVAL_MS` | Minimum spacing between upstream requests (default 200) |
 | `MCP_TRANSPORT`, `MCP_HOST`, `MCP_PORT` | `http` serves Streamable HTTP for hosting (default stdio) |
-| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Hosted-mode rate limits and Host/Origin validation |
+| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_MAX_CONNECTIONS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Hosted-mode rate limits, open-connection cap (default 100) and Host/Origin validation |

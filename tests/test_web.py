@@ -70,3 +70,33 @@ def test_host_and_origin_guard_from_environment():
         assert c.post("/mcp", headers=bad, json=init).status_code == 403
         good = {**headers, "Origin": "https://app.claude.ai"}
         assert c.post("/mcp", headers=good, json=init).status_code == 200
+
+
+def test_hosted_app_keeps_no_sessions():
+    from marktplaats_mcp.server import build_http_app
+
+    headers = {"Content-Type": "application/json", "Accept": "application/json, text/event-stream"}
+    init = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+            "protocolVersion": "2025-06-18",
+            "capabilities": {},
+            "clientInfo": {"name": "p", "version": "0"},
+        },
+    }
+    call = {
+        "jsonrpc": "2.0",
+        "id": 2,
+        "method": "tools/call",
+        "params": {"name": "list_categories", "arguments": {}},
+    }
+    with TestClient(build_http_app({})) as c:
+        response = c.post("/mcp", headers=headers, json=init)
+        assert response.status_code == 200
+        assert "mcp-session-id" not in response.headers
+        # A tool call without any session id still works.
+        response = c.post("/mcp", headers=headers, json=call)
+        assert response.status_code == 200
+        assert "Fietsen en Brommers" in response.text

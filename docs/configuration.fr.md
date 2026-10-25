@@ -12,4 +12,4 @@ Tous les réglages sont des variables d'environnement. Le serveur local n'en a b
 | `MARKTPLAATS_AUDIT_LOG` | Chemin du journal d'audit des écritures, ou `off` |
 | `MARKTPLAATS_MIN_INTERVAL_MS` | Espacement minimal entre les requêtes sortantes (200 par défaut) |
 | `MCP_TRANSPORT`, `MCP_HOST`, `MCP_PORT` | `http` sert le transport Streamable HTTP pour l'hébergement (stdio par défaut) |
-| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Limites de débit et validation Host/Origin en mode hébergé |
+| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_MAX_CONNECTIONS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Limites de débit, plafond de connexions ouvertes (100 par défaut) et validation Host/Origin en mode hébergé |

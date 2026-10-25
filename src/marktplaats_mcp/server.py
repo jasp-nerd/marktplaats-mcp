@@ -1089,6 +1089,13 @@ def http_guard_config(environ: Any) -> dict[str, Any]:
     }
 
 
+def build_http_app(environ: Any) -> Any:
+    """The hosted ASGI app. Stateless: no tool keeps per-session state, and
+    clients that never send DELETE would otherwise pile up sessions in memory
+    until the transport refuses new ones."""
+    return mcp.http_app(stateless_http=True, **http_guard_config(environ))
+
+
 def _env_list(environ: Any, name: str) -> list[str] | None:
     raw = environ.get(name, "").strip()
     return [item.strip() for item in raw.split(",") if item.strip()] or None
@@ -1099,7 +1106,8 @@ def main() -> None:
 
     Runs over stdio by default. Set MCP_TRANSPORT=http to serve Streamable HTTP
     (for remote/hosted use), with MCP_HOST (default 0.0.0.0), MCP_PORT (default
-    8000), MCP_RPS (per-client requests/second, default 5), MCP_GLOBAL_RPS and
+    8000), MCP_RPS (per-client requests/second, default 5), MCP_GLOBAL_RPS,
+    MCP_MAX_CONNECTIONS (open-connection cap, default 100) and
     MCP_ALLOWED_HOSTS / MCP_ALLOWED_ORIGINS (comma-separated; validates the
     Host and Origin headers when set).
     """
@@ -1138,9 +1146,11 @@ def main() -> None:
         # Build the ASGI app explicitly so the Host/Origin guard settings are
         # applied exactly as tested, then serve it with uvicorn.
         uvicorn.run(
-            mcp.http_app(**http_guard_config(os.environ)),
+            build_http_app(os.environ),
             host=os.environ.get("MCP_HOST", "0.0.0.0"),
             port=int(os.environ.get("MCP_PORT", "8000")),
+            # Beyond this many open connections uvicorn answers 503 instead of queueing.
+            limit_concurrency=int(os.environ.get("MCP_MAX_CONNECTIONS", "100")),
             log_level="info",
         )
     else:

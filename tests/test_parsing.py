@@ -151,6 +151,12 @@ class TestParseListing:
         listing = parse_listing(raw, NL, compact=True)
         assert listing.distance_km is None
 
+    def test_zero_distance_is_the_buyers_own_town(self, search_response):
+        raw = dict(search_response["listings"][0])
+        raw["location"] = {**raw["location"], "distanceMeters": 0, "isBuyerLocation": True}
+        listing = parse_listing(raw, NL, compact=True)
+        assert listing.distance_km == 0.0
+
     def test_2dehands_urls_use_belgian_host(self, search_response_be):
         raw = search_response_be["listings"][0]
         listing = parse_listing(raw, BE, compact=True)

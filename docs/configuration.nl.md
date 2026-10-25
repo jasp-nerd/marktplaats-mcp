@@ -12,4 +12,4 @@ Alle instellingen zijn omgevingsvariabelen. De lokale server heeft er geen nodig
 | `MARKTPLAATS_AUDIT_LOG` | Pad van het auditlogboek voor schrijfacties, of `off` |
 | `MARKTPLAATS_MIN_INTERVAL_MS` | Minimale tussentijd tussen verzoeken naar de marktplaats (standaard 200) |
 | `MCP_TRANSPORT`, `MCP_HOST`, `MCP_PORT` | `http` serveert Streamable HTTP voor hosting (standaard stdio) |
-| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Rate-limits en Host/Origin-validatie in gehoste modus |
+| `MCP_RPS`, `MCP_GLOBAL_RPS`, `MCP_MAX_CONNECTIONS`, `MCP_ALLOWED_HOSTS`, `MCP_ALLOWED_ORIGINS` | Rate-limits, maximum aantal open verbindingen (standaard 100) en Host/Origin-validatie in gehoste modus |

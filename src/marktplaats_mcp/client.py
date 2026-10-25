@@ -14,7 +14,7 @@ import random
 import time
 from collections import OrderedDict
 from datetime import datetime, timedelta, timezone
-from typing import Any
+from typing import Any, Generic, TypeVar
 
 import httpx
 
@@ -73,20 +73,25 @@ class NotFoundError(ApiError):
     """The requested resource does not exist (HTTP 404)."""
 
 
-class PageCache:
-    """Small TTL cache for raw JSON responses.
+V = TypeVar("V")
 
-    Pagination walks aligned pages from offset 0 (see server._collect_listings),
-    so consecutive tool calls in one session re-read the same page. Serving it
-    from memory keeps us polite towards the upstream API.
+
+class TTLCache(Generic[V]):
+    """Bounded LRU cache whose entries expire after ``ttl`` seconds.
+
+    Expired entries are dropped on every write, so a quiet server does not keep
+    stale pages around, and ``max_entries`` caps memory under load.
     """
 
-    def __init__(self, ttl: float = 60.0, max_entries: int = 64) -> None:
+    def __init__(self, ttl: float, max_entries: int) -> None:
         self.ttl = ttl
         self.max_entries = max_entries
-        self._entries: OrderedDict[Any, tuple[float, dict[str, Any]]] = OrderedDict()
+        self._entries: OrderedDict[Any, tuple[float, V]] = OrderedDict()
 
-    def get(self, key: Any) -> dict[str, Any] | None:
+    def __len__(self) -> int:
+        return len(self._entries)
+
+    def get(self, key: Any) -> V | None:
         entry = self._entries.get(key)
         if entry is None:
             return None
@@ -97,16 +102,32 @@ class PageCache:
         self._entries.move_to_end(key)
         return value
 
-    def put(self, key: Any, value: dict[str, Any]) -> None:
+    def put(self, key: Any, value: V) -> None:
         if self.ttl <= 0:
             return
-        self._entries[key] = (time.monotonic() + self.ttl, value)
+        now = time.monotonic()
+        self._entries[key] = (now + self.ttl, value)
         self._entries.move_to_end(key)
+        for stale in [k for k, (expires_at, _) in self._entries.items() if expires_at < now]:
+            del self._entries[stale]
         while len(self._entries) > self.max_entries:
             self._entries.popitem(last=False)
 
     def clear(self) -> None:
         self._entries.clear()
+
+
+class PageCache(TTLCache[dict[str, Any]]):
+    """Short-lived cache for raw search JSON.
+
+    Pagination walks aligned pages from offset 0 (see server._collect_listings),
+    so consecutive tool calls in one session re-read the same page. Serving it
+    from memory keeps us polite towards the upstream API. A parsed page of 100
+    listings is over a megabyte, so the cache stays small.
+    """
+
+    def __init__(self, ttl: float = 60.0, max_entries: int = 16) -> None:
+        super().__init__(ttl, max_entries)
 
 
 class MarktplaatsClient:

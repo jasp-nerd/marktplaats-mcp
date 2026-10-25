@@ -163,10 +163,11 @@ def parse_listing(
     vip_url = raw.get("vipUrl")
     url = f"{site.base_url}{vip_url}" if vip_url else site.listing_url(item_id)
     location = raw.get("location") or {}
+    # Negative without a postcode; 0 for ads in the buyer's own town.
     distance = location.get("distanceMeters")
     distance_km = (
         round(distance / 1000, 1)
-        if isinstance(distance, int) and 0 < distance < 1_000_000
+        if isinstance(distance, int) and 0 <= distance < 1_000_000
         else None
     )
     price_info = raw.get("priceInfo") or {}

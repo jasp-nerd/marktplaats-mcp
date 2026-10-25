@@ -10,10 +10,9 @@ so we resolve human labels against the live facets instead of hardcoding ids.
 from __future__ import annotations
 
 import re
-import time
 from typing import Any
 
-from .client import Range
+from .client import Range, TTLCache
 from .models import FilterOption, SearchFilter
 
 FACET_TTL_SECONDS = 3600
@@ -132,22 +131,8 @@ def _to_int(text: str | None) -> int | None:
     return int(digits) if digits else None
 
 
-class FacetCache:
+class FacetCache(TTLCache[list[SearchFilter]]):
     """Facets change rarely; keep them for an hour per (site, category, query)."""
 
-    def __init__(self, ttl: float = FACET_TTL_SECONDS) -> None:
-        self.ttl = ttl
-        self._entries: dict[Any, tuple[float, list[SearchFilter]]] = {}
-
-    def get(self, key: Any) -> list[SearchFilter] | None:
-        entry = self._entries.get(key)
-        if entry and entry[0] > time.monotonic():
-            return entry[1]
-        self._entries.pop(key, None)
-        return None
-
-    def put(self, key: Any, filters: list[SearchFilter]) -> None:
-        self._entries[key] = (time.monotonic() + self.ttl, filters)
-
-    def clear(self) -> None:
-        self._entries.clear()
+    def __init__(self, ttl: float = FACET_TTL_SECONDS, max_entries: int = 256) -> None:
+        super().__init__(ttl, max_entries)
